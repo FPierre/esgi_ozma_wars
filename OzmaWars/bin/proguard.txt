@@ -1,0 +1,9 @@
+# view AndroidManifest.xml #generated:16
+-keep class com.application.android.esgi.ozma.wars.OzmaWarsActivity { <init>(...); }
+
+# view res/layout/fragment_start.xml #generated:19
+# view res/layout/fragment_start.xml #generated:27
+# view res/layout/fragment_start.xml #generated:38
+# view res/layout/fragment_start.xml #generated:8
+-keep class com.application.android.esgi.ozma.wars.widgets.OzmaText { <init>(...); }
+

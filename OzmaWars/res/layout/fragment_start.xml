@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:text="Ozma Wars"
+        android:textColor="@color/white"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let's travel &amp; Fight"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:layout_gravity="center_horizontal"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        android:text="New Game"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border_white"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Continue"
+        android:textColor="@color/dark_grey"
+        android:textSize="22sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border_grey"/>
+</LinearLayout>

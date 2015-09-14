@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ozma application theme -->
+    <style name="OzmaTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/dark</item>
+
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/dark</item>
+        <item name="android:textColorSecondary">@color/dark</item>
+        <item name="android:textColorSecondaryInverse">@color/dark</item>
+        
+        <!-- Action colors from Lollipop
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:colorPrimary">@color/blue</item>
+        <item name="android:colorPrimaryDark">@color/dark_blue</item> -->
+    </style>
+</resources>
