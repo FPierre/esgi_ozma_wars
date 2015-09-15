@@ -9,9 +9,31 @@ A "Shoot Them Up" game for Android with NDK.
 
 ### Why? ###
 
-Student project: build an Android application, an Android game with NDK library
+Student project: build an Android game with NDK library
 
 ### Who? ###
 
 * Pierre Flauder
 * Florent Blot
+
+### TODO ###
+
+#### Global ####
+
+* project structure (NDK and Android architecture)
+* game initialisation
+* happy end (or disastrous end)
+
+#### Graphics #####
+
+* life bar display
+* ship display
+* enemy ship display
+* destruction of the ennemy ship
+
+#### Game play ####
+
+* life bar system
+* ship moves
+* ship weapon (weapons ?)
+* enemy ship weapons
