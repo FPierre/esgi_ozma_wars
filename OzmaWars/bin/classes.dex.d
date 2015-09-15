@@ -1,7 +1,23 @@
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes.dex : \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\BuildConfig.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\DummyEdit.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\DummyEdit.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentGame$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentGame$2.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentGame$SDLCommandHandler.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentGame$ShowTextInputTask.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentGame.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentStart$1.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentStart.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLGenericMotionListener_API12.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLInputConnection.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLJoystickHandler.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLJoystickHandler_API12$RangeComparator.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLJoystickHandler_API12$SDLJoystick.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLJoystickHandler_API12.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLMain.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLSurface$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SDLSurface.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\main\DummyEdit.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\main\OzmaWarsActivity$1.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\main\OzmaWarsActivity$SDLCommandHandler.class \
@@ -38,6 +54,7 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\ap
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\SDLMain.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\SDLSurface$1.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\SDLSurface.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\utils\OzmaUtils.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\widgets\OzmaText.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\org\libsdl\app\DummyEdit.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\org\libsdl\app\OzmaWarsActivity$1.class \

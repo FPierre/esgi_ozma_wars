@@ -17,7 +17,7 @@
 extern void SDL_Android_Init(JNIEnv* env, jclass cls);
 
 /* Start up the SDL app */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeInit(JNIEnv* env, jclass cls, jobject obj)
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeInit(JNIEnv* env, jclass cls, jobject obj)
 {
     /* This interface could expand with ABI negotiation, calbacks, etc. */
     SDL_Android_Init(env, cls);

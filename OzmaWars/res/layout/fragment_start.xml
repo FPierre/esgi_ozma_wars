@@ -25,6 +25,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/button_new_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -36,6 +37,7 @@
         android:background="@drawable/border_white"/>
 
     <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/button_continue_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"

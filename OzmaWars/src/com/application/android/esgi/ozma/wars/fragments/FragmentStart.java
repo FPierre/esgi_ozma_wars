@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
+import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.OzmaWarsActivity;
 
 /**
@@ -24,6 +25,9 @@ public class FragmentStart extends Fragment {
     // Debug
     private static final String DEBUG_TAG = "//-- FragmentStart";
 
+    // Context
+    private Activity activity;
+
     public FragmentStart() { }
 
     public static FragmentStart newInstance() {
@@ -32,8 +36,9 @@ public class FragmentStart extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Activity activity_) {
+        super.onAttach(activity_);
+        this.activity = activity_;
     }
 
     @Override
@@ -55,6 +60,18 @@ public class FragmentStart extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_start, container, false);
+
+        TextView btnNewGame = (TextView) v.findViewById(R.id.button_new_game);
+        TextView btnContinueGame = (TextView) v.findViewById(R.id.button_continue_game);
+
+        // Display a new game
+        btnNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OzmaWarsActivity) activity).handleFragment(FragmentGame.newInstance(), OzmaUtils.FRAG_GAME_TAG, true);
+            }
+        });
+
         return v;
     }
 

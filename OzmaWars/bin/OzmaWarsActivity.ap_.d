@@ -5,6 +5,7 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-hdpi\
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-ldpi\ic_launcher.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-mdpi\ic_launcher.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-xhdpi\ic_launcher.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_game.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_start.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\ozma_activity.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\values\colors.xml \

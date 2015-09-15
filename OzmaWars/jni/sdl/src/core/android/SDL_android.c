@@ -23,7 +23,7 @@
   Edited by: Fllo on 09/14/2015
   Modified: 
     from => Java_org_libsdl_app_SDLActivity
-    to =>   Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity
+    to =>   Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame
 
   ***************************************************************************
 */
@@ -150,7 +150,7 @@ void SDL_Android_Init(JNIEnv* mEnv, jclass cls)
 }
 
 /* Resize */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeResize(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeResize(
                                     JNIEnv* env, jclass jcls,
                                     jint width, jint height, jint format)
 {
@@ -158,7 +158,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeResize
 }
 
 // Paddown
-int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativePadDown(
+int Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativePadDown(
                                     JNIEnv* env, jclass jcls,
                                     jint device_id, jint keycode)
 {
@@ -166,7 +166,7 @@ int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativePadDown
 }
 
 // Padup
-int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativePadUp(
+int Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativePadUp(
                                    JNIEnv* env, jclass jcls,
                                    jint device_id, jint keycode)
 {
@@ -174,7 +174,7 @@ int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativePadUp(
 }
 
 /* Joy */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeJoy(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeJoy(
                                     JNIEnv* env, jclass jcls,
                                     jint device_id, jint axis, jfloat value)
 {
@@ -182,7 +182,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeJoy(
 }
 
 /* POV Hat */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeHat(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeHat(
                                     JNIEnv* env, jclass jcls,
                                     jint device_id, jint hat_id, jint x, jint y)
 {
@@ -190,7 +190,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeHat(
 }
 
 
-int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeAddJoystick(
+int Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeAddJoystick(
     JNIEnv* env, jclass jcls,
     jint device_id, jstring device_name, jint is_accelerometer, 
     jint nbuttons, jint naxes, jint nhats, jint nballs)
@@ -205,7 +205,7 @@ int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeAddJoysti
     return retval;
 }
 
-int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeRemoveJoystick(
+int Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeRemoveJoystick(
     JNIEnv* env, jclass jcls, jint device_id)
 {
     return Android_RemoveJoystick(device_id);
@@ -213,7 +213,7 @@ int Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeRemoveJoy
 
 
 /* Surface Created */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeSurfaceChanged(JNIEnv* env, jclass jcls)
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeSurfaceChanged(JNIEnv* env, jclass jcls)
 {
     SDL_WindowData *data;
     SDL_VideoDevice *_this;
@@ -239,7 +239,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeSurfac
 }
 
 /* Surface Destroyed */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeSurfaceDestroyed(JNIEnv* env, jclass jcls)
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeSurfaceDestroyed(JNIEnv* env, jclass jcls)
 {
     /* We have to clear the current context and destroy the egl surface here
      * Otherwise there's BAD_NATIVE_WINDOW errors coming from eglCreateWindowSurface on resume
@@ -265,27 +265,27 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeSurfac
 
 }
 
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeFlipBuffers(JNIEnv* env, jclass jcls)
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeFlipBuffers(JNIEnv* env, jclass jcls)
 {
     SDL_GL_SwapWindow(Android_Window);
 }
 
 /* Keydown */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeKeyDown(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeKeyDown(
                                     JNIEnv* env, jclass jcls, jint keycode)
 {
     Android_OnKeyDown(keycode);
 }
 
 /* Keyup */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeKeyUp(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeKeyUp(
                                     JNIEnv* env, jclass jcls, jint keycode)
 {
     Android_OnKeyUp(keycode);
 }
 
 /* Keyboard Focus Lost */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeKeyboardFocusLost(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeKeyboardFocusLost(
                                     JNIEnv* env, jclass jcls)
 {
     /* Calling SDL_StopTextInput will take care of hiding the keyboard and cleaning up the DummyText widget */
@@ -294,7 +294,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeKeyboa
 
 
 /* Touch */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeTouch(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeTouch(
                                     JNIEnv* env, jclass jcls,
                                     jint touch_device_id_in, jint pointer_finger_id_in,
                                     jint action, jfloat x, jfloat y, jfloat p)
@@ -303,7 +303,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeTouch(
 }
 
 /* Accelerometer */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeAccel(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_onNativeAccel(
                                     JNIEnv* env, jclass jcls,
                                     jfloat x, jfloat y, jfloat z)
 {
@@ -314,14 +314,14 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_onNativeAccel(
 }
 
 /* Low memory */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeLowMemory(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeLowMemory(
                                     JNIEnv* env, jclass cls)
 {
     SDL_SendAppEvent(SDL_APP_LOWMEMORY);
 }
 
 /* Quit */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeQuit(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeQuit(
                                     JNIEnv* env, jclass cls)
 {
     /* Discard previous events. The user should have handled state storage
@@ -337,7 +337,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeQuit(
 }
 
 /* Pause */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativePause(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativePause(
                                     JNIEnv* env, jclass cls)
 {
     __android_log_print(ANDROID_LOG_VERBOSE, "SDL", "nativePause()");
@@ -354,7 +354,7 @@ void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativePause(
 }
 
 /* Resume */
-void Java_com_application_android_esgi_ozma_wars_OzmaWarsActivity_nativeResume(
+void Java_com_application_android_esgi_ozma_wars_fragments_FragmentGame_nativeResume(
                                     JNIEnv* env, jclass cls)
 {
     __android_log_print(ANDROID_LOG_VERBOSE, "SDL", "nativeResume()");
