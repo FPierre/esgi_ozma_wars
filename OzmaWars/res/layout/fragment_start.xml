@@ -2,49 +2,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" 
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <com.application.android.esgi.ozma.wars.widgets.OzmaText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:layout_margin="0dp"
-        android:text="Ozma Wars"
-        android:textColor="@color/white"
-        android:textSize="38sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
-
-    <com.application.android.esgi.ozma.wars.widgets.OzmaText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Let's travel &amp; Fight"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:layout_gravity="center_horizontal"/>
-
-    <com.application.android.esgi.ozma.wars.widgets.OzmaText
-        android:id="@+id/button_new_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginTop="40dp"
-        android:text="New Game"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/border_white"/>
-
-    <com.application.android.esgi.ozma.wars.widgets.OzmaText
-        android:id="@+id/button_continue_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginTop="10dp"
-        android:text="Continue"
-        android:textColor="@color/dark_grey"
-        android:textSize="22sp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/border_grey"/>
+        android:text="Hi-score"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/text_highscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="00000"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent" 
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:text="Ozma Wars"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's travel &amp; Fight"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
+
+            <com.application.android.esgi.ozma.wars.widgets.OzmaText
+                android:id="@+id/button_new_game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Insert coin"
+                android:textColor="@color/red"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:background="@drawable/border_red"/>
+
+            <com.application.android.esgi.ozma.wars.widgets.OzmaText
+                android:id="@+id/button_continue_game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Continue"
+                android:textColor="@color/dark_grey"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:background="@drawable/border_grey"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

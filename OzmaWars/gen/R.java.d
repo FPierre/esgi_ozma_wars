@@ -1,5 +1,6 @@
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\gen\com\application\android\esgi\ozma\wars\R.java \
  : C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_grey.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_red.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_white.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-hdpi\ic_launcher.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-ldpi\ic_launcher.png \

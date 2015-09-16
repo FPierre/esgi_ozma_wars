@@ -61,6 +61,7 @@ public class FragmentStart extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_start, container, false);
 
+        TextView textHighScore = (TextView) v.findViewById(R.id.text_highscore);
         TextView btnNewGame = (TextView) v.findViewById(R.id.button_new_game);
         TextView btnContinueGame = (TextView) v.findViewById(R.id.button_continue_game);
 
