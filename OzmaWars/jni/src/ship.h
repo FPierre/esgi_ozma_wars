@@ -4,6 +4,9 @@
 #include "weapon.h"
 #include "SDL.h"
 
+#define LEFT_SENSIBILITY = -5
+#define RIGHT_SENSIBILITY = 5
+
 typedef struct {
     int x;
     int y;
