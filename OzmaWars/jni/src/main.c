@@ -19,8 +19,11 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    Ship *ship = init_ship(400, 400, 200, 100);
-    Ship *enemy_ship = init_ship(0, 100, 100, 100);
+    Weapon *laser_canon = weapon_init(1);
+
+    // rand() % limit
+    Ship *ship = ship_init(400, 400, 200, 100, *laser_canon);
+    Ship *enemy_ship = ship_init(0, 100, 100, 100, *laser_canon);
 
     while (!done) {
         enemy_ship->rectangle.x += 2;

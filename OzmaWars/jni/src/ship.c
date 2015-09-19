@@ -1,7 +1,7 @@
 #include "ship.h"
 #include "SDL.h"
 
-Ship *init_ship(int x, int y, int size, int max_health) {
+Ship *ship_init(int x, int y, int size, int max_health, Weapon weapon) {
     Ship *ship = malloc(sizeof(Ship));
     ship->x = x;
     ship->y = y;
@@ -11,6 +11,11 @@ Ship *init_ship(int x, int y, int size, int max_health) {
     ship->rectangle.y = ship->y;
     ship->rectangle.w = ship->size;
     ship->rectangle.h = ship->size;
+    ship->weapon = weapon;
 
     return ship;
+}
+
+void ship_fire() {
+
 }

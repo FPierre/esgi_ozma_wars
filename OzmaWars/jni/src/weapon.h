@@ -7,4 +7,6 @@ typedef struct {
     int strength;
 } Weapon;
 
+Weapon *weapon_init(int strength);
+
 #endif
