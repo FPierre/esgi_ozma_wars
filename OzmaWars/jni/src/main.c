@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-
+#include "SDL.h"
+#include "math.h"
 #include "weapon.h"
 #include "ship.h"
 
-#include "SDL.h"
+#define PI 3.14159265
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip) {
     SDL_Rect dst = { x, y, clip->w, clip->h };
@@ -29,17 +30,45 @@ int main(int argc, char *argv[]) {
     Weapon *laser_canon = weapon_init(1);
 
     Ship *ship = ship_init(400, 400, 200, 100, *laser_canon);
-    Ship *enemy_ship = ship_init(0, 100, 100, 100, *laser_canon);
+    Ship *enemy_ship = ship_init(10, 10, 100, 100, *laser_canon);
 
     SDL_Surface *pSprite = SDL_LoadBMP("spritesheets/ship.bmp");
     SDL_SetColorKey(pSprite, SDL_TRUE, SDL_MapRGB(pSprite->format, 255, 0, 255));
-
     SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, pSprite);
-
     SDL_Rect srcrect = { 41, 42, 40, 45 };
 
+
+    // TEST MISSILE
+
+    double val = 180.0 / PI;
+
+    SDL_Surface *pSprite2 = SDL_LoadBMP("spritesheets/projectile.bmp");
+    SDL_SetColorKey(pSprite2, SDL_TRUE, SDL_MapRGB(pSprite2->format, 0, 255, 255));
+    SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
+    SDL_Rect srcrect2 = { 55, 390, 50, 20 };
+
+    int start_x = 10;
+    int start_y = 10;
+
+    SDL_Rect missile = { start_x, start_y, 100, 60 };
+
+    int end_x = 400;
+    int end_y = 400;
+
+    int diff_x = end_x - start_x;
+    int diff_y = end_y - start_y;
+
+    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    double angle = atan2(diff_y, diff_x) * val;
+
     while (!done) {
-        enemy_ship->rectangle.x++;
+
+
+        missile.x += length / 100;
+        missile.y += length / 100;
+
+
+        // enemy_ship->rectangle.x++;
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -58,13 +87,22 @@ int main(int argc, char *argv[]) {
         SDL_RenderCopy(renderer, tex, &srcrect, &(ship->rectangle));
 
         // SDL_RenderCopy(renderer, tex2, &srcrect2, &(enemy_ship->rectangle));
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 100);
+
+        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 200);
         SDL_RenderFillRect(renderer, &(enemy_ship->rectangle));
+
+
+        SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
+
+        // SDL_RenderCopy(renderer, tex2, &srcrect2, &missile);
+        // SDL_SetRenderDrawColor(renderer, 100, 100, 100, 100);
+        // SDL_RenderFillRect(renderer, &missile);
+
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderPresent(renderer);
 
-        SDL_Delay(1);
+        SDL_Delay(10);
     }
 
 
