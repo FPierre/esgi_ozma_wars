@@ -11,7 +11,9 @@
     <application 
         android:label="@string/app_name" 
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/OzmaTheme">
+        android:theme="@style/OzmaTheme"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true">
 
         <activity 
             android:name="OzmaWarsActivity"

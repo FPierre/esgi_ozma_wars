@@ -38,7 +38,7 @@ public class OzmaWarsActivity extends Activity {
 
         // Display Start fragment
         if (savedInstanceState == null)
-        	handleFragment(FragmentStart.newInstance(), OzmaUtils.FRAG_START_TAG, false);
+        	handleFragment(FragmentStart.newInstance(), OzmaUtils.START_TAG, false);
     }
 
     // Fragments handler method

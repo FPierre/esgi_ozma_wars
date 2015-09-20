@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:text="Options"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:text="Sound"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="left"/>
+
+        <CheckBox
+            android:id="@+id/settings_checkbox_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="18dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:text="Vibrate"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="left"/>
+
+        <CheckBox 
+            android:id="@+id/settings_checkbox_vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:id="@+id/button_clear_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Clear score"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/border_white"/>
+    </LinearLayout>
+</LinearLayout>
