@@ -7,13 +7,17 @@
 typedef struct {
     int x;
     int y;
-    int size;
+    int w;
+    int h;
+    double angle;
     int health;
     int max_health;
-    Weapon weapon;
-    SDL_Rect rectangle;
+    Weapon *weapon;
+    Sprite *image;
+    SDL_Rect body;
 } Ship;
 
-Ship *ship_init(int x, int y, int size, int max_health, Weapon weapon);
+Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite *image, Weapon *weapon);
+void ship_render(SDL_Renderer *renderer, Ship *ship);
 
 #endif
