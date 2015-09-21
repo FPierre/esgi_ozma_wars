@@ -19,5 +19,6 @@ typedef struct {
 
 Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite *image, Weapon *weapon);
 void ship_render(SDL_Renderer *renderer, Ship *ship);
+void ship_fire(Ship *ship, Ship *target);
 
 #endif

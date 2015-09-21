@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     RGB blue_background = { 0, 255, 255 };
     Sprite *missile_image = sprite_init(renderer, "spritesheets/projectile.bmp", blue_background, 55, 390, 50, 20);
 
-    Weapon *canon = weapon_init(100, 60, 1, 1, missile_image);
+    Weapon *canon = weapon_init(100, 60, 0.0, 1, 1, missile_image);
 
     // Initialisation Ship
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
     Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
 
-    Ship *ship = ship_init(400, 400, 200, 200, 0.0, 100, ship_image, canon);
+    Ship *ship = ship_init(700, 400, 200, 200, 0.0, 100, ship_image, canon);
     Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
 
     // TEST MISSILE
@@ -53,30 +53,35 @@ int main(int argc, char *argv[]) {
     // SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
     // SDL_Rect srcrect2 = { 55, 390, 50, 20 };
 
-    // int start_x = 10;
-    // int start_y = 10;
+    double val = 180.0 / PI;
+
+    int start_x = enemy_ship->x;
+    int start_y = enemy_ship->y;
 
     // SDL_Rect missile = { start_x, start_y, 100, 60 };
 
-    // int end_x = 400;
-    // int end_y = 400;
+    int end_x = ship->x;
+    int end_y = ship->y;
 
-    // int diff_x = end_x - start_x;
-    // int diff_y = end_y - start_y;
+    int diff_x = end_x - start_x;
+    int diff_y = end_y - start_y;
 
-    // int length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    // double angle = atan2(diff_y, diff_x) * val;
+    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    double angle = atan2(diff_y, diff_x) * val;
+
+    enemy_ship->weapon->angle = angle;
+
+    // ship_fire(enemy_ship, ship);
 
     int first_fire = 1;
 
     while (!done) {
-
         if (first_fire == 1) {
-
-
             first_fire = 0;
         }
 
+        enemy_ship->weapon->body.x += diff_x / 100;
+        enemy_ship->weapon->body.y += diff_y / 100;
 
         // missile.x += length / 100;
         // missile.y += length / 100;
@@ -90,7 +95,7 @@ int main(int argc, char *argv[]) {
                     break;
 
                 case SDL_MOUSEMOTION:
-                    // ship->rectangle.x += 2;
+                    // ship->body.x += 2;
                     break;
             }
         }
@@ -105,7 +110,7 @@ int main(int argc, char *argv[]) {
         ship_render(renderer, ship);
         ship_render(renderer, enemy_ship);
 
-        // // SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
+        // SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderPresent(renderer);

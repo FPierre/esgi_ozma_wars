@@ -1,4 +1,7 @@
+#include "math.h"
 #include "ship.h"
+
+#define PI 3.14159265
 
 Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite *image, Weapon *weapon) {
     Ship *ship = malloc(sizeof(Ship));
@@ -20,4 +23,18 @@ Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite
 
 void ship_render(SDL_Renderer *renderer, Ship *ship) {
     SDL_RenderCopyEx(renderer, ship->image->texture, &(ship->image->image_location), &(ship->body), ship->angle, NULL, SDL_FLIP_NONE);
+}
+
+void ship_fire(Ship *ship, Ship *target) {
+    double val = 180.0 / PI;
+    int start_x = ship->x;
+    int start_y = ship->y;
+    int end_x = target->x;
+    int end_y = target->y;
+    int diff_x = end_x - start_x;
+    int diff_y = end_y - start_y;
+    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    double angle = atan2(diff_y, diff_x) * val;
+
+    ship->weapon->angle = angle;
 }

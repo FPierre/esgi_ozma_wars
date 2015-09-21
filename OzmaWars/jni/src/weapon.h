@@ -18,13 +18,14 @@ typedef struct {
     int y;
     int w;
     int h;
+    double angle;
     int strength;
     int speed;
     Sprite *image;
     SDL_Rect body;
 } Weapon;
 
-Weapon *weapon_init(int w, int h, int strength, int speed, Sprite *image);
+Weapon *weapon_init(int w, int h, double angle, int strength, int speed, Sprite *image);
 void weapon_render(SDL_Renderer *renderer, Weapon *weapon);
 
 #endif
