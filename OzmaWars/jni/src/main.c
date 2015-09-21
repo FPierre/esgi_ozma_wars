@@ -62,45 +62,13 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
-    // TEST MISSILE
-
-    // double val = 180.0 / PI;
-
-    // SDL_Surface *pSprite2 = SDL_LoadBMP("spritesheets/projectile.bmp");
-    // SDL_SetColorKey(pSprite2, SDL_TRUE, SDL_MapRGB(pSprite2->format, 0, 255, 255));
-    // SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
-    // SDL_Rect srcrect2 = { 55, 390, 50, 20 };
-
-    // double val = 180.0 / PI;
-
-    // int start_x = enemy_ship->x;
-    // int start_y = enemy_ship->y;
-
-    // // SDL_Rect missile = { start_x, start_y, 100, 60 };
-
-    // int end_x = ship->x;
-    // int end_y = ship->y;
-
-    // int diff_x = end_x - start_x;
-    // int diff_y = end_y - start_y;
-
-    // int length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    // double angle = atan2(diff_y, diff_x) * val;
-
-    // enemy_ship->weapon->angle = angle;
-
     ship_fire(enemy_ship, ship);
 
-    int first_fire = 1;
+    ship_set_ride(enemy_ship, 200, 300);
 
     while (!done) {
-        if (first_fire == 1) {
-            first_fire = 0;
-        }
-
         weapon_move(enemy_ship->weapon);
-
-        // enemy_ship->rectangle.x++;
+        ship_move(enemy_ship);
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -123,8 +91,6 @@ int main(int argc, char *argv[]) {
 
         ship_render(renderer, ship);
         ship_render(renderer, enemy_ship);
-
-        // SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderPresent(renderer);

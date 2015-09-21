@@ -10,6 +10,8 @@ Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite
     ship->w = w;
     ship->h = h;
     ship->angle = angle;
+    ship->mov_to_target_x = 0;
+    ship->mov_to_target_y = 0;
     ship->health = ship->max_health = max_health;
     ship->body.x = ship->x;
     ship->body.y = ship->y;
@@ -39,4 +41,32 @@ void ship_fire(Ship *ship, Ship *target) {
     ship->weapon->angle = angle;
     ship->weapon->mov_to_target_x = diff_x;
     ship->weapon->mov_to_target_y = diff_y;
+}
+
+void ship_set_ride(Ship *ship, int x, int y) {
+    double val = 180.0 / PI;
+    int start_x = ship->x;
+    int start_y = ship->y;
+    int end_x = x;
+    int end_y = y;
+    int diff_x = end_x - start_x;
+    int diff_y = end_y - start_y;
+    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    double angle = atan2(diff_y, diff_x) * val;
+
+    ship->angle = angle;
+    ship->mov_to_target_x = diff_x;
+    ship->mov_to_target_y = diff_y;
+    ship->target.x = end_x;
+    ship->target.y = end_y;
+}
+
+void ship_move(Ship *ship) {
+    if (ship->body.x < ship->target.x) {
+        ship->body.x += ship->mov_to_target_x / 100;
+    }
+
+    if (ship->body.y < ship->target.y) {
+        ship->body.y += ship->mov_to_target_y / 100;
+    }
 }
