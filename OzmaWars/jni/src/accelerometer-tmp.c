@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <android/log.h>
-#include "../SDL/src/core/android/SDL_android.h"
 #include "android/sensor.h"
 
 #include "SDL.h"
@@ -12,9 +11,6 @@
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-/** 
- * Test: draw a circle
- **/
 int main(int argc, char *argv[]) {
 
     SDL_Window *window;

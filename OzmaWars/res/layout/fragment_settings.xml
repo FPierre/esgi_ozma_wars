@@ -17,9 +17,9 @@
         android:gravity="center_horizontal"/>
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="35dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -43,10 +43,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="18dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -69,7 +67,41 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:id="@+id/button_controls_gyroscope"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:text="Gyro\nscope"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/border_red"/>
+
+        <com.application.android.esgi.ozma.wars.widgets.OzmaText
+            android:id="@+id/button_controls_joystick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="Joys\ntick"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/border_white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">

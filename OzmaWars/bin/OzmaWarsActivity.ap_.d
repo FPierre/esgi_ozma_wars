@@ -26,8 +26,17 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-x
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xxhdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xxxhdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\fonts \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\fonts\consola.ttf \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\fonts\consolab.ttf \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\fonts\consolai.ttf \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\fonts\consolaz.ttf \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\goat.bmp \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\goat.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\projectile.bmp \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\projectiles.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\ship.bmp \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\ship.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\ship2.bmp \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\assets\spritesheets\ship2.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\AndroidManifest.xml \

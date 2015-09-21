@@ -1,14 +1,14 @@
-obj/local/armeabi-v7a/objs/main/__/SDL/src/main/android/SDL_android_main.o: \
- jni/src/../SDL/src/main/android/SDL_android_main.c \
- jni/src/../SDL/src/main/android/../../SDL_internal.h \
- jni/src/../SDL/src/main/android/../../dynapi/SDL_dynapi.h \
- jni/src/../SDL/src/main/android/../../dynapi/SDL_dynapi_overrides.h \
- jni/src/../SDL/include/SDL_config.h \
- jni/src/../SDL/include/SDL_platform.h \
- jni/src/../SDL/include/begin_code.h jni/src/../SDL/include/close_code.h \
- jni/src/../SDL/include/SDL_config_android.h \
- jni/src/../SDL/include/SDL_main.h jni/src/../SDL/include/SDL_stdinc.h \
- jni/src/../SDL/include/SDL_config.h \
+obj/local/armeabi-v7a/objs/main/__/sdl/src/main/android/SDL_android_main.o: \
+ jni/src/../sdl/src/main/android/SDL_android_main.c \
+ jni/src/../sdl/src/main/android/../../SDL_internal.h \
+ jni/src/../sdl/src/main/android/../../dynapi/SDL_dynapi.h \
+ jni/src/../sdl/src/main/android/../../dynapi/SDL_dynapi_overrides.h \
+ jni/src/../sdl/include/SDL_config.h \
+ jni/src/../sdl/include/SDL_platform.h \
+ jni/src/../sdl/include/begin_code.h jni/src/../sdl/include/close_code.h \
+ jni/src/../sdl/include/SDL_config_android.h \
+ jni/src/../sdl/include/SDL_main.h jni/src/../sdl/include/SDL_stdinc.h \
+ jni/src/../sdl/include/SDL_config.h \
  /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/sys/types.h \
  /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/stdint.h \
  /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/sys/_types.h \
@@ -44,27 +44,27 @@ obj/local/armeabi-v7a/objs/main/__/SDL/src/main/android/SDL_android_main.o: \
  /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/asm/page.h \
  /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/jni.h
 
-jni/src/../SDL/src/main/android/../../SDL_internal.h:
+jni/src/../sdl/src/main/android/../../SDL_internal.h:
 
-jni/src/../SDL/src/main/android/../../dynapi/SDL_dynapi.h:
+jni/src/../sdl/src/main/android/../../dynapi/SDL_dynapi.h:
 
-jni/src/../SDL/src/main/android/../../dynapi/SDL_dynapi_overrides.h:
+jni/src/../sdl/src/main/android/../../dynapi/SDL_dynapi_overrides.h:
 
-jni/src/../SDL/include/SDL_config.h:
+jni/src/../sdl/include/SDL_config.h:
 
-jni/src/../SDL/include/SDL_platform.h:
+jni/src/../sdl/include/SDL_platform.h:
 
-jni/src/../SDL/include/begin_code.h:
+jni/src/../sdl/include/begin_code.h:
 
-jni/src/../SDL/include/close_code.h:
+jni/src/../sdl/include/close_code.h:
 
-jni/src/../SDL/include/SDL_config_android.h:
+jni/src/../sdl/include/SDL_config_android.h:
 
-jni/src/../SDL/include/SDL_main.h:
+jni/src/../sdl/include/SDL_main.h:
 
-jni/src/../SDL/include/SDL_stdinc.h:
+jni/src/../sdl/include/SDL_stdinc.h:
 
-jni/src/../SDL/include/SDL_config.h:
+jni/src/../sdl/include/SDL_config.h:
 
 /cygdrive/c/Users/Fllo/AppData/Local/Android/android-ndk-r10e/platforms/android-17/arch-arm/usr/include/sys/types.h:
 
