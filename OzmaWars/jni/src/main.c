@@ -53,25 +53,25 @@ int main(int argc, char *argv[]) {
     // SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
     // SDL_Rect srcrect2 = { 55, 390, 50, 20 };
 
-    double val = 180.0 / PI;
+    // double val = 180.0 / PI;
 
-    int start_x = enemy_ship->x;
-    int start_y = enemy_ship->y;
+    // int start_x = enemy_ship->x;
+    // int start_y = enemy_ship->y;
 
-    // SDL_Rect missile = { start_x, start_y, 100, 60 };
+    // // SDL_Rect missile = { start_x, start_y, 100, 60 };
 
-    int end_x = ship->x;
-    int end_y = ship->y;
+    // int end_x = ship->x;
+    // int end_y = ship->y;
 
-    int diff_x = end_x - start_x;
-    int diff_y = end_y - start_y;
+    // int diff_x = end_x - start_x;
+    // int diff_y = end_y - start_y;
 
-    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    double angle = atan2(diff_y, diff_x) * val;
+    // int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    // double angle = atan2(diff_y, diff_x) * val;
 
-    enemy_ship->weapon->angle = angle;
+    // enemy_ship->weapon->angle = angle;
 
-    // ship_fire(enemy_ship, ship);
+    ship_fire(enemy_ship, ship);
 
     int first_fire = 1;
 
@@ -80,8 +80,8 @@ int main(int argc, char *argv[]) {
             first_fire = 0;
         }
 
-        enemy_ship->weapon->body.x += diff_x / 100;
-        enemy_ship->weapon->body.y += diff_y / 100;
+        enemy_ship->weapon->body.x += enemy_ship->weapon->mov_to_target_x / 100;
+        enemy_ship->weapon->body.y += enemy_ship->weapon->mov_to_target_y / 100;
 
         // missile.x += length / 100;
         // missile.y += length / 100;

@@ -19,6 +19,8 @@ typedef struct {
     int w;
     int h;
     double angle;
+    int mov_to_target_x;
+    int mov_to_target_y;
     int strength;
     int speed;
     Sprite *image;

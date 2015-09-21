@@ -37,4 +37,6 @@ void ship_fire(Ship *ship, Ship *target) {
     double angle = atan2(diff_y, diff_x) * val;
 
     ship->weapon->angle = angle;
+    ship->weapon->mov_to_target_x = diff_x;
+    ship->weapon->mov_to_target_y = diff_y;
 }

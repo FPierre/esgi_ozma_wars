@@ -7,6 +7,8 @@ Weapon *weapon_init(int w, int h, double angle, int strength, int speed, Sprite 
     weapon->w = w;
     weapon->h = h;
     weapon->angle = angle;
+    weapon->mov_to_target_x = 0;
+    weapon->mov_to_target_y = 0;
     weapon->strength = strength;
     weapon->speed = speed;
     weapon->body.x = weapon->x;
