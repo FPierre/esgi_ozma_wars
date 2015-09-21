@@ -23,3 +23,8 @@ Weapon *weapon_init(int w, int h, double angle, int strength, int speed, Sprite 
 void weapon_render(SDL_Renderer *renderer, Weapon *weapon) {
     SDL_RenderCopyEx(renderer, weapon->image->texture, &(weapon->image->image_location), &(weapon->body), weapon->angle, NULL, SDL_FLIP_NONE);
 }
+
+void weapon_move(Weapon *weapon) {
+    weapon->body.x += weapon->mov_to_target_x / 100;
+    weapon->body.y += weapon->mov_to_target_y / 100;
+}

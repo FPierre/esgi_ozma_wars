@@ -42,7 +42,25 @@ int main(int argc, char *argv[]) {
     Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
 
     Ship *ship = ship_init(700, 400, 200, 200, 0.0, 100, ship_image, canon);
+
+    // struct Target ride[2];
+
+    // Target a = { 200, 300 };
+    // Target b = { 300, 400 };
+
+    // ride[1] = a;
+    // ride[2] = b;
+
     Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+
+    // int i, j;
+
+    // for (i = 0; i < 1; i++) {
+    //     for (j = 0; j < 1; j++) {
+    //         ride[i].p[j] = 0;
+    //         ride[i].v[j] = 0;
+    //     }
+    // }
 
     // TEST MISSILE
 
@@ -80,11 +98,7 @@ int main(int argc, char *argv[]) {
             first_fire = 0;
         }
 
-        enemy_ship->weapon->body.x += enemy_ship->weapon->mov_to_target_x / 100;
-        enemy_ship->weapon->body.y += enemy_ship->weapon->mov_to_target_y / 100;
-
-        // missile.x += length / 100;
-        // missile.y += length / 100;
+        weapon_move(enemy_ship->weapon);
 
         // enemy_ship->rectangle.x++;
 

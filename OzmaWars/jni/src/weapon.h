@@ -5,13 +5,12 @@
 
 #define PI 3.14159265
 
-// typedef struct {
-//     // int type;
-//     // struct Object ?
-//     int x;
-//     int y;
-//     Ship ship;
-// } Target;
+typedef struct {
+    // int type;
+    // struct Object ?
+    int x;
+    int y;
+} Target;
 
 typedef struct {
     int x;
@@ -29,5 +28,6 @@ typedef struct {
 
 Weapon *weapon_init(int w, int h, double angle, int strength, int speed, Sprite *image);
 void weapon_render(SDL_Renderer *renderer, Weapon *weapon);
+void weapon_move(Weapon *weapon);
 
 #endif
