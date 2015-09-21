@@ -1,13 +1,22 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
+#include <android/log.h>
+#include "android/sensor.h"
+#include "../SDL/src/core/android/SDL_android.h"
 #include "SDL.h"
+
 #include "math.h"
 #include "sprite.h"
 #include "weapon.h"
 #include "ship.h"
 
-#define PI 3.14159265
+#define  PI         3.14159265
+#define  LOG_TAG    "MAIN NATIVE"
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip) {
     SDL_Rect dst = { x, y, clip->w, clip->h };
@@ -41,7 +50,12 @@ int main(int argc, char *argv[]) {
     Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
     Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
 
-    Ship *ship = ship_init(400, 400, 200, 200, 0.0, 100, ship_image, canon);
+    float ship_x = 400;
+    float ship_y = 400;
+    // float ship_z = 1;
+    int ship_size = 200;
+
+    Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
     Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
 
     // TEST MISSILE
@@ -95,12 +109,52 @@ int main(int argc, char *argv[]) {
             }
         }
 
+
         SDL_RenderClear(renderer);
 
         // Render de débug du missile
         // sprite_render(renderer, missile_image);
 
         weapon_render(renderer, canon);
+
+        float accelValues[3];
+        Android_JNI_GetAccelerometerValues(accelValues);
+        int i = 0;
+        char values[30];
+
+        for(i = 0 ; i < 3 ; i++) {
+            switch(i) {
+                case 0: 
+                    sprintf(values, "value X %f", accelValues[i]);
+                    ship_x += (4 * accelValues[i]);
+                    break;
+
+                case 1: 
+                    sprintf(values, "value Y %f", accelValues[i]);
+                    ship_y += (4 * accelValues[i]);
+                    break;
+
+                case 2: 
+                    sprintf(values, "value Z %f", accelValues[i]);
+                    break;
+            }
+            LOGD("%s", values);
+            memset(values, 0, 30 * (sizeof values[0]));
+        }
+
+        // Valeurs de l'accelerometre x, y et z
+        // float accelValues[3];
+        // Android_JNI_GetAccelerometerValues(accelValues);
+
+        // ship_x = ship_x + accelValues[0];
+        // ship_y = ship_y + accelValues[1];
+        // // z += accelValues[2];
+
+        // LOGD("Values: X = %.2f", ship_x);
+        // LOGD("Values: Y = %.2f", ship_y);
+        // // LOGD("Values: Z = %.2f", z);
+
+        Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
 
         ship_render(renderer, ship);
         ship_render(renderer, enemy_ship);
