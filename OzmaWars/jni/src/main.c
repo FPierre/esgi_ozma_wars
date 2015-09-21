@@ -3,6 +3,7 @@
 #include <time.h>
 #include "SDL.h"
 #include "math.h"
+#include "sprite.h"
 #include "weapon.h"
 #include "ship.h"
 
@@ -27,46 +28,58 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    Weapon *laser_canon = weapon_init(1);
+    // Initialisation Weapon
 
-    Ship *ship = ship_init(400, 400, 200, 100, *laser_canon);
-    Ship *enemy_ship = ship_init(10, 10, 100, 100, *laser_canon);
+    RGB blue_background = { 0, 255, 255 };
+    Sprite *missile_image = sprite_init(renderer, "spritesheets/projectile.bmp", blue_background, 55, 390, 50, 20);
 
-    SDL_Surface *pSprite = SDL_LoadBMP("spritesheets/ship.bmp");
-    SDL_SetColorKey(pSprite, SDL_TRUE, SDL_MapRGB(pSprite->format, 255, 0, 255));
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, pSprite);
-    SDL_Rect srcrect = { 41, 42, 40, 45 };
+    Weapon *canon = weapon_init(100, 60, 1, 1, missile_image);
 
+    // Initialisation Ship
+
+    RGB pink_background = { 255, 0, 255 };
+    Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
+    Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
+
+    Ship *ship = ship_init(400, 400, 200, 200, 0.0, 100, ship_image, canon);
+    Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
 
     // TEST MISSILE
 
-    double val = 180.0 / PI;
+    // double val = 180.0 / PI;
 
-    SDL_Surface *pSprite2 = SDL_LoadBMP("spritesheets/projectile.bmp");
-    SDL_SetColorKey(pSprite2, SDL_TRUE, SDL_MapRGB(pSprite2->format, 0, 255, 255));
-    SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
-    SDL_Rect srcrect2 = { 55, 390, 50, 20 };
+    // SDL_Surface *pSprite2 = SDL_LoadBMP("spritesheets/projectile.bmp");
+    // SDL_SetColorKey(pSprite2, SDL_TRUE, SDL_MapRGB(pSprite2->format, 0, 255, 255));
+    // SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
+    // SDL_Rect srcrect2 = { 55, 390, 50, 20 };
 
-    int start_x = 10;
-    int start_y = 10;
+    // int start_x = 10;
+    // int start_y = 10;
 
-    SDL_Rect missile = { start_x, start_y, 100, 60 };
+    // SDL_Rect missile = { start_x, start_y, 100, 60 };
 
-    int end_x = 400;
-    int end_y = 400;
+    // int end_x = 400;
+    // int end_y = 400;
 
-    int diff_x = end_x - start_x;
-    int diff_y = end_y - start_y;
+    // int diff_x = end_x - start_x;
+    // int diff_y = end_y - start_y;
 
-    int length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    double angle = atan2(diff_y, diff_x) * val;
+    // int length = sqrt(diff_x * diff_x + diff_y * diff_y);
+    // double angle = atan2(diff_y, diff_x) * val;
+
+    int first_fire = 1;
 
     while (!done) {
 
+        if (first_fire == 1) {
 
-        missile.x += length / 100;
-        missile.y += length / 100;
 
+            first_fire = 0;
+        }
+
+
+        // missile.x += length / 100;
+        // missile.y += length / 100;
 
         // enemy_ship->rectangle.x++;
 
@@ -77,27 +90,22 @@ int main(int argc, char *argv[]) {
                     break;
 
                 case SDL_MOUSEMOTION:
-                    ship->rectangle.x += 2;
+                    // ship->rectangle.x += 2;
                     break;
             }
         }
 
         SDL_RenderClear(renderer);
 
-        SDL_RenderCopy(renderer, tex, &srcrect, &(ship->rectangle));
+        // Render de débug du missile
+        // sprite_render(renderer, missile_image);
 
-        // SDL_RenderCopy(renderer, tex2, &srcrect2, &(enemy_ship->rectangle));
+        weapon_render(renderer, canon);
 
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 200);
-        SDL_RenderFillRect(renderer, &(enemy_ship->rectangle));
+        ship_render(renderer, ship);
+        ship_render(renderer, enemy_ship);
 
-
-        SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
-
-        // SDL_RenderCopy(renderer, tex2, &srcrect2, &missile);
-        // SDL_SetRenderDrawColor(renderer, 100, 100, 100, 100);
-        // SDL_RenderFillRect(renderer, &missile);
-
+        // // SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderPresent(renderer);
@@ -105,37 +113,7 @@ int main(int argc, char *argv[]) {
         SDL_Delay(10);
     }
 
-
-
-// int iW = 120 / 3, iH = 50;
-
-// SDL_Rect clips[3];
-
-// int i;
-// for (i = 0; i < 2; ++i) {
-//     // clips[i].x = i / 2 * iW;
-//     // clips[i].y = i % 2 * iH;
-//     // clips[i].w = iW;
-//     // clips[i].h = iH;
-//     clips[i].x = 0;
-//     clips[i].y = 0;
-//     clips[i].w = 40;
-//     clips[i].h = 40;
-// }
-
-// //Specify a default clip to start with
-// int useClip = 0;
-
-//         SDL_Surface *pSprite = SDL_LoadBMP("image.bmp");
-
-//         SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, pSprite);
-
-//         renderTexture(tex, renderer, 200, 200, &clips[useClip]);
-
-
-
-
-    SDL_DestroyTexture(tex);
+    // SDL_DestroyTexture(tex);
     // SDL_DestroyTexture(tex2);
 
     exit(0);
