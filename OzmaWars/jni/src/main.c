@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     RGB blue_background = { 0, 255, 255 };
     Sprite *missile_image = sprite_init(renderer, "spritesheets/projectile.bmp", blue_background, 55, 390, 50, 20);
 
-    Weapon *canon = weapon_init(100, 60, 1, 1, missile_image);
+    Weapon *canon = weapon_init(100, 60, 0.0, 1, 1, missile_image);
 
     // Initialisation Ship
 
@@ -50,52 +50,40 @@ int main(int argc, char *argv[]) {
     Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
     Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
 
-    float ship_x = 400;
+    float ship_x = 700;
     float ship_y = 400;
     // float ship_z = 1;
-    int ship_size = 200;
+    int ship_size = 150;
 
     Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
     Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
 
     // TEST MISSILE
 
-    // double val = 180.0 / PI;
+    // struct Target ride[2];
 
-    // SDL_Surface *pSprite2 = SDL_LoadBMP("spritesheets/projectile.bmp");
-    // SDL_SetColorKey(pSprite2, SDL_TRUE, SDL_MapRGB(pSprite2->format, 0, 255, 255));
-    // SDL_Texture *tex2 = SDL_CreateTextureFromSurface(renderer, pSprite2);
-    // SDL_Rect srcrect2 = { 55, 390, 50, 20 };
+    // Target a = { 200, 300 };
+    // Target b = { 300, 400 };
 
-    // int start_x = 10;
-    // int start_y = 10;
+    // ride[1] = a;
+    // ride[2] = b;
 
-    // SDL_Rect missile = { start_x, start_y, 100, 60 };
+    // int i, j;
 
-    // int end_x = 400;
-    // int end_y = 400;
+    // for (i = 0; i < 1; i++) {
+    //     for (j = 0; j < 1; j++) {
+    //         ride[i].p[j] = 0;
+    //         ride[i].v[j] = 0;
+    //     }
+    // }
 
-    // int diff_x = end_x - start_x;
-    // int diff_y = end_y - start_y;
+    ship_fire(enemy_ship, ship);
 
-    // int length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    // double angle = atan2(diff_y, diff_x) * val;
-
-    int first_fire = 1;
+    ship_set_ride(enemy_ship, 200, 300);
 
     while (!done) {
-
-        if (first_fire == 1) {
-
-
-            first_fire = 0;
-        }
-
-
-        // missile.x += length / 100;
-        // missile.y += length / 100;
-
-        // enemy_ship->rectangle.x++;
+        weapon_move(enemy_ship->weapon);
+        ship_move(enemy_ship);
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -104,7 +92,7 @@ int main(int argc, char *argv[]) {
                     break;
 
                 case SDL_MOUSEMOTION:
-                    // ship->rectangle.x += 2;
+                    // ship->body.x += 2;
                     break;
             }
         }
@@ -117,51 +105,26 @@ int main(int argc, char *argv[]) {
 
         weapon_render(renderer, canon);
 
+        // Valeurs de l'accelerometre
+
         float accelValues[3];
         Android_JNI_GetAccelerometerValues(accelValues);
-        int i = 0;
-        char values[30];
 
-        for(i = 0 ; i < 3 ; i++) {
-            switch(i) {
-                case 0: 
-                    sprintf(values, "value X %f", accelValues[i]);
-                    ship_x += (4 * accelValues[i]);
-                    break;
+        ship_x += (20 * accelValues[0]);
+        ship_y += (20 * accelValues[1]);
 
-                case 1: 
-                    sprintf(values, "value Y %f", accelValues[i]);
-                    ship_y += (4 * accelValues[i]);
-                    break;
+        // Mouvement du vaisseau
 
-                case 2: 
-                    sprintf(values, "value Z %f", accelValues[i]);
-                    break;
-            }
-            LOGD("%s", values);
-            memset(values, 0, 30 * (sizeof values[0]));
-        }
+        ship->body.x = ship_x;
+        ship->body.y = ship_y;
+        // ship_move(ship);
 
-        // Valeurs de l'accelerometre x, y et z
-        // float accelValues[3];
-        // Android_JNI_GetAccelerometerValues(accelValues);
-
-        // ship_x = ship_x + accelValues[0];
-        // ship_y = ship_y + accelValues[1];
-        // // z += accelValues[2];
-
-        // LOGD("Values: X = %.2f", ship_x);
-        // LOGD("Values: Y = %.2f", ship_y);
-        // // LOGD("Values: Z = %.2f", z);
-
-        Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
+        // Affichage des éléments
 
         ship_render(renderer, ship);
         ship_render(renderer, enemy_ship);
 
-        // // SDL_RenderCopyEx(renderer, tex2, &srcrect2, &missile, angle, NULL, SDL_FLIP_NONE);
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);
 
         SDL_Delay(10);

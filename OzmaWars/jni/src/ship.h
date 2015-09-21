@@ -10,14 +10,20 @@ typedef struct {
     int w;
     int h;
     double angle;
+    int mov_to_target_x;
+    int mov_to_target_y;
     int health;
     int max_health;
     Weapon *weapon;
     Sprite *image;
+    Target target;
     SDL_Rect body;
 } Ship;
 
 Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite *image, Weapon *weapon);
 void ship_render(SDL_Renderer *renderer, Ship *ship);
+void ship_fire(Ship *ship, Ship *target);
+void ship_set_ride(Ship *ship, int x, int y);
+void ship_move(Ship *ship);
 
 #endif

@@ -1,11 +1,14 @@
 #include "weapon.h"
 
-Weapon *weapon_init(int w, int h, int strength, int speed, Sprite *image) {
+Weapon *weapon_init(int w, int h, double angle, int strength, int speed, Sprite *image) {
     Weapon *weapon = malloc(sizeof(Weapon));
     weapon->x = 100;
     weapon->y = 100;
     weapon->w = w;
     weapon->h = h;
+    weapon->angle = angle;
+    weapon->mov_to_target_x = 0;
+    weapon->mov_to_target_y = 0;
     weapon->strength = strength;
     weapon->speed = speed;
     weapon->body.x = weapon->x;
@@ -18,6 +21,10 @@ Weapon *weapon_init(int w, int h, int strength, int speed, Sprite *image) {
 }
 
 void weapon_render(SDL_Renderer *renderer, Weapon *weapon) {
-    // SDL_Rect test = { 100, 100, 100, 100 };
-    SDL_RenderCopyEx(renderer, weapon->image->texture, &(weapon->image->image_location), &(weapon->body), 0.0, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, weapon->image->texture, &(weapon->image->image_location), &(weapon->body), weapon->angle, NULL, SDL_FLIP_NONE);
+}
+
+void weapon_move(Weapon *weapon) {
+    weapon->body.x += weapon->mov_to_target_x / 100;
+    weapon->body.y += weapon->mov_to_target_y / 100;
 }
