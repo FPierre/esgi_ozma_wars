@@ -52,7 +52,6 @@ int main(int argc, char *argv[]) {
 
     float ship_x = 700;
     float ship_y = 400;
-    // float ship_z = 1;
     int ship_size = 150;
 
     Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
@@ -115,9 +114,18 @@ int main(int argc, char *argv[]) {
 
         // Mouvement du vaisseau
 
+        if (ship->body.x > ship_x) {
+            sprite_position(ship_image, 0, 42);
+        } else if(ship->body.x < ship_x) {
+            sprite_position(ship_image, 82, 42);
+        } else {
+            sprite_position(ship_image, 41, 42);
+        }
+
+        ship->image = ship_image;
+
         ship->body.x = ship_x;
         ship->body.y = ship_y;
-        // ship_move(ship);
 
         // Affichage des éléments
 

@@ -17,3 +17,8 @@ void sprite_render(SDL_Renderer *renderer, Sprite *sprite) {
     SDL_Rect test = { 100, 100, 100, 100 };
     SDL_RenderCopy(renderer, sprite->texture, &(sprite->image_location), &test);
 }
+
+void sprite_position(Sprite *sprite, int x, int y) {
+    sprite->image_location.x = x;
+    sprite->image_location.y = y;
+}
