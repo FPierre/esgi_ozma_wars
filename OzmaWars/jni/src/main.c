@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 
     ship_fire(enemy_ship, ship);
 
-    ship_set_ride(enemy_ship, 200, 300);
+    ship_set_ride(enemy_ship, 100, 700);
 
     while (!done) {
         weapon_move(enemy_ship->weapon);
