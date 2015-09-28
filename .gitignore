@@ -1,3 +1,3 @@
 OzmaWars/local.properties
-OzmaWars/obj/local/*
-OzmaWars/libs/*
+OzmaWars/obj/**
+OzmaWars/libs/**
