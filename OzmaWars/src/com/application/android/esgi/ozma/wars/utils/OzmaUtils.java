@@ -10,7 +10,8 @@ package com.application.android.esgi.ozma.wars.utils;
 **/
 public class OzmaUtils {
 	
-    public static final String FRAG_START_TAG = "START_FRAG";
-    public static final String FRAG_GAME_TAG = "GAME_FRAG";
+    public static final String START_TAG = "START_FRAG";
+    public static final String GAME_TAG = "GAME_FRAG";
+    public static final String SETTINGS_TAG = "SETTINGS_TAG";
 
 }

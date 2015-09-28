@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
@@ -62,14 +63,24 @@ public class FragmentStart extends Fragment {
         View v = inflater.inflate(R.layout.fragment_start, container, false);
 
         TextView textHighScore = (TextView) v.findViewById(R.id.text_highscore);
+        ImageView btnSettings = (ImageView) v.findViewById(R.id.button_settings);
         TextView btnNewGame = (TextView) v.findViewById(R.id.button_new_game);
         TextView btnContinueGame = (TextView) v.findViewById(R.id.button_continue_game);
 
+        // Open settings fragment
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OzmaWarsActivity) activity).handleFragment(FragmentSettings.newInstance(), 
+                    OzmaUtils.SETTINGS_TAG, true);
+            }
+        });
         // Display a new game
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((OzmaWarsActivity) activity).handleFragment(FragmentGame.newInstance(), OzmaUtils.FRAG_GAME_TAG, true);
+                ((OzmaWarsActivity) activity).handleFragment(FragmentGame.newInstance(), 
+                    OzmaUtils.GAME_TAG, true);
             }
         });
 

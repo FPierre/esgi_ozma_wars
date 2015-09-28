@@ -85,7 +85,6 @@ public class FragmentGame extends Fragment {
         System.loadLibrary("main");
     }
     
-    
     public static void initialize() {
         // The static nature of the singleton and Android quirkyness force us to initialize everything here
         // Otherwise, when exiting the app and returning to it, these variables *keep* their pre exit values
@@ -237,6 +236,7 @@ public class FragmentGame extends Fragment {
         
     /* The native thread has finished */
     public static void handleNativeExit() {
+        Log.v("//-- FragmentGame", "handleNativeExit called");
         FragmentGame.mSDLThread = null;
         ((OzmaWarsActivity) activity).onBackPressed(); // TODO: Called BackPressed to return on FragmentStart.
     }

@@ -1,13 +1,22 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
+#include <android/log.h>
+#include "android/sensor.h"
+#include "../SDL/src/core/android/SDL_android.h"
 #include "SDL.h"
+
 #include "math.h"
 #include "sprite.h"
 #include "weapon.h"
 #include "ship.h"
 
-#define PI 3.14159265
+#define  PI         3.14159265
+#define  LOG_TAG    "MAIN NATIVE"
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip) {
     SDL_Rect dst = { x, y, clip->w, clip->h };
@@ -41,7 +50,14 @@ int main(int argc, char *argv[]) {
     Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
     Sprite *enemy_ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 155, 303, 30, 28);
 
-    Ship *ship = ship_init(700, 400, 200, 200, 0.0, 100, ship_image, canon);
+    float ship_x = 700;
+    float ship_y = 400;
+    int ship_size = 150;
+
+    Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
+    Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+
+    // TEST MISSILE
 
     // struct Target ride[2];
 
@@ -50,8 +66,6 @@ int main(int argc, char *argv[]) {
 
     // ride[1] = a;
     // ride[2] = b;
-
-    Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
 
     // int i, j;
 
@@ -82,6 +96,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
+
         SDL_RenderClear(renderer);
 
         // Render de débug du missile
@@ -89,10 +104,35 @@ int main(int argc, char *argv[]) {
 
         weapon_render(renderer, canon);
 
+        // Valeurs de l'accelerometre
+
+        float accelValues[3];
+        Android_JNI_GetAccelerometerValues(accelValues);
+
+        ship_x += (20 * accelValues[0]);
+        ship_y += (20 * accelValues[1]);
+
+        // Mouvement du vaisseau
+
+        if (ship->body.x > ship_x) {
+            sprite_position(ship_image, 0, 42);
+        } else if(ship->body.x < ship_x) {
+            sprite_position(ship_image, 82, 42);
+        } else {
+            sprite_position(ship_image, 41, 42);
+        }
+
+        ship->image = ship_image;
+
+        ship->body.x = ship_x;
+        ship->body.y = ship_y;
+
+        // Affichage des éléments
+
         ship_render(renderer, ship);
         ship_render(renderer, enemy_ship);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);
 
         SDL_Delay(10);
