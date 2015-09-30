@@ -2,6 +2,7 @@ package com.application.android.esgi.ozma.wars.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
-import com.application.android.esgi.ozma.wars.OzmaWarsActivity;
+import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
+import com.application.android.esgi.ozma.wars.activities.GameActivity;
+
 
 /**
   * ---- FragmentStart
@@ -79,8 +82,8 @@ public class FragmentStart extends Fragment {
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((OzmaWarsActivity) activity).handleFragment(FragmentGame.newInstance(), 
-                    OzmaUtils.GAME_TAG, true);
+                Intent i = new Intent(activity, GameActivity.class);
+                activity.startActivity(i);
             }
         });
 

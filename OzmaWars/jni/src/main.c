@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <android/log.h>
+#include <jni.h>
 #include "android/sensor.h"
 #include "../SDL/src/core/android/SDL_android.h"
 #include "SDL.h"
@@ -86,7 +87,7 @@ int main(int argc, char *argv[]) {
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
-                case SDL_QUIT:
+                case SDL_QUIT: case SDL_KEYDOWN:
                     done = 1;
                     break;
 
@@ -95,7 +96,6 @@ int main(int argc, char *argv[]) {
                     break;
             }
         }
-
 
         SDL_RenderClear(renderer);
 
@@ -114,9 +114,9 @@ int main(int argc, char *argv[]) {
 
         // Mouvement du vaisseau
 
-        if (ship->body.x > ship_x) {
+        if (ship->body.x > ship_x + 2) {
             sprite_position(ship_image, 0, 42);
-        } else if(ship->body.x < ship_x) {
+        } else if(ship->body.x < ship_x - 2) {
             sprite_position(ship_image, 82, 42);
         } else {
             sprite_position(ship_image, 41, 42);

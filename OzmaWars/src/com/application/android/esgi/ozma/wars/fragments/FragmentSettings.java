@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
 
+
 /**
   * ---- FragmentSettings
   * Object: User settings (sounds, vibrate, score, etc)

@@ -1,4 +1,4 @@
-package com.application.android.esgi.ozma.wars;
+package com.application.android.esgi.ozma.wars.activities;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.fragments.FragmentStart;
+import com.application.android.esgi.ozma.wars.fragments.FragmentGame;
 
 
 /**
@@ -24,9 +25,6 @@ public class OzmaWarsActivity extends Activity {
 
     private static final String DEBUG_TAG = "//-- OzmaWarsActivity";
 
-    // Main components
-    private FrameLayout mFrame;
-
     // Setup
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +32,12 @@ public class OzmaWarsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ozma_activity);
 
-        mFrame = (FrameLayout) findViewById(R.id.main_frame);
-
         // Display Start fragment
-        if (savedInstanceState == null)
-        	handleFragment(FragmentStart.newInstance(), OzmaUtils.START_TAG, false);
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.main_frame, FragmentStart.newInstance(), OzmaUtils.START_TAG)
+                    .commit();
+        }
     }
 
     // Fragments handler method
@@ -51,20 +50,7 @@ public class OzmaWarsActivity extends Activity {
         transaction.commit();
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        int keyCode = event.getKeyCode();
-        // Ignore certain special keys so they're handled by Android
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
-            keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
-            keyCode == KeyEvent.KEYCODE_CAMERA ||
-            keyCode == 168 || /* API 11: KeyEvent.KEYCODE_ZOOM_IN */
-            keyCode == 169 /* API 11: KeyEvent.KEYCODE_ZOOM_OUT */ ) {
-            return false;
-        }
-        return super.dispatchKeyEvent(event);
-    }
-
+    // OnBackPressed method
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {

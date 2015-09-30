@@ -1,41 +1,4 @@
-package com.application.android.esgi.ozma.wars.fragments;
-
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioTrack;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.Display;
-import android.view.InputDevice;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.BaseInputConnection;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsoluteLayout;
-
-import com.application.android.esgi.ozma.wars.R;
-import com.application.android.esgi.ozma.wars.OzmaWarsActivity;
+package com.application.android.esgi.ozma.wars.activities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,27 +6,40 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.app.*;
+import android.content.*;
+import android.view.*;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsoluteLayout;
+import android.os.*;
+import android.util.Log;
+import android.graphics.*;
+import android.media.*;
+import android.hardware.*;
+
+import com.application.android.esgi.ozma.wars.R;
+
+
 /**
-  * ---- FragmentGame
-  * Object: Game screen
-  * Used by: OzmaWarsActivity
+  * ---- GameActivity
+  * Object: Game screen "flight and kill"
+  * Used by: Application
   *
   * @author Pierre (Pierre Flauder) &amp; Fllo (Florent Blot)
 **/
-public class FragmentGame extends Fragment {
-	
-    // Debug
-    private static final String DEBUG_TAG = "//-- FragmentGame";
+public class GameActivity extends Activity {
+
+    private static final String DEBUG_TAG = "//-- GameActivity";
 
     // Keep track of the paused state
     public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
     public static boolean mExitCalledFromJava;
 
-    // Context
-    protected static FragmentGame mSingleton;
-    private static Activity activity;
-
     // Main components
+    protected static GameActivity mSingleton;
     protected static SDLSurface mSurface;
     protected static View mTextEdit;
     protected static ViewGroup mLayout;
@@ -85,6 +61,7 @@ public class FragmentGame extends Fragment {
         System.loadLibrary("main");
     }
     
+    
     public static void initialize() {
         // The static nature of the singleton and Android quirkyness force us to initialize everything here
         // Otherwise, when exiting the app and returning to it, these variables *keep* their pre exit values
@@ -101,113 +78,104 @@ public class FragmentGame extends Fragment {
         mHasFocus = true;
     }
 
-    public FragmentGame() { }
-
-    public static FragmentGame newInstance() {
-    	FragmentGame frag = new FragmentGame();
-    	return frag;
-    }
-
+    // Setup
     @Override
-    public void onAttach(Activity activity_) {
-        super.onAttach(activity_);
-        activity = activity_;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.v(DEBUG_TAG, "onCreate():" + mSingleton);
         super.onCreate(savedInstanceState);
         
-        FragmentGame.initialize();
+        GameActivity.initialize();
         // So we can call stuff from static callbacks
         mSingleton = this;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        Log.v(DEBUG_TAG, "onResume()");
-        super.onResume();
-        FragmentGame.handleResume();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
         // Set up the surface
-        mSurface = new SDLSurface(activity.getApplication());
+        mSurface = new SDLSurface(getApplication());
         
-        if (Build.VERSION.SDK_INT >= 12) {
+        if(Build.VERSION.SDK_INT >= 12) {
             mJoystickHandler = new SDLJoystickHandler_API12();
-        } else {
+        }
+        else {
             mJoystickHandler = new SDLJoystickHandler();
         }
 
-        // Add dynamic views into layout
-        View v = inflater.inflate(R.layout.fragment_game, container, false);
+        // Display layout contents
+        setContentView(R.layout.game_activity);
 
-        // Create dynamic view
-        mLayout = (AbsoluteLayout) v.findViewById(R.id.game_frame);
+        mLayout = (AbsoluteLayout) findViewById(R.id.game_frame);
         mLayout.addView(mSurface);
+    }
 
-        // Called when layout has focus 
-        // (replace onWindowFocusChanged() in parent Activity)
-        v.post(new Runnable() {
-            @Override
-            public void run() {
-                FragmentGame.mHasFocus = true;
-                FragmentGame.handleResume();
-            }
-        });
+    // Events
+    @Override
+    protected void onPause() {
+        Log.v(DEBUG_TAG, "onPause()");
+        super.onPause();
+        GameActivity.handlePause();
+    }
 
-        return v;
+    @Override
+    protected void onResume() {
+        Log.v(DEBUG_TAG, "onResume()");
+        super.onResume();
+        GameActivity.handleResume();
+    }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        Log.v(DEBUG_TAG, "onWindowFocusChanged(): " + hasFocus);
+
+        GameActivity.mHasFocus = hasFocus;
+        if (hasFocus) {
+            GameActivity.handleResume();
+        }
     }
 
     @Override
     public void onLowMemory() {
         Log.v(DEBUG_TAG, "onLowMemory()");
         super.onLowMemory();
-        FragmentGame.nativeLowMemory();
+        GameActivity.nativeLowMemory();
     }
 
     @Override
-    public void onPause() {
-        Log.v(DEBUG_TAG, "onPause()");
-        super.onPause();
-        FragmentGame.handlePause();
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.v(DEBUG_TAG, "onDestroyView()");
+    protected void onDestroy() {
+        Log.v(DEBUG_TAG, "onDestroy()");
         // Send a quit message to the application
-        FragmentGame.mExitCalledFromJava = true;
-        FragmentGame.nativeQuit();
+        GameActivity.mExitCalledFromJava = true;
+        GameActivity.nativeQuit();
 
         // Now wait for the SDL thread to quit
-        if (FragmentGame.mSDLThread != null) {
+        if (GameActivity.mSDLThread != null) {
             try {
-                FragmentGame.mSDLThread.join();
+                GameActivity.mSDLThread.join();
             } catch(Exception e) {
                 Log.v(DEBUG_TAG, "Problem stopping thread: " + e);
             }
-            FragmentGame.mSDLThread = null;
+            GameActivity.mSDLThread = null;
 
-            //Log.v("FragmentGame", "Finished waiting for SDL thread");
+            //Log.v(DEBUG_TAG, "Finished waiting for SDL thread");
         }
             
-        super.onDestroyView();
+        super.onDestroy();
         // Reset everything in case the user re opens the app
-        FragmentGame.initialize();
+        GameActivity.initialize();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        // Ignore certain special keys so they're handled by Android
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
+            keyCode == KeyEvent.KEYCODE_CAMERA ||
+            keyCode == 168 || /* API 11: KeyEvent.KEYCODE_ZOOM_IN */
+            keyCode == 169 /* API 11: KeyEvent.KEYCODE_ZOOM_OUT */
+            ) {
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     /** Called by onPause or surfaceDestroyed. Even if surfaceDestroyed
@@ -215,9 +183,9 @@ public class FragmentGame extends Fragment {
      *  to 'true' during the call to onPause (in a usual scenario).
      */
     public static void handlePause() {
-        if (!FragmentGame.mIsPaused && FragmentGame.mIsSurfaceReady) {
-            FragmentGame.mIsPaused = true;
-            FragmentGame.nativePause();
+        if (!GameActivity.mIsPaused && GameActivity.mIsSurfaceReady) {
+            GameActivity.mIsPaused = true;
+            GameActivity.nativePause();
             mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, false);
         }
     }
@@ -227,18 +195,17 @@ public class FragmentGame extends Fragment {
      * every time we get one of those events, only if it comes after surfaceDestroyed
      */
     public static void handleResume() {
-        if (FragmentGame.mIsPaused && FragmentGame.mIsSurfaceReady && FragmentGame.mHasFocus) {
-            FragmentGame.mIsPaused = false;
-            FragmentGame.nativeResume();
+        if (GameActivity.mIsPaused && GameActivity.mIsSurfaceReady && GameActivity.mHasFocus) {
+            GameActivity.mIsPaused = false;
+            GameActivity.nativeResume();
             mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, true);
         }
     }
         
     /* The native thread has finished */
     public static void handleNativeExit() {
-        Log.v("//-- FragmentGame", "handleNativeExit called");
-        FragmentGame.mSDLThread = null;
-        ((OzmaWarsActivity) activity).onBackPressed(); // TODO: Called BackPressed to return on FragmentStart.
+        GameActivity.mSDLThread = null;
+        mSingleton.finish();
     }
 
 
@@ -269,17 +236,17 @@ public class FragmentGame extends Fragment {
     protected static class SDLCommandHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            Context context = activity; // getContext();
+            Context context = getContext();
             if (context == null) {
-                Log.e("FragmentGame", "error handling message, getContext() returned null");
+                Log.e(DEBUG_TAG, "error handling message, getContext() returned null");
                 return;
             }
             switch (msg.arg1) {
             case COMMAND_CHANGE_TITLE:
                 if (context instanceof Activity) {
-                    ((Activity) context).setTitle((String) msg.obj);
+                    ((Activity) context).setTitle((String)msg.obj);
                 } else {
-                    Log.e("FragmentGame", "error handling message, getContext() returned no Activity");
+                    Log.e(DEBUG_TAG, "error handling message, getContext() returned no Activity");
                 }
                 break;
             case COMMAND_TEXTEDIT_HIDE:
@@ -292,8 +259,8 @@ public class FragmentGame extends Fragment {
                 break;
 
             default:
-                if (!mSingleton.onUnhandledMessage(msg.arg1, msg.obj)) {
-                    Log.e("FragmentGame", "error handling message, command is " + msg.arg1);
+                if ((context instanceof GameActivity) && !((GameActivity) context).onUnhandledMessage(msg.arg1, msg.obj)) {
+                    Log.e(DEBUG_TAG, "error handling message, command is " + msg.arg1);
                 }
             }
         }
@@ -339,7 +306,7 @@ public class FragmentGame extends Fragment {
     public static native int nativeRemoveJoystick(int device_id);
 
     public static void flipBuffers() {
-        FragmentGame.nativeFlipBuffers();
+        GameActivity.nativeFlipBuffers();
     }
 
     public static boolean setActivityTitle(String title) {
@@ -352,7 +319,7 @@ public class FragmentGame extends Fragment {
     }
 
     public static Context getContext() {
-        return activity;
+        return mSingleton;
     }
 
     /**
@@ -362,11 +329,11 @@ public class FragmentGame extends Fragment {
         final Object lock = new Object();
         final Object[] results = new Object[2]; // array for writable variables
         synchronized (lock) {
-            getActivity().runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     synchronized (lock) {
-                        results[0] = getActivity().getSystemService(name);
+                        results[0] = getSystemService(name);
                         results[1] = Boolean.TRUE;
                         lock.notify();
                     }
@@ -384,6 +351,8 @@ public class FragmentGame extends Fragment {
     }
 
     static class ShowTextInputTask implements Runnable {
+
+        private static final String DEBUG_TAG = "//-- GameActivity";
         /*
          * This is used to regulate the pan&scan method to have some offset from
          * the bottom edge of the input region and the top edge of an input
@@ -427,7 +396,7 @@ public class FragmentGame extends Fragment {
     }
             
     public static Surface getNativeSurface() {
-        return FragmentGame.mSurface.getNativeSurface();
+        return GameActivity.mSurface.getNativeSurface();
     }
 
     // Audio
@@ -436,7 +405,7 @@ public class FragmentGame extends Fragment {
         int audioFormat = is16Bit ? AudioFormat.ENCODING_PCM_16BIT : AudioFormat.ENCODING_PCM_8BIT;
         int frameSize = (isStereo ? 2 : 1) * (is16Bit ? 2 : 1);
         
-        Log.v("FragmentGame", "SDL audio: wanted " + (isStereo ? "stereo" : "mono") + " " + (is16Bit ? "16-bit" : "8-bit") + " " + (sampleRate / 1000f) + "kHz, " + desiredFrames + " frames buffer");
+        Log.v(DEBUG_TAG, "SDL audio: wanted " + (isStereo ? "stereo" : "mono") + " " + (is16Bit ? "16-bit" : "8-bit") + " " + (sampleRate / 1000f) + "kHz, " + desiredFrames + " frames buffer");
         
         // Let the user pick a larger buffer if they really want -- but ye
         // gods they probably shouldn't, the minimums are horrifyingly high
@@ -460,11 +429,11 @@ public class FragmentGame extends Fragment {
             mAudioTrack.play();
         }
        
-        Log.v("FragmentGame", "SDL audio: got " + ((mAudioTrack.getChannelCount() >= 2) ? "stereo" : "mono") + " " + ((mAudioTrack.getAudioFormat() == AudioFormat.ENCODING_PCM_16BIT) ? "16-bit" : "8-bit") + " " + (mAudioTrack.getSampleRate() / 1000f) + "kHz, " + desiredFrames + " frames buffer");
+        Log.v(DEBUG_TAG, "SDL audio: got " + ((mAudioTrack.getChannelCount() >= 2) ? "stereo" : "mono") + " " + ((mAudioTrack.getAudioFormat() == AudioFormat.ENCODING_PCM_16BIT) ? "16-bit" : "8-bit") + " " + (mAudioTrack.getSampleRate() / 1000f) + "kHz, " + desiredFrames + " frames buffer");
         
         return 0;
     }
-
+    
     public static void audioWriteShortBuffer(short[] buffer) {
         for (int i = 0; i < buffer.length; ) {
             int result = mAudioTrack.write(buffer, i, buffer.length - i);
@@ -477,7 +446,7 @@ public class FragmentGame extends Fragment {
                     // Nom nom
                 }
             } else {
-                Log.w("FragmentGame", "SDL audio: error return from write(short)");
+                Log.w(DEBUG_TAG, "SDL audio: error return from write(short)");
                 return;
             }
         }
@@ -495,7 +464,7 @@ public class FragmentGame extends Fragment {
                     // Nom nom
                 }
             } else {
-                Log.w("FragmentGame", "SDL audio: error return from write(byte)");
+                Log.w(DEBUG_TAG, "SDL audio: error return from write(byte)");
                 return;
             }
         }
@@ -532,7 +501,7 @@ public class FragmentGame extends Fragment {
     }
     
     public static void pollInputDevices() {
-        if (FragmentGame.mSDLThread != null) {
+        if (GameActivity.mSDLThread != null) {
             mJoystickHandler.pollInputDevices();
         }
     }
@@ -546,9 +515,9 @@ class SDLMain implements Runnable {
     @Override
     public void run() {
         // Runs SDL_main()
-        FragmentGame.nativeInit();
+        GameActivity.nativeInit();
 
-        //Log.v("FragmentGame", "SDL thread terminated");
+        //Log.v(DEBUG_TAG, "SDL thread terminated");
     }
 }
 
@@ -556,11 +525,13 @@ class SDLMain implements Runnable {
 /**
   * SDLSurface. This is what we draw on, so we need to know when it's created
   * in order to do anything useful. 
-  *
+  * 
   * Because of this, that's where we set up the SDL thread
 **/
 class SDLSurface extends SurfaceView implements SurfaceHolder.Callback, 
     View.OnKeyListener, View.OnTouchListener, SensorEventListener  {
+
+    private static final String DEBUG_TAG = "//-- GameActivity";
 
     // Sensors
     protected static SensorManager mSensorManager;
@@ -583,7 +554,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         mDisplay = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         
-        if (Build.VERSION.SDK_INT >= 12) {
+        if(Build.VERSION.SDK_INT >= 12) {
             setOnGenericMotionListener(new SDLGenericMotionListener_API12());
         }
 
@@ -599,101 +570,101 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Called when we have a valid drawing surface
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.v("FragmentGame", "surfaceCreated()");
+        Log.v(DEBUG_TAG, "surfaceCreated()");
         holder.setType(SurfaceHolder.SURFACE_TYPE_GPU);
     }
 
     // Called when we lose the surface
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.v("FragmentGame", "surfaceDestroyed()");
+        Log.v(DEBUG_TAG, "surfaceDestroyed()");
         // Call this *before* setting mIsSurfaceReady to 'false'
-        FragmentGame.handlePause();
-        FragmentGame.mIsSurfaceReady = false;
-        FragmentGame.onNativeSurfaceDestroyed();
+        GameActivity.handlePause();
+        GameActivity.mIsSurfaceReady = false;
+        GameActivity.onNativeSurfaceDestroyed();
     }
 
     // Called when the surface is resized
     @Override
     public void surfaceChanged(SurfaceHolder holder,
                                int format, int width, int height) {
-        Log.v("FragmentGame", "surfaceChanged()");
+        Log.v(DEBUG_TAG, "surfaceChanged()");
 
         int sdlFormat = 0x15151002; // SDL_PIXELFORMAT_RGB565 by default
         switch (format) {
         case PixelFormat.A_8:
-            Log.v("FragmentGame", "pixel format A_8");
+            Log.v(DEBUG_TAG, "pixel format A_8");
             break;
         case PixelFormat.LA_88:
-            Log.v("FragmentGame", "pixel format LA_88");
+            Log.v(DEBUG_TAG, "pixel format LA_88");
             break;
         case PixelFormat.L_8:
-            Log.v("FragmentGame", "pixel format L_8");
+            Log.v(DEBUG_TAG, "pixel format L_8");
             break;
         case PixelFormat.RGBA_4444:
-            Log.v("FragmentGame", "pixel format RGBA_4444");
+            Log.v(DEBUG_TAG, "pixel format RGBA_4444");
             sdlFormat = 0x15421002; // SDL_PIXELFORMAT_RGBA4444
             break;
         case PixelFormat.RGBA_5551:
-            Log.v("FragmentGame", "pixel format RGBA_5551");
+            Log.v(DEBUG_TAG, "pixel format RGBA_5551");
             sdlFormat = 0x15441002; // SDL_PIXELFORMAT_RGBA5551
             break;
         case PixelFormat.RGBA_8888:
-            Log.v("FragmentGame", "pixel format RGBA_8888");
+            Log.v(DEBUG_TAG, "pixel format RGBA_8888");
             sdlFormat = 0x16462004; // SDL_PIXELFORMAT_RGBA8888
             break;
         case PixelFormat.RGBX_8888:
-            Log.v("FragmentGame", "pixel format RGBX_8888");
+            Log.v(DEBUG_TAG, "pixel format RGBX_8888");
             sdlFormat = 0x16261804; // SDL_PIXELFORMAT_RGBX8888
             break;
         case PixelFormat.RGB_332:
-            Log.v("FragmentGame", "pixel format RGB_332");
+            Log.v(DEBUG_TAG, "pixel format RGB_332");
             sdlFormat = 0x14110801; // SDL_PIXELFORMAT_RGB332
             break;
         case PixelFormat.RGB_565:
-            Log.v("FragmentGame", "pixel format RGB_565");
+            Log.v(DEBUG_TAG, "pixel format RGB_565");
             sdlFormat = 0x15151002; // SDL_PIXELFORMAT_RGB565
             break;
         case PixelFormat.RGB_888:
-            Log.v("FragmentGame", "pixel format RGB_888");
+            Log.v(DEBUG_TAG, "pixel format RGB_888");
             // Not sure this is right, maybe SDL_PIXELFORMAT_RGB24 instead?
             sdlFormat = 0x16161804; // SDL_PIXELFORMAT_RGB888
             break;
         default:
-            Log.v("FragmentGame", "pixel format unknown " + format);
+            Log.v(DEBUG_TAG, "pixel format unknown " + format);
             break;
         }
 
         mWidth = width;
         mHeight = height;
-        FragmentGame.onNativeResize(width, height, sdlFormat);
-        Log.v("FragmentGame", "Window size:" + width + "x"+height);
+        GameActivity.onNativeResize(width, height, sdlFormat);
+        Log.v(DEBUG_TAG, "Window size:" + width + "x"+height);
 
         // Set mIsSurfaceReady to 'true' *before* making a call to handleResume
-        FragmentGame.mIsSurfaceReady = true;
-        FragmentGame.onNativeSurfaceChanged();
+        GameActivity.mIsSurfaceReady = true;
+        GameActivity.onNativeSurfaceChanged();
 
 
-        if (FragmentGame.mSDLThread == null) {
+        if (GameActivity.mSDLThread == null) {
             // This is the entry point to the C app.
             // Start up the C app thread and enable sensor input for the first time
 
-            FragmentGame.mSDLThread = new Thread(new SDLMain(), "SDLThread");
+            GameActivity.mSDLThread = new Thread(new SDLMain(), "SDLThread");
             enableSensor(Sensor.TYPE_ACCELEROMETER, true);
-            FragmentGame.mSDLThread.start();
+            GameActivity.mSDLThread.start();
             
             // Set up a listener thread to catch when the native thread ends
             new Thread(new Runnable(){
                 @Override
                 public void run(){
                     try {
-                        FragmentGame.mSDLThread.join();
+                        GameActivity.mSDLThread.join();
                     }
                     catch(Exception e){}
                     finally{ 
                         // Native thread has finished
-                        if (! FragmentGame.mExitCalledFromJava) {
-                            FragmentGame.handleNativeExit();
+                        if (! GameActivity.mExitCalledFromJava) {
+                            GameActivity.handleNativeExit();
                         }
                     }
                 }
@@ -716,11 +687,11 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         if ( (event.getSource() & 0x00000401) != 0 || /* API 12: SOURCE_GAMEPAD */
                    (event.getSource() & InputDevice.SOURCE_DPAD) != 0 ) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (FragmentGame.onNativePadDown(event.getDeviceId(), keyCode) == 0) {
+                if (GameActivity.onNativePadDown(event.getDeviceId(), keyCode) == 0) {
                     return true;
                 }
             } else if (event.getAction() == KeyEvent.ACTION_UP) {
-                if (FragmentGame.onNativePadUp(event.getDeviceId(), keyCode) == 0) {
+                if (GameActivity.onNativePadUp(event.getDeviceId(), keyCode) == 0) {
                     return true;
                 }
             }
@@ -728,13 +699,13 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         
         if( (event.getSource() & InputDevice.SOURCE_KEYBOARD) != 0) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                //Log.v("FragmentGame", "key down: " + keyCode);
-                FragmentGame.onNativeKeyDown(keyCode);
+                //Log.v(DEBUG_TAG, "key down: " + keyCode);
+                GameActivity.onNativeKeyDown(keyCode);
                 return true;
             }
             else if (event.getAction() == KeyEvent.ACTION_UP) {
-                //Log.v("FragmentGame", "key up: " + keyCode);
-                FragmentGame.onNativeKeyUp(keyCode);
+                //Log.v(DEBUG_TAG, "key up: " + keyCode);
+                GameActivity.onNativeKeyUp(keyCode);
                 return true;
             }
         }
@@ -760,7 +731,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     x = event.getX(i) / mWidth;
                     y = event.getY(i) / mHeight;
                     p = event.getPressure(i);
-                    FragmentGame.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
+                    GameActivity.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
                 }
                 break;
             
@@ -779,7 +750,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                 x = event.getX(i) / mWidth;
                 y = event.getY(i) / mHeight;
                 p = event.getPressure(i);
-                FragmentGame.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
+                GameActivity.onNativeTouch(touchDevId, pointerFingerId, action, x, y, p);
                 break;
             
             default:
@@ -829,7 +800,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     y = event.values[1];
                     break;
             }
-            FragmentGame.onNativeAccel(-x / SensorManager.GRAVITY_EARTH,
+            GameActivity.onNativeAccel(-x / SensorManager.GRAVITY_EARTH,
                                       y / SensorManager.GRAVITY_EARTH,
                                       event.values[2] / SensorManager.GRAVITY_EARTH - 1);
         }
@@ -866,10 +837,10 @@ class DummyEdit extends View implements View.OnKeyListener {
         }
 
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            FragmentGame.onNativeKeyDown(keyCode);
+            GameActivity.onNativeKeyDown(keyCode);
             return true;
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
-            FragmentGame.onNativeKeyUp(keyCode);
+            GameActivity.onNativeKeyUp(keyCode);
             return true;
         }
 
@@ -886,8 +857,8 @@ class DummyEdit extends View implements View.OnKeyListener {
         // FIXME: And determine the keyboard presence doing this: http://stackoverflow.com/questions/2150078/how-to-check-visibility-of-software-keyboard-in-android
         // FIXME: An even more effective way would be if Android provided this out of the box, but where would the fun be in that :)
         if (event.getAction()==KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-            if (FragmentGame.mTextEdit != null && FragmentGame.mTextEdit.getVisibility() == View.VISIBLE) {
-                FragmentGame.onNativeKeyboardFocusLost();
+            if (GameActivity.mTextEdit != null && GameActivity.mTextEdit.getVisibility() == View.VISIBLE) {
+                GameActivity.onNativeKeyboardFocusLost();
             }
         }
         return super.onKeyPreIme(keyCode, event);
@@ -923,11 +894,11 @@ class SDLInputConnection extends BaseInputConnection {
             if (event.isPrintingKey()) {
                 commitText(String.valueOf((char) event.getUnicodeChar()), 1);
             }
-            FragmentGame.onNativeKeyDown(keyCode);
+            GameActivity.onNativeKeyDown(keyCode);
             return true;
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
-            FragmentGame.onNativeKeyUp(keyCode);
+            GameActivity.onNativeKeyUp(keyCode);
             return true;
         }
         return super.sendKeyEvent(event);
@@ -1035,7 +1006,7 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
                     }
                     
                     mJoysticks.add(joystick);
-                    FragmentGame.nativeAddJoystick(joystick.device_id, joystick.name, 0, -1, 
+                    GameActivity.nativeAddJoystick(joystick.device_id, joystick.name, 0, -1, 
                                                   joystick.axes.size(), joystick.hats.size()/2, 0);
                 }
             }
@@ -1056,7 +1027,7 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
             
         for(int i=0; i < removedDevices.size(); i++) {
             int device_id = removedDevices.get(i);
-            FragmentGame.nativeRemoveJoystick(device_id);
+            GameActivity.nativeRemoveJoystick(device_id);
             for (int j=0; j < mJoysticks.size(); j++) {
                 if (mJoysticks.get(j).device_id == device_id) {
                     mJoysticks.remove(j);
@@ -1088,12 +1059,12 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
                             InputDevice.MotionRange range = joystick.axes.get(i);
                             /* Normalize the value to -1...1 */
                             float value = ( event.getAxisValue( range.getAxis(), actionPointerIndex) - range.getMin() ) / range.getRange() * 2.0f - 1.0f;
-                            FragmentGame.onNativeJoy(joystick.device_id, i, value );
+                            GameActivity.onNativeJoy(joystick.device_id, i, value );
                         }          
                         for (int i = 0; i < joystick.hats.size(); i+=2) {
                             int hatX = Math.round(event.getAxisValue( joystick.hats.get(i).getAxis(), actionPointerIndex ) );
                             int hatY = Math.round(event.getAxisValue( joystick.hats.get(i+1).getAxis(), actionPointerIndex ) );
-                            FragmentGame.onNativeHat(joystick.device_id, i/2, hatX, hatY );
+                            GameActivity.onNativeHat(joystick.device_id, i/2, hatX, hatY );
                         }
                     }
                     break;
@@ -1110,6 +1081,6 @@ class SDLGenericMotionListener_API12 implements View.OnGenericMotionListener {
     // We only have joysticks yet
     @Override
     public boolean onGenericMotion(View v, MotionEvent event) {
-        return FragmentGame.handleJoystickMotionEvent(event);
+        return GameActivity.handleJoystickMotionEvent(event);
     }
 }
