@@ -61,12 +61,19 @@ void ship_set_ride(Ship *ship, int x, int y) {
     ship->target.y = end_y;
 }
 
-void ship_move(Ship *ship) {
+int ship_move(Ship *ship) {
     if (ship->body.x < ship->target.x) {
         ship->body.x += ship->mov_to_target_x / 100;
     }
 
     if (ship->body.y < ship->target.y) {
         ship->body.y += ship->mov_to_target_y / 100;
+    }
+
+    if (ship->body.x >= ship->target.x && ship->body.y >= ship->target.y) {
+        return 1;
+    }
+    else {
+        return 0;
     }
 }

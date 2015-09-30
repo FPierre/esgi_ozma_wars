@@ -24,6 +24,6 @@ Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite
 void ship_render(SDL_Renderer *renderer, Ship *ship);
 void ship_fire(Ship *ship, Ship *target);
 void ship_set_ride(Ship *ship, int x, int y);
-void ship_move(Ship *ship);
+int ship_move(Ship *ship);
 
 #endif

@@ -3,5 +3,5 @@
 *.ap_
 *.ap_.d
 OzmaWars/local.properties
-OzmaWars/obj/local/*
-OzmaWars/libs/*
+OzmaWars/obj/**
+OzmaWars/libs/**
