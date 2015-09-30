@@ -9,6 +9,7 @@
 #include "sprite.h"
 #include "weapon.h"
 #include "ship.h"
+#include "background.h"
 
 #define  LOG_TAG    "MAIN NATIVE"
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -88,6 +89,10 @@ int main(int argc, char *argv[]) {
         }
 
         SDL_RenderClear(renderer);
+
+        // Init du background
+
+        star_init(renderer, 0, rand()%(4-0)+1, rand()%(1280-0)+1, rand()%(800-0)+1);
 
         // Render de débug du missile
         // sprite_render(renderer, missile_image);
