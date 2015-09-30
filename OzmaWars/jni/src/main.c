@@ -2,28 +2,18 @@
 #include <stdio.h>
 #include <android/log.h>
 #include "android/sensor.h"
-#include "../SDL/src/core/android/SDL_android.h"
+#include "../sdl/src/core/android/SDL_android.h"
 #include "SDL.h"
 
-#include "math.h"
 #include "sprite.h"
 #include "weapon.h"
 #include "ship.h"
 
-#define  PI         3.14159265
 #define  LOG_TAG    "MAIN NATIVE"
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-
-
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip) {
-    SDL_Rect dst = { x, y, clip->w, clip->h };
-
-    SDL_RenderCopy(ren, tex, NULL, &dst);
-    SDL_RenderPresent(ren);
-}
 
 int main(int argc, char *argv[]) {
     srand(time(NULL));
