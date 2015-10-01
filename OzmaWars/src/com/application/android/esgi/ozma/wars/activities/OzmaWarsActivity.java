@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.fragments.FragmentStart;
-import com.application.android.esgi.ozma.wars.fragments.FragmentGame;
 
 
 /**
