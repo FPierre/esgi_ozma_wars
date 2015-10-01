@@ -29,22 +29,22 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    // Init du background
+    // // Init du background
 
-    int i = 0;
-    int nbStars = 50; // rand()%(20-0)+1;
-    Star *stars[nbStars];
+    // int i = 0;
+    // int nbStars = 50; // rand()%(20-0)+1;
+    // Star *stars[nbStars];
 
-    for (i = 0; i < nbStars; ++i) {
-        RGBA color = { 155, 155, 28, 255 }; // jaune (?)
-        if ((i % 2) == 0) { // blanc
-            color.r = 255;
-            color.b = 255;
-            color.g = 255;
-            color.a = 255;
-        }
-        stars[i] = star_init( renderer, color, rand()%(5-0)+1, rand()%(1280-0)+1, -(rand()%(3000-0)+1) );
-    }
+    // for (i = 0; i < nbStars; ++i) {
+    //     RGBA color = { 155, 155, 28, 255 }; // jaune (?)
+    //     if ((i % 2) == 0) { // blanc
+    //         color.r = 255;
+    //         color.b = 255;
+    //         color.g = 255;
+    //         color.a = 255;
+    //     }
+    //     stars[i] = star_init( renderer, color, rand()%(5-0)+1, rand()%(1280-0)+1, -(rand()%(3000-0)+1) );
+    // }
 
     // Initialisation Weapon
 
@@ -135,11 +135,19 @@ int main(int argc, char *argv[]) {
         ship->body.x = ship_x;
         ship->body.y = ship_y;
 
-        // Mouvements des étoiles
+        // Détection des collisions
 
-        for (i = 0; i < nbStars; ++i) {
-            star_move(renderer, stars[i], 0, 2);
+        if (checkCollision(ship, canon) == 1) {
+            LOGI("========= Weapon touch ship!");
+        } else {
+            LOGI("========= Weapon do not touch ship...");
         }
+
+        // // Mouvements des étoiles
+
+        // for (i = 0; i < nbStars; ++i) {
+        //     star_move(renderer, stars[i], 0, 2);
+        // }
 
         // Affichage des éléments
 

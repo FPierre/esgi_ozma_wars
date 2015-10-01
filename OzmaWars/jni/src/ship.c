@@ -77,3 +77,45 @@ int ship_move(Ship *ship) {
         return 0;
     }
 }
+
+int checkCollision(Ship *ship, Weapon *weapon) { // collisions
+    // Initialisation des variables (B = Weapon, A = Ship)
+    int leftA,      leftB;
+    int rightA,     rightB;
+    int topA,       topB;
+    int bottomA,    bottomB;
+
+    // Sides of ship
+    Sprite *shipe_sprite = ship->image;
+    topA = ship->body.x;
+    rightA = ship->body.x + shipe_sprite->image_location.w;
+    leftA = ship->body.y;
+    bottomA = rightA + ship->body.y;
+
+    // Sides of weapon
+    Sprite *weapon_sprite = weapon->image;
+    topB = weapon->body.x;
+    rightB = weapon->body.x + weapon_sprite->image_location.w;
+    leftB = weapon->body.y;
+    bottomB = rightB + weapon->body.y;
+
+    // If any of the sides from B are outside of A
+    if (bottomB <= topA) {
+        return 0;
+    }
+
+    if (topB >= bottomA) {
+        return 0;
+    }
+
+    if (rightB <= leftA) {
+        return 0;
+    }
+
+    if (leftB >= rightA) {
+        return 0;
+    }
+
+    //If none of the sides from B are outside A
+    return 1;
+}
