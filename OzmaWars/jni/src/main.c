@@ -32,11 +32,17 @@ int main(int argc, char *argv[]) {
     // Init du background
 
     int i = 0;
-    int nbStars = rand()%(8-0)+1;
+    int nbStars = rand()%(10-0)+1;
     Star *stars[nbStars];
 
     for (i = 0; i < nbStars; ++i) {
-        stars[i] = star_init(renderer, rand()%(6-0)+1, rand()%(1280-0)+1, rand()%(800-0)+1);
+        RGBA color = { 255, 0, 0, 0 };
+        // if (i & 1) { // impair
+        //     color = { 255, 255, 255, 255 }; // blanc
+        // } else { // pair
+        //     color = { 255, 0, 0, 0 }; // rouge
+        // }
+        stars[i] = star_init(renderer, color, rand()%(6-0)+1, rand()%(950-0)+1, rand()%(800-0)+1);
     }
 
     // Initialisation Weapon
