@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
 
     RGB blue_background = { 0, 255, 255 };
     Sprite *missile_image = sprite_init(renderer, "spritesheets/projectile.bmp", blue_background, 55, 390, 50, 20);
+    Sprite *destroy_ship_image = sprite_init(renderer, "spritesheets/projectile.bmp", blue_background, 0, 132, 78, 90); // Destruction sprite init
 
     Weapon *canon = weapon_init(100, 60, 0.0, 1, 1, missile_image);
 
@@ -62,6 +63,7 @@ int main(int argc, char *argv[]) {
     float ship_x = 700;
     float ship_y = 400;
     int ship_size = 150;
+    int ship_state = 0;
 
     Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
     Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
@@ -120,28 +122,33 @@ int main(int argc, char *argv[]) {
         ship_x += (20 * accelValues[0]);
         ship_y += (20 * accelValues[1]);
 
-        // Mouvement du vaisseau
-
-        if (ship->body.x > ship_x + 2) {
-            sprite_position(ship_image, 0, 42);
-        } else if(ship->body.x < ship_x - 2) {
-            sprite_position(ship_image, 82, 42);
-        } else {
-            sprite_position(ship_image, 41, 42);
-        }
-
-        ship->image = ship_image;
-
-        ship->body.x = ship_x;
-        ship->body.y = ship_y;
-
         // Détection des collisions
 
         if (checkCollision(ship, canon) == 1) {
-            LOGI("======================================= WEAPON TOUCHES SHIP! =======================================");
+            // LOGI("======================================= WEAPON TOUCHES SHIP! =======================================");
+            ship_destroyed(ship, destroy_ship_image, ship_state);
+            ship_state++;
+
+            // DEBUG:
+            if (ship_state > 32) { ship_state = 0; done = 1; }
         } else {
-            LOGI("...........NOT TOUCH!.........");
+            // LOGI("...........NOT TOUCH!.........");
+
+            // Mouvement du vaisseau
+
+            ship->image = ship_image;
+
+            if (ship->body.x > ship_x + 2) {
+                sprite_position(ship_image, 0, 42, 40, 45);
+            } else if(ship->body.x < ship_x - 2) {
+                sprite_position(ship_image, 82, 42, 40, 45);
+            } else {
+                sprite_position(ship_image, 41, 42, 40, 45);
+            }
         }
+
+        ship->body.x = ship_x;
+        ship->body.y = ship_y;
 
         // // Mouvements des étoiles
 
@@ -157,7 +164,7 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);
 
-        SDL_Delay(200);
+        SDL_Delay(20);
     }
 
     // SDL_DestroyTexture(tex);

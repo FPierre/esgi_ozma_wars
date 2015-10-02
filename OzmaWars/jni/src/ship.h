@@ -26,5 +26,6 @@ void ship_fire(Ship *ship, Ship *target);
 void ship_set_ride(Ship *ship, int x, int y);
 int ship_move(Ship *ship);
 int checkCollision(Ship *ship, Weapon *weapon);
+void ship_destroyed(Ship *ship, Sprite *image, int state);
 
 #endif

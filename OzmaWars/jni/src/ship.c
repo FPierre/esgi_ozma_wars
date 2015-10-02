@@ -106,3 +106,23 @@ int checkCollision(Ship *ship, Weapon *weapon) {
     // Si aucun des côtés de B est hors zone A, alors il y a collision
     return 1;
 }
+
+
+void ship_destroyed(Ship *ship, Sprite *image, int state) {
+    switch (state) {
+        case 0:
+            ship->image = image;
+            break;
+        case 7:
+            sprite_position(image, 78, 132, 90, 90);
+            break;
+        case 14:
+            sprite_position(image, 168, 132, 103, 90);
+            break;
+        case 21:
+            sprite_position(image, 0, 0, 0, 0);
+            break;
+        case 28: // détruire Ship -> Game Over!
+            break;
+    }
+}
