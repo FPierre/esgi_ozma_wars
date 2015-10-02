@@ -25,6 +25,6 @@ void ship_render(SDL_Renderer *renderer, Ship *ship);
 void ship_fire(Ship *ship, Ship *target);
 void ship_set_ride(Ship *ship, int x, int y);
 int ship_move(Ship *ship);
-int checkCollision(Ship *ship, Weapon *weapon); // collisions
+int checkCollision(Ship *ship, Weapon *weapon);
 
 #endif

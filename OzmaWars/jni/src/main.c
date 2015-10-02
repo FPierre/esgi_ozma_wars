@@ -138,9 +138,9 @@ int main(int argc, char *argv[]) {
         // Détection des collisions
 
         if (checkCollision(ship, canon) == 1) {
-            LOGI("========= Weapon touch ship!");
+            LOGI("======================================= WEAPON TOUCHES SHIP! =======================================");
         } else {
-            LOGI("========= Weapon do not touch ship...");
+            LOGI("...........NOT TOUCH!.........");
         }
 
         // // Mouvements des étoiles
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);
 
-        SDL_Delay(10);
+        SDL_Delay(200);
     }
 
     // SDL_DestroyTexture(tex);

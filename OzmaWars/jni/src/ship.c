@@ -78,44 +78,31 @@ int ship_move(Ship *ship) {
     }
 }
 
-int checkCollision(Ship *ship, Weapon *weapon) { // collisions
+int checkCollision(Ship *ship, Weapon *weapon) {
     // Initialisation des variables (B = Weapon, A = Ship)
-    int leftA,      leftB;
-    int rightA,     rightB;
-    int topA,       topB;
-    int bottomA,    bottomB;
+    int leftA,   leftB;
+    int rightA,  rightB;
+    int topA,    topB;
+    int bottomA, bottomB;
 
-    // Sides of ship
-    Sprite *shipe_sprite = ship->image;
-    topA = ship->body.x;
-    rightA = ship->body.x + shipe_sprite->image_location.w;
-    leftA = ship->body.y;
-    bottomA = rightA + ship->body.y;
+    // Calcule les côtés du Ship (A)
+    leftA =     ship->body.x;
+    rightA =    ship->body.x + ship->w;
+    topA =      ship->body.y;
+    bottomA =   ship->body.y + ship->h;
 
-    // Sides of weapon
-    Sprite *weapon_sprite = weapon->image;
-    topB = weapon->body.x;
-    rightB = weapon->body.x + weapon_sprite->image_location.w;
-    leftB = weapon->body.y;
-    bottomB = rightB + weapon->body.y;
+    // Calcule les côtés du Weapon (B) 
+    leftB =     weapon->body.x;
+    rightB =    weapon->body.x + weapon->w;
+    topB =      weapon->body.y;
+    bottomB =   weapon->body.y + weapon->h;
 
-    // If any of the sides from B are outside of A
-    if (bottomB <= topA) {
-        return 0;
-    }
+    // Si un seul des côtés de B est hors zone A, alors il n'y a pas de collision possible
+    if( bottomB <= topA ) { return 0; }
+    if( topB >= bottomA ) { return 0; }
+    if( rightB <= leftA ) { return 0; }
+    if( leftB >= rightA ) { return 0; }
 
-    if (topB >= bottomA) {
-        return 0;
-    }
-
-    if (rightB <= leftA) {
-        return 0;
-    }
-
-    if (leftB >= rightA) {
-        return 0;
-    }
-
-    //If none of the sides from B are outside A
+    // Si aucun des côtés de B est hors zone A, alors il y a collision
     return 1;
 }
