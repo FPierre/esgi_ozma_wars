@@ -104,11 +104,11 @@ int checkCollision(Ship *ship, Ship *enemy_ship) {
     topC =      weapon->body.y;
     bottomC =   weapon->body.y + weapon->h;
 
-    // Si un seul des côtés de B ou de C est hors zone de A, alors il n'y a pas de collision possible
-    if( bottomB <= topA && bottomC <= topA ) { return 0; }
-    if( topB >= bottomA && topC >= bottomA ) { return 0; }
-    if( rightB <= leftA && rightC <= leftA ) { return 0; }
-    if( leftB >= rightA && leftC >= rightA ) { return 0; }
+    // Si un seul des côtés de B et de C est hors zone de A, alors il n'y a pas de collision possible
+    if( /*bottomB <= topA &&*/ bottomC <= topA ) { return 0; }
+    if( /*topB >= bottomA &&*/ topC >= bottomA ) { return 0; }
+    if( /*rightB <= leftA &&*/ rightC <= leftA ) { return 0; }
+    if( /*leftB >= rightA &&*/ leftC >= rightA ) { return 0; }
 
     // Si aucun des côtés de B ou de C est hors zone de A, alors il y a collision
     return 1;
