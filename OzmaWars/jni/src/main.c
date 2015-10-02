@@ -124,16 +124,13 @@ int main(int argc, char *argv[]) {
 
         // Détection des collisions
 
-        if (checkCollision(ship, canon) == 1) {
-            // LOGI("======================================= WEAPON TOUCHES SHIP! =======================================");
+        if (checkCollision(ship, enemy_ship) == 1) {
             ship_destroyed(ship, destroy_ship_image, ship_state);
             ship_state++;
 
-            // DEBUG:
+            // QUIT LOOP AND GAME:
             if (ship_state > 32) { ship_state = 0; done = 1; }
         } else {
-            // LOGI("...........NOT TOUCH!.........");
-
             // Mouvement du vaisseau
 
             ship->image = ship_image;

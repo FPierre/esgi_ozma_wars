@@ -78,12 +78,12 @@ int ship_move(Ship *ship) {
     }
 }
 
-int checkCollision(Ship *ship, Weapon *weapon) {
-    // Initialisation des variables (B = Weapon, A = Ship)
-    int leftA,   leftB;
-    int rightA,  rightB;
-    int topA,    topB;
-    int bottomA, bottomB;
+int checkCollision(Ship *ship, Ship *enemy_ship) {
+    // Initialisation des variables (A = Ship, B = Enemy Ship, C = Weapon's Enemy Ship)
+    int leftA,   leftB,   leftC;
+    int rightA,  rightB,  rightC;
+    int topA,    topB,    topC;
+    int bottomA, bottomB, bottomC;
 
     // Calcule les côtés du Ship (A)
     leftA =     ship->body.x;
@@ -91,19 +91,26 @@ int checkCollision(Ship *ship, Weapon *weapon) {
     topA =      ship->body.y;
     bottomA =   ship->body.y + ship->h;
 
-    // Calcule les côtés du Weapon (B) 
-    leftB =     weapon->body.x;
-    rightB =    weapon->body.x + weapon->w;
-    topB =      weapon->body.y;
-    bottomB =   weapon->body.y + weapon->h;
+    // Calcule les côtés du Enemy Ship (B)
+    leftB =     enemy_ship->body.x;
+    rightB =    enemy_ship->body.x + enemy_ship->w;
+    topB =      enemy_ship->body.y;
+    bottomB =   enemy_ship->body.y + enemy_ship->h;
 
-    // Si un seul des côtés de B est hors zone A, alors il n'y a pas de collision possible
-    if( bottomB <= topA ) { return 0; }
-    if( topB >= bottomA ) { return 0; }
-    if( rightB <= leftA ) { return 0; }
-    if( leftB >= rightA ) { return 0; }
+    // Calcule les côtés du Weapon (C)
+    Weapon *weapon = enemy_ship->weapon;
+    leftC =     weapon->body.x;
+    rightC =    weapon->body.x + weapon->w;
+    topC =      weapon->body.y;
+    bottomC =   weapon->body.y + weapon->h;
 
-    // Si aucun des côtés de B est hors zone A, alors il y a collision
+    // Si un seul des côtés de B ou de C est hors zone de A, alors il n'y a pas de collision possible
+    if( bottomB <= topA && bottomC <= topA ) { return 0; }
+    if( topB >= bottomA && topC >= bottomA ) { return 0; }
+    if( rightB <= leftA && rightC <= leftA ) { return 0; }
+    if( leftB >= rightA && leftC >= rightA ) { return 0; }
+
+    // Si aucun des côtés de B ou de C est hors zone de A, alors il y a collision
     return 1;
 }
 
