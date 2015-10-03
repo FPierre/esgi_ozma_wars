@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background);
+    Rgb pink_background(255, 0, 255);
+    Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background);
     // Ship ship(0, 0, 100, ship_image);
 
     while (!done) {
