@@ -4,7 +4,7 @@ Ship::Ship() {
 
 }
 
-Ship::Ship(int _x, int _y, int _health, Sprite& _image) : x(_x),
+Ship::Ship(int _x, int _y, int _health, Sprite *_image) : x(_x),
                                                           y(_y),
                                                           health(_health),
                                                           image(_image) {
@@ -22,5 +22,5 @@ Ship::~Ship() {
 }
 
 void Ship::render(SDL_Renderer *renderer) {
-    this->image.render(renderer);
+    this->image->render(renderer);
 }

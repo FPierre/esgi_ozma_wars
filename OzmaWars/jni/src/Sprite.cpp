@@ -4,23 +4,18 @@ Sprite::Sprite() {
 
 }
 
-Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background) : x(_x),
-                                                                                                     y(_y),
-                                                                                                     w(_w),
-                                                                                                     h(_h),
-                                                                                                     angle(_angle),
-                                                                                                     background(_background) {
+Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *renderer) : x(_x),
+                                                                                                                             y(_y),
+                                                                                                                             w(_w),
+                                                                                                                             h(_h),
+                                                                                                                             angle(_angle),
+                                                                                                                             background(_background) {
     this->surface = SDL_LoadBMP(_path.c_str());
     SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
-    this->texture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
+    this->texture = SDL_CreateTextureFromSurface(renderer, this->surface);
 
-    SDL_Rect test = { this->x, this->y, this->w, this->h };
-    this->image_location = test;
-
-    // this->image_location->x = this->x;
-    // this->image_location->y = this->y;
-    // this->image_location->w = this->w;
-    // this->image_location->h = this->h;
+    SDL_Rect location = { this->x, this->y, this->w, this->h };
+    this->image_location = location;
 }
 
 Sprite::Sprite(const Sprite& _sprite) {
