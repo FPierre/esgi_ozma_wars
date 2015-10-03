@@ -1,11 +1,11 @@
 #include "SDL.h"
 
-#include "LevelOne.h"
+#include "LevelTwo.h"
 #include "Rgb.h"
 #include "Sprite.h"
 #include "Ship.h"
 
-LevelOne::LevelOne(Window _window) : window(_window) {
+LevelTwo::LevelTwo(Window _window) : window(_window) {
     // Init de tous les objets
 
     // Rgb pink_background(255, 0, 255);
@@ -15,11 +15,11 @@ LevelOne::LevelOne(Window _window) : window(_window) {
     // this->ship = ship;
 }
 
-LevelOne::~LevelOne() {
+LevelTwo::~LevelTwo() {
 
 }
 
-void LevelOne::handle_events() {
+void LevelTwo::handle_events() {
     SDL_Event event;
 
     // While there's events to handle
@@ -34,7 +34,7 @@ void LevelOne::handle_events() {
     }
 }
 
-void LevelOne::logic() {
+void LevelTwo::logic() {
     // If the dot went to the exit
     // if (check_collision(myDot, exit) == true) {
     //     // Go to the overworld
@@ -45,20 +45,8 @@ void LevelOne::logic() {
     // myDot.move();
 }
 
-void LevelOne::render() {
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    Weapon canon(100, &missile_image);
-
-    Rgb pink_background(255, 0, 255);
-    Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    Ship ship(0, 0, 100, &canon, &ship_image);
-
-    // this->ship = ship;
-
+void LevelTwo::render() {
     SDL_RenderClear(this->window.renderer);
-
-    ship.render(this->window.renderer);
 
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);

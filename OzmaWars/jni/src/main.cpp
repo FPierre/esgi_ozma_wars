@@ -12,6 +12,7 @@
 #include "Ship.h"
 #include "GameState.h"
 #include "LevelOne.h"
+#include "LevelTwo.h"
 
 enum GameStates {
     STATE_NULL,
@@ -20,10 +21,10 @@ enum GameStates {
     STATE_EXIT
 };
 
-int stateID = STATE_NULL;
-int nextState = STATE_NULL;
+int state_id = STATE_NULL;
+int next_state = STATE_NULL;
 
-GameState *currentState = NULL;
+GameState *current_state = NULL;
 
 // State status manager
 void set_next_state(int newState);
@@ -43,30 +44,30 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    Weapon canon(100, &missile_image);
+    // Rgb blue_background(0, 255, 255);
+    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
+    // Weapon canon(100, &missile_image);
 
     // Rgb pink_background(255, 0, 255);
     // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
     // Ship ship(0, 0, 100, &ship_image);
 
     // Set the current state ID
-    stateID = STATE_LEVEL_ONE;
+    state_id = STATE_LEVEL_ONE;
 
     // Set the current game state object
-    currentState = new LevelOne(window);
+    current_state = new LevelOne(window);
 
     // While the user hasn't quit
-    while (stateID != STATE_EXIT) {
+    while (state_id != STATE_EXIT) {
         // Do state event handling
-        currentState->handle_events();
+        current_state->handle_events();
         // Do state logic
-        currentState->logic();
+        current_state->logic();
         // Change state if needed
         change_state(window);
         // Do state rendering
-        currentState->render();
+        current_state->render();
 
 
     // while (!done) {
@@ -97,36 +98,35 @@ int main(int argc, char *argv[]) {
 
 void set_next_state(int newState) {
     // If the user doesn't want to exit
-    if (nextState != STATE_EXIT) {
+    if (next_state != STATE_EXIT) {
         //Set the next state
-        nextState = newState;
+        next_state = newState;
     }
 }
 
 
 void change_state(Window window) {
     // If the state needs to be changed
-    if (nextState != STATE_NULL) {
+    if (next_state != STATE_NULL) {
         // Delete the current state
-        if (nextState != STATE_EXIT) {
-            delete currentState;
+        if (next_state != STATE_EXIT) {
+            delete current_state;
         }
 
         // Change the state
-        switch (nextState) {
+        switch (next_state) {
             case STATE_LEVEL_ONE:
-                currentState = new LevelOne(window);
+                current_state = new LevelOne(window);
                 break;
 
-            // case STATE_LEVEL_TWO:
-            //     currentState = new LevelTwo();
-            //     break;
+            case STATE_LEVEL_TWO:
+                current_state = new LevelTwo(window);
+                break;
         }
 
         // Change the current state ID
-        stateID = nextState;
-
+        state_id = next_state;
         // NULL the next state ID
-        nextState = STATE_NULL;
+        next_state = STATE_NULL;
     }
 }
