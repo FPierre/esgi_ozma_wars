@@ -17,7 +17,7 @@ class Ship {
     Ship(int _x, int _y, int _health, Sprite *_image);
     Ship(const Ship& _ship);
     ~Ship();
-    void render(SDL_Renderer *renderer);
+    void render(SDL_Renderer *_renderer);
 };
 
 #endif

@@ -4,15 +4,15 @@ Sprite::Sprite() {
 
 }
 
-Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *renderer) : x(_x),
-                                                                                                                             y(_y),
-                                                                                                                             w(_w),
-                                                                                                                             h(_h),
-                                                                                                                             angle(_angle),
-                                                                                                                             background(_background) {
+Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *_renderer) : x(_x),
+                                                                                                                              y(_y),
+                                                                                                                              w(_w),
+                                                                                                                              h(_h),
+                                                                                                                              angle(_angle),
+                                                                                                                              background(_background) {
     this->surface = SDL_LoadBMP(_path.c_str());
     SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
-    this->texture = SDL_CreateTextureFromSurface(renderer, this->surface);
+    this->texture = SDL_CreateTextureFromSurface(_renderer, this->surface);
 
     SDL_Rect location = { this->x, this->y, this->w, this->h };
     this->image_location = location;
@@ -31,7 +31,7 @@ Sprite::~Sprite() {
 
 }
 
-void Sprite::render(SDL_Renderer *renderer) {
+void Sprite::render(SDL_Renderer *_renderer) {
     SDL_Rect test = { 100, 100, 100, 100 };
-    SDL_RenderCopy(renderer, this->texture, &(this->image_location), &test);
+    SDL_RenderCopy(_renderer, this->texture, &(this->image_location), &test);
 }

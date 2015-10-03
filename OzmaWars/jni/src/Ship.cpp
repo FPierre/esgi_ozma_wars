@@ -21,6 +21,6 @@ Ship::~Ship() {
 
 }
 
-void Ship::render(SDL_Renderer *renderer) {
-    this->image->render(renderer);
+void Ship::render(SDL_Renderer *_renderer) {
+    this->image->render(_renderer);
 }
