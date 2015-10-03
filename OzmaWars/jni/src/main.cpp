@@ -3,19 +3,28 @@
 #include "android/sensor.h"
 #include "../sdl/src/core/android/SDL_android.h"
 #include "SDL.h"
+#include <string>
 
 #include "Window.h"
+#include "Rgb.h"
+#include "Sprite.h"
+#include "Ship.h"
 
 int main(int argc, char *argv[]) {
     SDL_Window *screen;
     SDL_Renderer *renderer;
-    Window window(renderer, screen);
+    Window window(screen, renderer);
 
-    if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &renderer) < 0)
+    if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0)
+    // if (SDL_CreateWindowAndRenderer(0, 0, 0, &screen, &renderer) < 0)
         exit(2);
 
     Uint8 done = 0;
     SDL_Event event;
+
+    // Rgb pink_background(255, 0, 255);
+    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background);
+    // Ship ship(0, 0, 100, ship_image);
 
     while (!done) {
         while (SDL_PollEvent(&event)) {
@@ -26,10 +35,13 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        SDL_RenderClear(renderer);
+        SDL_RenderClear(window.renderer);
 
-        SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
-        SDL_RenderPresent(renderer);
+        // ship.render(window.renderer);
+
+        SDL_SetRenderDrawColor(window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
+        // SDL_SetRenderDrawColor(window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
+        SDL_RenderPresent(window.renderer);
 
         SDL_Delay(10);
     }

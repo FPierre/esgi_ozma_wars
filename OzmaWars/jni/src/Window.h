@@ -4,14 +4,12 @@
 #include "SDL.h"
 
 class Window {
-    private:
+    public:
     int w;
     int h;
-    SDL_Renderer *renderer;
-
-    public:
     SDL_Window *screen;
-    Window(SDL_Renderer *_renderer, SDL_Window *_screen);
+    SDL_Renderer *renderer;
+    Window(SDL_Window *_screen, SDL_Renderer *_renderer);
 };
 
 #endif
