@@ -10,7 +10,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
-	main.cpp Window.cpp Rgb.cpp Sprite.cpp Weapon.cpp Ship.cpp GameState.cpp LevelOne.cpp LevelTwo.cpp
+	main.cpp sources/Window.cpp sources/Rgb.cpp sources/Sprite.cpp sources/Weapon.cpp sources/Ship.cpp sources/GameState.cpp sources/LevelOne.cpp sources/LevelTwo.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2
 

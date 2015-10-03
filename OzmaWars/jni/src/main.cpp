@@ -5,14 +5,14 @@
 #include "SDL.h"
 #include <string>
 
-#include "Window.h"
-#include "Rgb.h"
-#include "Sprite.h"
-#include "Weapon.h"
-#include "Ship.h"
-#include "GameState.h"
-#include "LevelOne.h"
-#include "LevelTwo.h"
+#include "headers/Window.h"
+#include "headers/Rgb.h"
+#include "headers/Sprite.h"
+#include "headers/Weapon.h"
+#include "headers/Ship.h"
+#include "headers/GameState.h"
+#include "headers/LevelOne.h"
+#include "headers/LevelTwo.h"
 
 enum GameStates {
     STATE_NULL,
