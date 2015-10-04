@@ -11,6 +11,7 @@ class LevelOne : public GameState {
     private:
     Window window;
     std::vector<Ship> ships;
+    Ship ship;
 
     public:
     LevelOne(Window _window);

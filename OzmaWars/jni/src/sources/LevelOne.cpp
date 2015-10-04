@@ -2,23 +2,21 @@
 #include "SDL_ttf.h"
 
 #include "headers/LevelOne.h"
-#include "headers/Rgb.h"
-#include "headers/Sprite.h"
-#include "headers/Ship.h"
+#include "headers/Game.h"
 
 LevelOne::LevelOne(Window _window) : window(_window) {
-    // Rgb blue_background(0, 255, 255);
-    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    // Weapon canon(100, &missile_image);
+    Rgb blue_background(0, 255, 255);
+    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
+    Weapon canon(100, &missile_image);
 
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
+    Rgb pink_background(255, 0, 255);
+    Sprite ship_image(155, 303, 30, 28, 180.0, "spritesheets/ship.bmp", pink_background, window.renderer);
 
-    // for (int i = 0; i < 3; i++) {
-    //     Ship ship(0, 0, 100, &canon, &ship_image);
+    for (int i = 0; i < 3; i++) {
+        Ship ship(0, 0, 100, &canon, &ship_image);
 
-    //     this->ships.push_back(ship);
-    // }
+        this->ships.push_back(ship);
+    }
 }
 
 LevelOne::~LevelOne() {
@@ -54,19 +52,6 @@ void LevelOne::logic() {
 }
 
 void LevelOne::render() {
-    // Rgb blue_background(0, 255, 255);
-    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    // Weapon canon(100, &missile_image);
-
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    // Ship ship(0, 0, 100, &canon, &ship_image);
-
-
-
-
-
-
 
 // FONCTIONNE
 // TTF_Init();
@@ -84,56 +69,24 @@ void LevelOne::render() {
 
     // SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
-
-
-
-
-
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    Weapon canon(100, &missile_image);
-
-    Rgb pink_background(255, 0, 255);
-    Sprite ship_image(155, 303, 30, 28, 180.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-
-    Ship ship1(0, 0, 100, &canon, &ship_image);
-
-    ship1.render(this->window.renderer);
-
-        // this->ships.push_back(ship);
-
-    Ship ship2(300, 300, 100, &canon, &ship_image);
-
-    ship2.render(this->window.renderer);
-
-
-    // Ship s = (Ship)this->ships[0];
-
-    // s.render(this->window.renderer);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // SDL_Rect test = { 100, 100, 100, 100 };
     // SDL_RenderCopy(this->window.renderer, s.image->texture, &(s.image->image_location), &test);
 
 
-    // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
+
+
+
+    this->ships[0].render(this->window.renderer);
+
+
+
+
+
+
+
+    SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
 // TTF_CloseFont(font);

@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include <string>
 
+#include "headers/Game.h"
 #include "headers/Window.h"
 #include "headers/Rgb.h"
 #include "headers/Sprite.h"
