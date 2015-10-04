@@ -18,6 +18,7 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 int main(int argc, char *argv[]) {
+    LOGI("NATIVE START");
     srand(time(NULL));
 
     SDL_Window *window;
@@ -55,6 +56,7 @@ int main(int argc, char *argv[]) {
     Weapon *canon = weapon_init(100, 60, 0.0, 1, 1, missile_image);
 
     // Initialisation Ship
+    LOGI("Ship init()");
 
     RGB pink_background = { 255, 0, 255 };
     Sprite *ship_image = sprite_init(renderer, "spritesheets/ship.bmp", pink_background, 41, 42, 40, 45);
@@ -66,7 +68,17 @@ int main(int argc, char *argv[]) {
     int ship_state = 0;
 
     Ship *ship = ship_init(ship_x, ship_y, ship_size, ship_size, 0.0, 100, ship_image, canon);
-    Ship *enemy_ship = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+    Ship *enemy_ship_1 = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+    Ship *enemy_ship_2 = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+    Ship *enemy_ship_3 = ship_init(10, 10, 100, 100, 180.0, 100, enemy_ship_image, canon);
+    
+    Ship *enemy_ships[3];
+    enemy_ships[0] = enemy_ship_1;
+    enemy_ships[1] = enemy_ship_2;
+    enemy_ships[2] = enemy_ship_3;
+
+    int length_enemy_ships = (int)( sizeof(enemy_ships) / sizeof(enemy_ships[0]) );
+    LOGI("Array size = %d", length_enemy_ships);
 
     // TEST MISSILE
 
@@ -87,13 +99,17 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
-    ship_fire(enemy_ship, ship);
+    ship_fire(enemy_ship_1, ship);
 
-    ship_set_ride(enemy_ship, 100, 700);
+    ship_set_ride(enemy_ship_1, 100, 700);
+    ship_set_ride(enemy_ship_2, 200, 150);
+    ship_set_ride(enemy_ship_3, 700, 220);
 
     while (!done) {
-        weapon_move(enemy_ship->weapon);
-        ship_move(enemy_ship);
+        weapon_move(enemy_ship_1->weapon);
+        ship_move(enemy_ship_1);
+        ship_move(enemy_ship_2);
+        ship_move(enemy_ship_3);
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -124,7 +140,7 @@ int main(int argc, char *argv[]) {
 
         // Détection des collisions
 
-        if (checkCollision(ship, enemy_ship, 1) == 1 || checkCollision(ship, enemy_ship, 0) == 1) {
+        if (checkCollision(ship, enemy_ships, length_enemy_ships) == 1) {
             ship_destroyed(ship, destroy_ship_image, ship_state);
             ship_state++;
 
@@ -156,7 +172,9 @@ int main(int argc, char *argv[]) {
         // Affichage des éléments
 
         ship_render(renderer, ship);
-        ship_render(renderer, enemy_ship);
+        ship_render(renderer, enemy_ship_1);
+        ship_render(renderer, enemy_ship_2);
+        ship_render(renderer, enemy_ship_3);
 
         SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);

@@ -84,12 +84,12 @@ int ship_move(Ship *ship) {
     }
 }
 
-int checkCollision(Ship *ship, Ship *enemy_ship, int mode) {
-    // Initialisation des variables (A = Ship, B = Enemy Ship, C = Weapon's Enemy Ship)
-    int leftA,   leftB,   leftC;
-    int rightA,  rightB,  rightC;
-    int topA,    topB,    topC;
-    int bottomA, bottomB, bottomC;
+int checkCollision(Ship *ship, Ship *enemy_ships[], int length_enemy_ships) {
+    // Initialisation des variables (A = Ship, B = Enemy Ship)
+    int leftA,   leftB;
+    int rightA,  rightB;
+    int topA,    topB;
+    int bottomA, bottomB;
 
     // Calcule les côtés du Ship (A)
     leftA =     ship->body.x;
@@ -97,34 +97,62 @@ int checkCollision(Ship *ship, Ship *enemy_ship, int mode) {
     topA =      ship->body.y;
     bottomA =   ship->body.y + ship->h;
 
-    // Calcule les côtés du Enemy Ship (B)
-    leftB =     enemy_ship->body.x;
-    rightB =    enemy_ship->body.x + enemy_ship->w;
-    topB =      enemy_ship->body.y;
-    bottomB =   enemy_ship->body.y + enemy_ship->h;
+    // Détermine les collisions d'après les Enemy Ships présents dans le tableau
+    int i=0, 
+        do_collision=0;
+    LOGI("checkCollision() : start - do_collision = %d", do_collision);
+    LOGI("checkCollision() : Array size = %d", (int)( sizeof(enemy_ships) / sizeof(enemy_ships[0]) ));
+    LOGI("checkCollision() : REAL ARRAY SIZE = %d", length_enemy_ships);
 
-    // Calcule les côtés du Weapon (C)
-    Weapon *weapon = enemy_ship->weapon;
-    leftC =     weapon->body.x;
-    rightC =    weapon->body.x + weapon->w;
-    topC =      weapon->body.y;
-    bottomC =   weapon->body.y + weapon->h;
+    for (i=0; i < length_enemy_ships; ++i) {
+        LOGI("checkCollision() : loop - ship (%d)", i);
+        // Calcule les côtés du Enemy Ship (B)
+        leftB =     enemy_ships[i]->body.x;
+        rightB =    enemy_ships[i]->body.x + enemy_ships[i]->w;
+        topB =      enemy_ships[i]->body.y;
+        bottomB =   enemy_ships[i]->body.y + enemy_ships[i]->h;
 
-    // Si un seul des côtés de B et de C est hors zone de A, alors il n'y a pas de collision possible
-    if (mode == 1) {
-        if( bottomB <= topA ) { LOGI("A"); return 0; }
-        if( topB >= bottomA ) { LOGI("B"); return 0; }
-        if( rightB <= leftA ) { LOGI("C"); return 0; }
-        if( leftB >= rightA ) { LOGI("D"); return 0; }
-    } else {
-        if( bottomC <= topA ) { LOGI("A_1"); return 0; }
-        if( topC >= bottomA ) { LOGI("B_1"); return 0; }
-        if( rightC <= leftA ) { LOGI("C_1"); return 0; }
-        if( leftC >= rightA ) { LOGI("D_1"); return 0; }
+        LOGI("checkCollision() : loop - ship (%d) TESTS", i);
+
+        // Si un seul des côtés de B est hors zone de A, alors il n'y a pas de collision possible
+        if( bottomB <= topA ) { LOGI("A"); continue; }
+        if( topB >= bottomA ) { LOGI("B"); continue; }
+        if( rightB <= leftA ) { LOGI("C"); continue; }
+        if( leftB >= rightA ) { LOGI("D"); continue; }
+
+        LOGI("checkCollision() : loop - ship (%d) COLLISION FOUND", i);
+
+        /**
+
+        if (enemy_ships[i]->weapon != NULL) {
+            LOGI("checkCollision() : loop - ship (%d) HAS WEAPON", i);
+            // Calcule les côtés du Weapon (C = Weapon's Enemy Ship)
+            Weapon *weapon = enemy_ships[i]->weapon;
+
+            int leftC =     weapon->body.x;
+            int rightC =    weapon->body.x + weapon->w;
+            int topC =      weapon->body.y;
+            int bottomC =   weapon->body.y + weapon->h;
+
+            LOGI("checkCollision() : loop - weapon (%d) TESTS WEAPON", i);
+
+            if( bottomC <= topA ) { LOGI("A_1"); continue; }
+            if( topC >= bottomA ) { LOGI("B_1"); continue; }
+            if( rightC <= leftA ) { LOGI("C_1"); continue; }
+            if( leftC >= rightA ) { LOGI("D_1"); continue; }
+
+            LOGI("checkCollision() : loop - weapon (%d) COLLISION FOUND WITH WEAPON", i);
+        }
+
+        **/
+
+        // Si aucun des côtés de B ou de C est hors zone de A, alors il y a collision
+        do_collision=1;
+        LOGI("checkCollision() : loop ends - do_collision = %d", do_collision);
     }
-
-    // Si aucun des côtés de B ou de C est hors zone de A, alors il y a collision
-    return 1;
+    LOGI("checkCollision() : end - return do_collision = %d", do_collision);
+    // On renvoit le résultat des tests
+    return do_collision;
 }
 
 
