@@ -20,6 +20,8 @@ class Ship {
     Ship(const Ship& _ship);
     ~Ship();
     void render(SDL_Renderer *_renderer);
+    void move(int _x, int _y);
+    void fire(int _x, int _y);
 };
 
 #endif

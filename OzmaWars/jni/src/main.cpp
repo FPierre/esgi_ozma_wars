@@ -104,7 +104,6 @@ void set_next_state(int newState) {
     }
 }
 
-
 void change_state(Window window) {
     // If the state needs to be changed
     if (next_state != STATE_NULL) {
