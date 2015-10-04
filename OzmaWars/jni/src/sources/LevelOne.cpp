@@ -7,13 +7,18 @@
 #include "headers/Ship.h"
 
 LevelOne::LevelOne(Window _window) : window(_window) {
-    // Init de tous les objets
+    // Rgb blue_background(0, 255, 255);
+    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
+    // Weapon canon(100, &missile_image);
 
     // Rgb pink_background(255, 0, 255);
     // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    // Ship ship(0, 0, 100, &ship_image);
 
-    // this->ship = ship;
+    // for (int i = 0; i < 3; i++) {
+    //     Ship ship(0, 0, 100, &canon, &ship_image);
+
+    //     this->ships.push_back(ship);
+    // }
 }
 
 LevelOne::~LevelOne() {
@@ -36,6 +41,8 @@ void LevelOne::handle_events() {
 }
 
 void LevelOne::logic() {
+    // this->ships[0].move(100, 100);
+
     // If the dot went to the exit
     // if (check_collision(myDot, exit) == true) {
     //     // Go to the overworld
@@ -47,8 +54,6 @@ void LevelOne::logic() {
 }
 
 void LevelOne::render() {
-
-
     // Rgb blue_background(0, 255, 255);
     // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
     // Weapon canon(100, &missile_image);
@@ -63,50 +68,76 @@ void LevelOne::render() {
 
 
 
+// FONCTIONNE
+// TTF_Init();
 
-TTF_Init();
+// TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 20);
+// SDL_Color text_color = { 0, 0, 0 };
+// SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
+// SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
+// int mWidth = message->w;
+// int mHeight = message->h;
+// SDL_Rect test = { 10, 10, mWidth, mHeight };
 
-TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 20);
-SDL_Color text_color = { 0, 0, 0 };
-SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
-SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
-int mWidth = message->w;
-int mHeight = message->h;
-SDL_Rect test = { 10, 10, mWidth, mHeight };
-
-
-
-
-    // this->ship = ship;
 
     SDL_RenderClear(this->window.renderer);
 
+    // SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
-SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
 
-    // ship.render(this->window.renderer);
+
+
+
+    Rgb blue_background(0, 255, 255);
+    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
+    Weapon canon(100, &missile_image);
+
+    Rgb pink_background(255, 0, 255);
+    Sprite ship_image(155, 303, 30, 28, 180.0, "spritesheets/ship.bmp", pink_background, window.renderer);
+
+    Ship ship1(0, 0, 100, &canon, &ship_image);
+
+    ship1.render(this->window.renderer);
+
+        // this->ships.push_back(ship);
+
+    Ship ship2(300, 300, 100, &canon, &ship_image);
+
+    ship2.render(this->window.renderer);
+
+
+    // Ship s = (Ship)this->ships[0];
+
+    // s.render(this->window.renderer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // SDL_Rect test = { 100, 100, 100, 100 };
+    // SDL_RenderCopy(this->window.renderer, s.image->texture, &(s.image->image_location), &test);
+
 
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-TTF_CloseFont(font);
-TTF_Quit();
+// TTF_CloseFont(font);
+// TTF_Quit();
 
     SDL_Delay(10);
-
-
-    // // Set the camera
-    // myDot.set_camera();
-
-    // // Show the background
-    // apply_surface( 0, 0, background, screen, &camera );
-
-    // // Show the door
-    // exit.show();
-
-    // // Show the dot on the screen
-    // myDot.show();
 }

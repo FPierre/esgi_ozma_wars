@@ -31,7 +31,7 @@ Ship::~Ship() {
 
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
-        this->image->render(_renderer);
+        this->image->render(this->x, this->y, _renderer);
     }
     else {
         // Sprite d'une explosion

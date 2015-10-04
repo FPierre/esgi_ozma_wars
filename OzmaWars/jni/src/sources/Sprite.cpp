@@ -31,7 +31,7 @@ Sprite::~Sprite() {
 
 }
 
-void Sprite::render(SDL_Renderer *_renderer) {
-    SDL_Rect test = { 100, 100, 100, 100 };
+void Sprite::render(int _x, int _y, SDL_Renderer *_renderer) {
+    SDL_Rect test = { _x, _y, 100, 100 };
     SDL_RenderCopyEx(_renderer, this->texture, &(this->image_location), &test, this->angle, NULL, SDL_FLIP_NONE);
 }

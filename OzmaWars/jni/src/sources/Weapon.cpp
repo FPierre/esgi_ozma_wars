@@ -23,7 +23,7 @@ Weapon::~Weapon() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->image->render(_renderer);
+    this->image->render(this->x, this->y, _renderer);
 }
 
 void Weapon::move(int _start_x, int _start_y, int _target_x, int _target_y) {

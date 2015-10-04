@@ -26,10 +26,7 @@ int next_state = STATE_NULL;
 
 GameState *current_state = NULL;
 
-// State status manager
 void set_next_state(int newState);
-
-// State changer
 void change_state(Window window);
 
 int main(int argc, char *argv[]) {
@@ -44,50 +41,16 @@ int main(int argc, char *argv[]) {
     Uint8 done = 0;
     SDL_Event event;
 
-    // Rgb blue_background(0, 255, 255);
-    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    // Weapon canon(100, &missile_image);
-
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    // Ship ship(0, 0, 100, &ship_image);
-
-    // Set the current state ID
     state_id = STATE_LEVEL_ONE;
-
-    // Set the current game state object
     current_state = new LevelOne(window);
 
-    // While the user hasn't quit
     while (state_id != STATE_EXIT) {
-        // Do state event handling
         current_state->handle_events();
-        // Do state logic
         current_state->logic();
         // Change state if needed
         change_state(window);
         // Do state rendering
         current_state->render();
-
-
-    // while (!done) {
-        // while (SDL_PollEvent(&event)) {
-        //     switch (event.type) {
-        //         case SDL_QUIT: case SDL_KEYDOWN:
-        //             done = 1;
-        //             break;
-        //     }
-        // }
-
-        // SDL_RenderClear(window.renderer);
-
-        // ship.render(window.renderer);
-
-        // SDL_SetRenderDrawColor(window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-        // // SDL_SetRenderDrawColor(window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-        // SDL_RenderPresent(window.renderer);
-
-        // SDL_Delay(10);
     }
 
     // SDL_DestroyTexture(tex);

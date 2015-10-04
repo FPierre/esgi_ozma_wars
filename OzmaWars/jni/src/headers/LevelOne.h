@@ -1,6 +1,8 @@
 #ifndef LEVELONE_H
 #define LEVELONE_H
 
+#include <vector>
+
 #include "GameState.h"
 #include "Window.h"
 #include "Ship.h"
@@ -8,7 +10,7 @@
 class LevelOne : public GameState {
     private:
     Window window;
-    Ship ship;
+    std::vector<Ship> ships;
 
     public:
     LevelOne(Window _window);
