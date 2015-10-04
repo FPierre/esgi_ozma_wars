@@ -1,4 +1,5 @@
 #include "SDL.h"
+#include "SDL_ttf.h"
 
 #include "headers/LevelOne.h"
 #include "headers/Rgb.h"
@@ -46,24 +47,53 @@ void LevelOne::logic() {
 }
 
 void LevelOne::render() {
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    Weapon canon(100, &missile_image);
 
-    Rgb pink_background(255, 0, 255);
-    Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    Ship ship(0, 0, 100, &canon, &ship_image);
+
+    // Rgb blue_background(0, 255, 255);
+    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
+    // Weapon canon(100, &missile_image);
+
+    // Rgb pink_background(255, 0, 255);
+    // Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, window.renderer);
+    // Ship ship(0, 0, 100, &canon, &ship_image);
+
+
+
+
+
+
+
+
+TTF_Init();
+
+TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 20);
+SDL_Color text_color = { 0, 0, 0 };
+SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
+SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
+int mWidth = message->w;
+int mHeight = message->h;
+SDL_Rect test = { 10, 10, mWidth, mHeight };
+
+
+
 
     // this->ship = ship;
 
     SDL_RenderClear(this->window.renderer);
 
-    ship.render(this->window.renderer);
+
+SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+
+
+    // ship.render(this->window.renderer);
 
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
+
+TTF_CloseFont(font);
+TTF_Quit();
 
     SDL_Delay(10);
 
