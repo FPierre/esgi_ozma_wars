@@ -1,7 +1,13 @@
 #include "math.h"
 #include "ship.h"
+#include <android/log.h>
 
 #define PI 3.14159265
+#define  LOG_TAG    "SHIP NATIVE"
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Ship *ship_init(int x, int y, int w, int h, double angle, int max_health, Sprite *image, Weapon *weapon) {
     Ship *ship = malloc(sizeof(Ship));
@@ -78,7 +84,7 @@ int ship_move(Ship *ship) {
     }
 }
 
-int checkCollision(Ship *ship, Ship *enemy_ship) {
+int checkCollision(Ship *ship, Ship *enemy_ship, int mode) {
     // Initialisation des variables (A = Ship, B = Enemy Ship, C = Weapon's Enemy Ship)
     int leftA,   leftB,   leftC;
     int rightA,  rightB,  rightC;
@@ -105,10 +111,17 @@ int checkCollision(Ship *ship, Ship *enemy_ship) {
     bottomC =   weapon->body.y + weapon->h;
 
     // Si un seul des côtés de B et de C est hors zone de A, alors il n'y a pas de collision possible
-    if( /*bottomB <= topA &&*/ bottomC <= topA ) { return 0; }
-    if( /*topB >= bottomA &&*/ topC >= bottomA ) { return 0; }
-    if( /*rightB <= leftA &&*/ rightC <= leftA ) { return 0; }
-    if( /*leftB >= rightA &&*/ leftC >= rightA ) { return 0; }
+    if (mode == 1) {
+        if( bottomB <= topA ) { LOGI("A"); return 0; }
+        if( topB >= bottomA ) { LOGI("B"); return 0; }
+        if( rightB <= leftA ) { LOGI("C"); return 0; }
+        if( leftB >= rightA ) { LOGI("D"); return 0; }
+    } else {
+        if( bottomC <= topA ) { LOGI("A_1"); return 0; }
+        if( topC >= bottomA ) { LOGI("B_1"); return 0; }
+        if( rightC <= leftA ) { LOGI("C_1"); return 0; }
+        if( leftC >= rightA ) { LOGI("D_1"); return 0; }
+    }
 
     // Si aucun des côtés de B ou de C est hors zone de A, alors il y a collision
     return 1;
