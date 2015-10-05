@@ -78,7 +78,6 @@ int main(int argc, char *argv[]) {
     enemy_ships[2] = enemy_ship_3;
 
     int length_enemy_ships = (int)( sizeof(enemy_ships) / sizeof(enemy_ships[0]) );
-    LOGI("Array size = %d", length_enemy_ships);
 
     // TEST MISSILE
 
