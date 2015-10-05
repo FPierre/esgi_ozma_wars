@@ -182,7 +182,8 @@ void ship_destroyed(Ship *ship, Sprite *image, int state) {
         case 21:
             sprite_position(image, 0, 0, 0, 0);
             break;
-        case 28: // détruire Ship -> Game Over!
+        case 22: // détruire Ship -> Game Over!
+            ship = NULL;
             break;
     }
 }

@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
 
         // Détection des collisions
 
-        if (checkCollision(ship, enemy_ships, length_enemy_ships) == 1) {
+        if (checkCollision(ship, enemy_ships, length_enemy_ships) == 1 || ship == NULL) {
             ship_destroyed(ship, destroy_ship_image, ship_state);
             ship_state++;
 
@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 12, 12, 12, 12);
         SDL_RenderPresent(renderer);
 
-        SDL_Delay(200);
+        SDL_Delay(20);
     }
 
     // SDL_DestroyTexture(tex);
