@@ -3,18 +3,23 @@
 
 #include <vector>
 
+#include "Game.h"
 #include "GameState.h"
 #include "Window.h"
 #include "Ship.h"
 
+// TESTS
+#include "Weapon.h"
+
 class LevelOne : public GameState {
     private:
+    Game game;
     Window window;
     std::vector<Ship> ships;
-    Ship ship;
+    std::map<std::string, Sprite> sprites;
 
     public:
-    LevelOne(Window _window);
+    LevelOne(Game _game, Window _window);
     ~LevelOne();
     void handle_events();
     void logic();

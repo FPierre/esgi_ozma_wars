@@ -8,9 +8,9 @@
 class Weapon {
     private:
     int strength;
-    Sprite *image;
 
     public:
+    Sprite *image;
     int x;
     int y;
     Weapon();
@@ -18,6 +18,7 @@ class Weapon {
     Weapon(const Weapon& _weapon);
     ~Weapon();
     void render(SDL_Renderer *_renderer);
+    // TODO Passer en private ? N'est à utiliser que dans le fire de Ship
     void move(int _start_x, int _start_y, int _target_x, int _target_y);
 };
 

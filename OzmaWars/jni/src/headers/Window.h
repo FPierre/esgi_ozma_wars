@@ -9,6 +9,7 @@ class Window {
     int h;
     SDL_Window *screen;
     SDL_Renderer *renderer;
+    Window();
     Window(SDL_Window *_screen, SDL_Renderer *_renderer);
 };
 

@@ -3,6 +3,7 @@
 #include "android/sensor.h"
 #include "../sdl/src/core/android/SDL_android.h"
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include <string>
 
 #include "headers/Game.h"
@@ -25,10 +26,18 @@ enum GameStates {
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
 
+Game game(0);
 GameState *current_state = NULL;
 
 void set_next_state(int newState);
 void change_state(Window window);
+
+
+#define LOG_TAG "main"
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 int main(int argc, char *argv[]) {
     SDL_Window *screen;
@@ -39,11 +48,14 @@ int main(int argc, char *argv[]) {
         exit(2);
     }
 
+    game.set_window(window);
+    game.init_sprites();
+
     Uint8 done = 0;
     SDL_Event event;
 
     state_id = STATE_LEVEL_ONE;
-    current_state = new LevelOne(window);
+    current_state = new LevelOne(game, window);
 
     while (state_id != STATE_EXIT) {
         current_state->handle_events();
@@ -79,7 +91,7 @@ void change_state(Window window) {
         // Change the state
         switch (next_state) {
             case STATE_LEVEL_ONE:
-                current_state = new LevelOne(window);
+                current_state = new LevelOne(game, window);
                 break;
 
             case STATE_LEVEL_TWO:

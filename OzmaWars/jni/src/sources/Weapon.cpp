@@ -10,7 +10,8 @@ Weapon::Weapon() {
 
 Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
                                                 image(_image) {
-
+    this->x = 0;
+    this->y = 0;
 }
 
 Weapon::Weapon(const Weapon& _weapon) {

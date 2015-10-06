@@ -1,20 +1,27 @@
+#include <android/log.h>
 #include <math.h>
 
 #include "headers/Ship.h"
 
 const double PI = 3.14159265358979323846;
 
+#define LOG_TAG "Ship"
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
 Ship::Ship() {
 
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon *_weapon, Sprite *_image) : x(_x),
-                                                                           y(_y),
-                                                                           health(_health),
-                                                                           weapon(_weapon),
-                                                                           image(_image) {
-    this->weapon->x = _x;
-    this->weapon->y = _y;
+Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
+                                                                          y(_y),
+                                                                          health(_health),
+                                                                          weapon(_weapon),
+                                                                          image(_image) {
+    this->weapon.x = _x;
+    this->weapon.y = _y;
 }
 
 Ship::Ship(const Ship& _ship) {
@@ -31,7 +38,15 @@ Ship::~Ship() {
 
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
+        LOGI("ship.render");
+
         this->image->render(this->x, this->y, _renderer);
+
+        if (this->weapon.x != this->x || this->weapon.y != this->y) {
+            this->weapon.render(_renderer);
+            // OLD
+            // this->weapon.image->render(this->weapon.x, this->weapon.y, _renderer);
+        }
     }
     else {
         // Sprite d'une explosion
@@ -58,5 +73,5 @@ void Ship::move(int _x, int _y) {
 }
 
 void Ship::fire(int _x, int _y) {
-    this->weapon->move(this->x, this->y, _x, _y);
+    this->weapon.move(this->x, this->y, _x, _y);
 }
