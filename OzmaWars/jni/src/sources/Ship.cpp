@@ -15,11 +15,12 @@ Ship::Ship() {
 
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
-                                                                          y(_y),
-                                                                          health(_health),
-                                                                          weapon(_weapon),
-                                                                          image(_image) {
+Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, SDL_Rect _border_limits) : x(_x),
+                                                                                                   y(_y),
+                                                                                                   health(_health),
+                                                                                                   weapon(_weapon),
+                                                                                                   image(_image),
+                                                                                                   border_limits(_border_limits) {
     this->weapon.x = _x;
     this->weapon.y = _y;
 }
@@ -38,14 +39,10 @@ Ship::~Ship() {
 
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
-        LOGI("ship.render");
-
         this->image->render(this->x, this->y, _renderer);
 
         if (this->weapon.x != this->x || this->weapon.y != this->y) {
             this->weapon.render(_renderer);
-            // OLD
-            // this->weapon.image->render(this->weapon.x, this->weapon.y, _renderer);
         }
     }
     else {
@@ -63,6 +60,7 @@ void Ship::move(int _x, int _y) {
 
     this->image->angle = angle;
 
+    // TODO Gérer la vitesse par ce / 100
     if (this->x < _x) {
         this->x += diff_x / 100;
     }
@@ -70,6 +68,22 @@ void Ship::move(int _x, int _y) {
     if (this->y < _y) {
         this->y += diff_y / 100;
     }
+
+    // if (_x < this->border_limits.x) {
+    //     _x = 0;
+    // }
+
+    // if (_x > this->border_limits.w) {
+    //     _x = this->border_limits.w;
+    // }
+
+    // if (_y < this->border_limits.y) {
+    //     _y = 0;
+    // }
+
+    // if (_y > this->border_limits.h) {
+    //     _y = this->border_limits.h;
+    // }
 }
 
 void Ship::fire(int _x, int _y) {

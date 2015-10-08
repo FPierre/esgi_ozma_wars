@@ -26,11 +26,10 @@ enum GameStates {
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
 
-Game game(0);
 GameState *current_state = NULL;
 
 void set_next_state(int newState);
-void change_state(Window window);
+void change_state(Game game, Window window);
 
 
 #define LOG_TAG "main"
@@ -44,12 +43,11 @@ int main(int argc, char *argv[]) {
     SDL_Renderer *renderer;
     Window window(screen, renderer);
 
-    if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
+    if (SDL_CreateWindowAndRenderer(0, 0, SDL_WINDOW_FULLSCREEN, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
     }
 
-    game.set_window(window);
-    game.init_sprites();
+    Game game(0, window);
 
     Uint8 done = 0;
     SDL_Event event;
@@ -61,7 +59,7 @@ int main(int argc, char *argv[]) {
         current_state->handle_events();
         current_state->logic();
         // Change state if needed
-        change_state(window);
+        change_state(game, window);
         // Do state rendering
         current_state->render();
     }
@@ -80,7 +78,7 @@ void set_next_state(int newState) {
     }
 }
 
-void change_state(Window window) {
+void change_state(Game game, Window window) {
     // If the state needs to be changed
     if (next_state != STATE_NULL) {
         // Delete the current state

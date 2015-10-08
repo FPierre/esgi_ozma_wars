@@ -13,10 +13,11 @@ class Ship {
     int health;
     Weapon weapon;
     Sprite *image;
+    SDL_Rect border_limits;
 
     public:
     Ship();
-    Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image);
+    Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, SDL_Rect _border_limits);
     Ship(const Ship& _ship);
     ~Ship();
     void render(SDL_Renderer *_renderer);

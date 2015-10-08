@@ -16,12 +16,11 @@ class Game {
     TTF_Font *font;
     std::map<std::string, Sprite> sprites;
     Window window;
+    Ship ship;
 
     public:
-    Game(int _score);
+    Game(int _score, Window _window);
     ~Game();
-    void set_window(Window _window);
-    void init_sprites();
     Sprite get_sprite(std::string _name);
     int update_score(int points);
     void render_score();

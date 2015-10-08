@@ -2,6 +2,7 @@
 #define LEVELONE_H
 
 #include <vector>
+#include "SDL.h"
 
 #include "Game.h"
 #include "GameState.h"

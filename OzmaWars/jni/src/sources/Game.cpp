@@ -8,26 +8,25 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-Game::Game(int _score) : score(_score) {
+Game::Game(int _score, Window _window) : score(_score),
+                                         window(_window) {
     // TTF_Font *test = TTF_OpenFont("fonts/consola.ttf", 20);
+
+    Rgb blue_background(0, 255, 255);
+    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+
+    Weapon canon(100, &missile_image);
+
+    Rgb pink_background(255, 0, 255);
+    Sprite ship_image(155, 303, 30, 28, 180, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+
+    Ship ship(0, 0, 100, canon, &ship_image);
+
+    this->ship = ship;
 }
 
 Game::~Game() {
 
-}
-
-void Game::set_window(Window _window) {
-    this->window = _window;
-}
-
-void Game::init_sprites() {
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    this->sprites["missile"] = missile_image;
-
-    Rgb pink_background(255, 0, 255);
-    Sprite ship_image(155, 303, 30, 28, 180.0, "spritesheets/ship.bmp", pink_background, window.renderer);
-    this->sprites["ship"] = ship_image;
 }
 
 Sprite Game::get_sprite(std::string _name) {
