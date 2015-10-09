@@ -31,7 +31,6 @@ GameState *current_state = NULL;
 void set_next_state(int newState);
 void change_state(Game game, Window window);
 
-
 #define LOG_TAG "main"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
@@ -39,11 +38,9 @@ void change_state(Game game, Window window);
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 int main(int argc, char *argv[]) {
-    SDL_Window *screen;
-    SDL_Renderer *renderer;
-    Window window(screen, renderer);
+    Window window;
 
-    if (SDL_CreateWindowAndRenderer(0, 0, SDL_WINDOW_FULLSCREEN, &(window.screen), &(window.renderer)) < 0) {
+    if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
     }
 

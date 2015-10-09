@@ -10,7 +10,8 @@ class Window {
     SDL_Window *screen;
     SDL_Renderer *renderer;
     Window();
-    Window(SDL_Window *_screen, SDL_Renderer *_renderer);
+    Window(const Window& _window);
+    ~Window();
 };
 
 #endif
