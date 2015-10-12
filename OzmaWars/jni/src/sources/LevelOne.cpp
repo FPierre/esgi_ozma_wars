@@ -12,23 +12,68 @@
 
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
-    Rgb blue_background(0, 255, 255);
-    Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, window.renderer);
-    this->sprites["missile"] = missile_image;
 
-    Rgb pink_background(255, 0, 255);
-    Sprite ship_image(155, 303, 30, 28, 180, "spritesheets/ship.bmp", pink_background, window.renderer);
-    this->sprites["ship"] = ship_image;
+                                                    LOGI("Constructeur");
+    // Rgb blue_background(0, 255, 255);
+    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    // this->sprites["missile"] = missile_image;
 
-    SDL_Rect window_borders = { 0, 0, this->window.w, this->window.h };
+    // Rgb pink_background(255, 0, 255);
+    // Sprite ship_image(155, 303, 30, 28, 180, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+    // this->sprites["ship"] = ship_image;
 
-    Weapon canon(100, &(this->sprites["missile"]));
+    // Sprite m = this->game.missile_image;
 
-    Ship ship1(0, 0, 100, canon, &(this->sprites["ship"]), window_borders);
-    this->ships.push_back(ship1);
+    // if (&m != nullptr) {
+    //     Weapon canon(100, &m);
 
-    Ship ship2(200, 200, 100, canon, &(this->sprites["ship"]), window_borders);
-    this->ships.push_back(ship2);
+    //     Sprite s = this->game.ship_image;
+
+    //     if (&s != nullptr) {
+    //         Ship ship1(0, 0, 100, canon, &s);
+
+    //         if (&ship1 != nullptr) {
+    //             LOGI("Ship ship1 a pu être crée");
+    //             this->sh = ship1;
+    //         }
+    //         else {
+    //             LOGI("Ship ship1 n'a pas pu être crée");
+    //         }
+    //     }
+    //     else {
+    //         LOGI("Sprite s n'a pas pu être crée");
+    //     }
+    // }
+    // else {
+    //     LOGI("Sprite m n'a pas pu être crée");
+    // }
+
+    // Weapon canon(100, &missile_image);
+    // Weapon canon(100, &(this->game.missile_image));
+    // Weapon canon(100, &(this->game.sprites["missile"]));
+
+    // Ship ship1(0, 0, 100, canon, &(this->sprites["ship"]));
+    // Ship ship1(0, 0, 100, canon, &ship_image);
+    // // // Ship ship1(0, 0, 100, canon, &s);
+    // this->ships.push_back(ship1);
+
+    // Ship ship2(200, 200, 100, canon, &(this->sprites["ship"]));
+    // Ship ship2(200, 200, 100, canon, &ship_image);
+    // // // Ship ship2(200, 200, 100, canon, &s);
+    // this->ships.push_back(ship2);
+
+    Weapon canon(100, &(this->game.missile_image));
+
+    Ship enemy_ship(0, 0, 100, canon, &(this->game.enemy_ship_image));
+    this->ships.push_back(enemy_ship);
+}
+
+LevelOne::LevelOne(const LevelOne& _level_one) {
+    LOGI("Constructeur par copie");
+
+    game = _level_one.game;
+    window = _level_one.window;
+    ships = _level_one.ships;
 }
 
 LevelOne::~LevelOne() {
@@ -48,11 +93,11 @@ void LevelOne::handle_events() {
 }
 
 void LevelOne::logic() {
-    this->ships[0].move(200, 0);
-    // this->ships[0].fire(300, 400);
+    // this->ships[0].move(200, 0);
+    // // this->ships[0].fire(300, 400);
 
-    this->ships[1].move(400, 0);
-    // this->ships[1].fire(700, 200);
+    // this->ships[1].move(400, 0);
+    // // this->ships[1].fire(700, 200);
 
     // If the dot went to the exit
     // if (check_collision(myDot, exit) == true) {
@@ -80,14 +125,17 @@ void LevelOne::render() {
 
 // this->game.render_score();
 
-    for (Ship ship : this->ships) {
-        ship.render(this->window.renderer);
+
+    for (Ship enemy_ship : this->ships) {
+        enemy_ship.render(this->window.renderer);
     }
 
-    // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
+    this->game.ship.render(this->window.renderer);
+
+    SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-    SDL_Delay(20);
+    SDL_Delay(100);
 }

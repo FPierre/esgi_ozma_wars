@@ -8,8 +8,6 @@
 #include "GameState.h"
 #include "Window.h"
 #include "Ship.h"
-
-// TESTS
 #include "Weapon.h"
 
 class LevelOne : public GameState {
@@ -17,10 +15,11 @@ class LevelOne : public GameState {
     Game game;
     Window window;
     std::vector<Ship> ships;
-    std::map<std::string, Sprite> sprites;
 
     public:
+    LevelOne();
     LevelOne(Game _game, Window _window);
+    LevelOne(const LevelOne& _level_one);
     ~LevelOne();
     void handle_events();
     void logic();

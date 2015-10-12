@@ -17,7 +17,7 @@ class Ship {
 
     public:
     Ship();
-    Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, SDL_Rect _border_limits);
+    Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image);
     Ship(const Ship& _ship);
     ~Ship();
     void render(SDL_Renderer *_renderer);

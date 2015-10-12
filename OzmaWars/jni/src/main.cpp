@@ -29,7 +29,7 @@ int next_state = STATE_NULL;
 GameState *current_state = NULL;
 
 void set_next_state(int newState);
-void change_state(Game game, Window window);
+void change_state(Game& game, Window& window);
 
 #define LOG_TAG "main"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -40,11 +40,17 @@ void change_state(Game game, Window window);
 int main(int argc, char *argv[]) {
     Window window;
 
+LOGI("1");
+
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
     }
 
+LOGI("2");
+
     Game game(0, window);
+
+LOGI("3");
 
     Uint8 done = 0;
     SDL_Event event;
@@ -52,14 +58,24 @@ int main(int argc, char *argv[]) {
     state_id = STATE_LEVEL_ONE;
     current_state = new LevelOne(game, window);
 
+LOGI("4");
+
     while (state_id != STATE_EXIT) {
+
+LOGI("5");
+
         current_state->handle_events();
         current_state->logic();
         // Change state if needed
-        change_state(game, window);
+        // change_state(game, window);
+
+LOGI("6");
+
         // Do state rendering
         current_state->render();
     }
+
+LOGI("7");
 
     // SDL_DestroyTexture(tex);
     // SDL_DestroyTexture(tex2);
@@ -75,7 +91,7 @@ void set_next_state(int newState) {
     }
 }
 
-void change_state(Game game, Window window) {
+void change_state(Game& game, Window& window) {
     // If the state needs to be changed
     if (next_state != STATE_NULL) {
         // Delete the current state

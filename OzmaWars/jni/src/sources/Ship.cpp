@@ -12,20 +12,22 @@ const double PI = 3.14159265358979323846;
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Ship::Ship() {
-
+    LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, SDL_Rect _border_limits) : x(_x),
-                                                                                                   y(_y),
-                                                                                                   health(_health),
-                                                                                                   weapon(_weapon),
-                                                                                                   image(_image),
-                                                                                                   border_limits(_border_limits) {
+Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
+                                                                         y(_y),
+                                                                         health(_health),
+                                                                         weapon(_weapon),
+                                                                         image(_image) {
+                                                                            LOGI("Consructeur");
     this->weapon.x = _x;
     this->weapon.y = _y;
 }
 
 Ship::Ship(const Ship& _ship) {
+    LOGI("Constructeur par copie");
+
     x = _ship.x;
     y = _ship.y;
     health = _ship.health;

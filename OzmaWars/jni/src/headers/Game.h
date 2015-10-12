@@ -14,14 +14,17 @@ class Game {
     private:
     int score;
     TTF_Font *font;
-    std::map<std::string, Sprite> sprites;
     Window window;
-    Ship ship;
 
     public:
+    Sprite missile_image;
+    Sprite enemy_ship_image;
+    Sprite ship_image;
+    Ship ship;
+    Game();
     Game(int _score, Window _window);
+    Game(const Game& _game);
     ~Game();
-    Sprite get_sprite(std::string _name);
     int update_score(int points);
     void render_score();
 };
