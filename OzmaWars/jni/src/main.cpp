@@ -40,17 +40,26 @@ void change_state(Game& game, Window& window);
 int main(int argc, char *argv[]) {
     Window window;
 
-LOGI("1");
+// LOGI("1");
 
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
     }
 
-LOGI("2");
+    // Temporaire, à déplacer dans le constructeur de Window ?
+    int w, h;
+    SDL_GetWindowSize(window.screen, &w, &h);
+    //LOGI("%d", w);
+    //LOGI("%d", h);
+
+    window.set_width(w);
+    window.set_height(h);
+
+// LOGI("2");
 
     Game game(0, window);
 
-LOGI("3");
+// LOGI("3");
 
     Uint8 done = 0;
     SDL_Event event;
@@ -58,24 +67,24 @@ LOGI("3");
     state_id = STATE_LEVEL_ONE;
     current_state = new LevelOne(game, window);
 
-LOGI("4");
+// LOGI("4");
 
     while (state_id != STATE_EXIT) {
 
-LOGI("5");
+// LOGI("5");
 
         current_state->handle_events();
         current_state->logic();
         // Change state if needed
         // change_state(game, window);
 
-LOGI("6");
+// LOGI("6");
 
         // Do state rendering
         current_state->render();
     }
 
-LOGI("7");
+// LOGI("7");
 
     // SDL_DestroyTexture(tex);
     // SDL_DestroyTexture(tex2);
