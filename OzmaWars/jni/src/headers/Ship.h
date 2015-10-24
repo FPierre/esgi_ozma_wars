@@ -27,6 +27,7 @@ class Ship {
     ~Ship();
     void set_sprite(Sprite *_image);
     int get_health();
+    bool alive();
     void render(SDL_Renderer *_renderer);
     void fire(int _x, int _y);
     virtual void move() = 0;

@@ -52,12 +52,16 @@ int Ship::get_health() {
     return this->health;
 }
 
+bool Ship::alive() {
+    return this->get_health() > 0;
+}
+
 void Ship::set_sprite(Sprite *_image) {
     this->image = _image;
 }
 
 void Ship::render(SDL_Renderer *_renderer) {
-    if (this->health > 0) {
+    if (this->alive()) {
         this->image->render(this->x, this->y, _renderer);
 
         if (this->weapon.x != this->x || this->weapon.y != this->y) {
