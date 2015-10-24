@@ -95,16 +95,28 @@ void LevelOne::handle_events() {
 }
 
 void LevelOne::logic() {
+    // Vérification des collisions
+    for (EnemyShip enemy_ship : this->enemy_ships) {
+        // Si un missile du Own Ship touche un Enemy Ship
+        if ( this->game.check_collision(this->game.own_ship.weapon, enemy_ship) ) {
+            LOGI("N°: "+i+" = COLLISION FOUND");
+        } else {
+            LOGI("N°: "+i+" = NOT COLLISION");
+        }
+
+        // Si un missile des Enemy Ships touche le Own Ship
+        if ( this->game.check_collision(this->game.own_ship, enemy_ship.weapon) ) {
+            LOGI("N°: "+i+" = COLLISION FOUND");
+        } else {
+            LOGI("N°: "+i+" = NOT COLLISION");
+        }
+    }
+
+    // Mouvements des objets
     this->game.own_ship.move();
 
     this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
-
-    if ( this->game.check_collision(this->game.own_ship, this->enemy_ships[0]) ) {
-        LOGI("COLLISION FOUND");
-    } else {
-        LOGI("NOT COLLISION");
-    }
 
     // this->enemy_ships[0].move(w, 0);
     // // // this->enemy_ships[0].fire(300, 400);
