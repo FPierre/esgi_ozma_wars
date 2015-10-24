@@ -27,7 +27,7 @@ class Ship {
     ~Ship();
     int get_x();
     int get_y();
-    Sprite *get_sprite()
+    Sprite *get_sprite();
     void render(SDL_Renderer *_renderer);
     void fire(int _x, int _y);
     virtual void move() = 0;
