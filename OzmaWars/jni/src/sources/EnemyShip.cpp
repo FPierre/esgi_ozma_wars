@@ -51,7 +51,7 @@ void EnemyShip::set_destination(int _x, int _y) {
     this->length_x = diff_x;
     this->length_y = diff_y;
 
-    this->sprite->set_angle(angle);
+    this->image->set_angle(angle);
 }
 
 void EnemyShip::move() {

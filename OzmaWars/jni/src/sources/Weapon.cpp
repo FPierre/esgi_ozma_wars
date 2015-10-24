@@ -8,10 +8,10 @@ Weapon::Weapon() {
 
 }
 
-Weapon::Weapon(int _strength, Sprite *_sprite) : strength(_strength),
-                                                sprite(_sprite) {
-    this->x = 0;
-    this->y = 0;
+Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
+                                                image(_image) {
+    // this->x = 0;
+    // this->y = 0;
     this->length_x = 0;
     this->length_y = 0;
     this->destination_x = 0;
@@ -26,7 +26,7 @@ Weapon::Weapon(const Weapon& _weapon) {
     destination_x = _weapon.destination_x;
     destination_y = _weapon.destination_y;
     strength = _weapon.strength;
-    sprite = _weapon.sprite;
+    image = _weapon.image;
 }
 
 Weapon::~Weapon() {
@@ -34,7 +34,7 @@ Weapon::~Weapon() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->sprite->render(this->x, this->y, _renderer);
+    this->image->render(this->x, this->y, _renderer);
 }
 
 void Weapon::set_destination(int _x, int _y) {
@@ -56,7 +56,7 @@ void Weapon::set_destination(int _x, int _y) {
     this->length_x = diff_x;
     this->length_y = diff_y;
 
-    this->sprite->set_angle(angle);
+    this->image->set_angle(angle);
 }
 
 void Weapon::move() {

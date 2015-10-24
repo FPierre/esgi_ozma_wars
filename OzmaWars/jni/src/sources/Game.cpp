@@ -15,7 +15,7 @@ Game::Game() {
 Game::Game(int _score, Window _window) : score(_score),
                                          window(_window) {
 
-    LOGI("Constructeur");
+    // LOGI("Constructeur");
     // TTF_Font *test = TTF_OpenFont("fonts/consola.ttf", 20);
 
     Rgb blue_background(0, 255, 255);
@@ -39,9 +39,13 @@ Game::Game(int _score, Window _window) : score(_score),
     }
 
     Sprite own_ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+    Sprite own_ship_image_left(82, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+    Sprite own_ship_image_right(0, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
 
     if (&own_ship_image != nullptr) {
         this->own_ship_image = own_ship_image;
+        this->own_ship_image_left = own_ship_image_left;
+        this->own_ship_image_right = own_ship_image_right;
     }
     else {
         LOGI("Sprite missile_image n'a pas pu être crée");
@@ -49,7 +53,9 @@ Game::Game(int _score, Window _window) : score(_score),
 
     Weapon canon(100, &(this->missile_image));
 
-    OwnShip own_ship(500, 500, 100, canon, &(this->own_ship_image));
+    OwnShip own_ship(500, 500, 100, canon, &(this->own_ship_image),
+                                           &own_ship_image_left,
+                                           &own_ship_image_right);
 
     this->own_ship = own_ship;
 }
@@ -64,6 +70,8 @@ Game::Game(const Game& _game) {
     missile_image = _game.missile_image;
     enemy_ship_image = _game.enemy_ship_image;
     own_ship_image = _game.own_ship_image;
+    own_ship_image_left = _game.own_ship_image_left;
+    own_ship_image_right = _game.own_ship_image_right;
 }
 
 Game::~Game() {

@@ -1,3 +1,4 @@
+#include <android/log.h>
 #include "android/sensor.h"
 #include "../sdl/src/core/android/SDL_android.h"
 
@@ -5,12 +6,23 @@
 
 const double PI = 3.14159265358979323846;
 
+#define LOG_TAG "OwnShip"
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+
 OwnShip::OwnShip() : Ship() {
 
 }
 
-OwnShip::OwnShip(int _x, int _y, int _health, Weapon _weapon, Sprite *_sprite) : Ship(_x, _y, _health, _weapon, _sprite) {
+OwnShip::OwnShip(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right) :
+    Ship(_x, _y, _health, _weapon, _image) {
+
     // LOGI("Constructeur");
+    this->image_front = _image;
+    this->image_left = _image_left;
+    this->image_right = _image_right;
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
@@ -20,7 +32,10 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     y = _ship.y;
     health = _ship.health;
     weapon = _ship.weapon;
-    sprite = _ship.sprite;
+    image = _ship.image;
+    image_front = _ship.image_front;
+    image_left = _ship.image_left;
+    image_right = _ship.image_right;
 }
 
 OwnShip::~OwnShip() {
@@ -31,12 +46,23 @@ void OwnShip::move() {
     float accelerometer_values[3];
     Android_JNI_GetAccelerometerValues(accelerometer_values);
 
-    float tmp_x_value = this->x + (20 * accelerometer_values[0]);
-    float tmp_y_value = this->y + (20 * accelerometer_values[1]);
+    float tmp_x_value = this->x + (21 * accelerometer_values[0]);
+    float tmp_y_value = this->y + (21 * accelerometer_values[1]);
 
     // TODO Passer cette partie dans constructeur (ce calcul n'est pas a faire ici)
-    int ship_width = this->sprite->get_width() * 2;
-    int ship_height = this->sprite->get_height() * 2;
+    int ship_width = this->image->get_width() * 2;
+    int ship_height = this->image->get_height() * 2;
+
+    // TODO Buggé, à finir (va dans le else, mais ne set pas le sprite image)
+    if (this->x > tmp_x_value + 2) {
+        set_sprite(this->image_right);
+    }
+    else if (this->x < tmp_x_value - 2) {
+        set_sprite(this->image_left);
+    }
+    else {
+        set_sprite(this->image_front);
+    }
 
     if (tmp_x_value >= this->area_limits.x && tmp_x_value <= (this->area_limits.w - ship_width)) {
         this->x = tmp_x_value;

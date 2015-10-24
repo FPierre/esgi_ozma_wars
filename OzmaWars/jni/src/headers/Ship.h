@@ -16,7 +16,7 @@ class Ship {
     int destination_x;
     int destination_y;
     int health;
-    Sprite *sprite;
+    Sprite *image;
     SDL_Rect area_limits;
 
     public:
@@ -25,6 +25,7 @@ class Ship {
     Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image);
     Ship(const Ship& _ship);
     ~Ship();
+    void set_sprite(Sprite *_image);
     void render(SDL_Renderer *_renderer);
     void fire(int _x, int _y);
     virtual void move() = 0;

@@ -13,11 +13,11 @@ Ship::Ship() {
     // LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_sprite) : x(_x),
-                                                                           y(_y),
-                                                                           health(_health),
-                                                                           weapon(_weapon),
-                                                                           sprite(_sprite) {
+Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
+                                                                          y(_y),
+                                                                          health(_health),
+                                                                          weapon(_weapon),
+                                                                          image(_image) {
     // LOGI("Constructeur");
 
     this->weapon.x = _x;
@@ -41,16 +41,20 @@ Ship::Ship(const Ship& _ship) {
     destination_y = _ship.destination_y;
     health = _ship.health;
     weapon = _ship.weapon;
-    sprite = _ship.sprite;
+    image = _ship.image;
 }
 
 Ship::~Ship() {
 
 }
 
+void Ship::set_sprite(Sprite *_image) {
+    this->image = _image;
+}
+
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
-        this->sprite->render(this->x, this->y, _renderer);
+        this->image->render(this->x, this->y, _renderer);
 
         if (this->weapon.x != this->x || this->weapon.y != this->y) {
             this->weapon.render(_renderer);

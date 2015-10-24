@@ -55,7 +55,9 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
 
     Weapon canon(100, &(this->game.missile_image));
 
-    OwnShip own_ship(0, 0, 100, canon, &(this->game.own_ship_image));
+    OwnShip own_ship(0, 0, 100, canon, &(this->game.own_ship_image),
+                                       &(this->game.own_ship_image_left),
+                                       &(this->game.own_ship_image_right));
     this->game.own_ship = own_ship;
 
     EnemyShip enemy_ship_1(0, 0, 100, canon, &(this->game.enemy_ship_image));

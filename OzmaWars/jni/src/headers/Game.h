@@ -20,6 +20,8 @@ class Game {
     Sprite missile_image;
     Sprite enemy_ship_image;
     Sprite own_ship_image;
+    Sprite own_ship_image_left;
+    Sprite own_ship_image_right;
     OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
