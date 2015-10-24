@@ -14,18 +14,22 @@ class Game {
     private:
     int score;
     TTF_Font *font;
+    SDL_Color text_color;
     Window window;
 
     public:
     Sprite missile_image;
     Sprite enemy_ship_image;
     Sprite own_ship_image;
+    Sprite own_ship_image_left;
+    Sprite own_ship_image_right;
     OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
     Game(const Game& _game);
     ~Game();
     int update_score(int points);
+    void render_life();
     void render_score();
 
     template<class S1, class S2>

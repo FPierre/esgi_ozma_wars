@@ -16,9 +16,9 @@ class Weapon {
     int length_y;
     int destination_x;
     int destination_y;
-    Sprite *sprite;
+    Sprite *image;
     Weapon();
-    Weapon(int _strength, Sprite *_sprite);
+    Weapon(int _strength, Sprite *_image);
     Weapon(const Weapon& _weapon);
     ~Weapon();
     void render(SDL_Renderer *_renderer);

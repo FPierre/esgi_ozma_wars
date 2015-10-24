@@ -15,47 +15,13 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
 
     // LOGI("Constructeur");
 
-    // Rgb blue_background(0, 255, 255);
-    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
-    // this->sprites["missile"] = missile_image;
-
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(155, 303, 30, 28, 180, "spritesheets/ship.bmp", pink_background, this->window.renderer);
-    // this->sprites["ship"] = ship_image;
-
-    // Sprite m = this->game.missile_image;
-
-    // if (&m != nullptr) {
-    //     Weapon canon(100, &m);
-
-    //     Sprite s = this->game.ship_image;
-
-    //     if (&s != nullptr) {
-    //         Ship ship1(0, 0, 100, canon, &s);
-
-    //         if (&ship1 != nullptr) {
-    //             LOGI("Ship ship1 a pu être crée");
-    //             this->sh = ship1;
-    //         }
-    //         else {
-    //             LOGI("Ship ship1 n'a pas pu être crée");
-    //         }
-    //     }
-    //     else {
-    //         LOGI("Sprite s n'a pas pu être crée");
-    //     }
-    // }
-    // else {
-    //     LOGI("Sprite m n'a pas pu être crée");
-    // }
-
-
-
     int w = this->window.get_width();
 
     Weapon canon(100, &(this->game.missile_image));
 
-    OwnShip own_ship(0, 0, 100, canon, &(this->game.own_ship_image));
+    OwnShip own_ship(0, 0, 100, canon, &(this->game.own_ship_image),
+                                       &(this->game.own_ship_image_left),
+                                       &(this->game.own_ship_image_right));
     this->game.own_ship = own_ship;
 
     EnemyShip enemy_ship_1(0, 0, 100, canon, &(this->game.enemy_ship_image));
@@ -141,7 +107,7 @@ void LevelOne::render() {
 
 // TTF_Init();
 // TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
-// SDL_Color text_color = { 0, 0, 0 };
+// SDL_Color text_color = { 255, 255, 255 };
 // SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
 // SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
 // int mWidth = message->w;
@@ -150,8 +116,8 @@ void LevelOne::render() {
 
 // SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
-// this->game.render_score();
-
+    this->game.render_score();
+    this->game.render_life();
 
     for (EnemyShip enemy_ship : this->enemy_ships) {
         enemy_ship.render(this->window.renderer);
