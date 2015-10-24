@@ -65,12 +65,15 @@ void Weapon::move() {
     // LOGI("this->destination_x : %d", this->destination_x);
     // LOGI("this->destination_y : %d", this->destination_y);
 
-    // TODO Gérer la vitesse par / 100
-    if (this->x < this->destination_x) {
-        this->x += this->length_x / 50;
-    }
 
-    if (this->y < this->destination_y) {
+    // Le missile ne doit pas s'arreter s'il atteint sa "destination"
+    // S'il ne touche pas un vaisseau, il sort de l'écran
+    // TODO Gérer la vitesse par / 50
+    // if (this->x < this->destination_x) {
+        this->x += this->length_x / 50;
+    // }
+
+    // if (this->y < this->destination_y) {
         this->y += this->length_y / 50;
-    }
+    // }
 }

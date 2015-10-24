@@ -1,3 +1,6 @@
+#include "android/sensor.h"
+#include "../sdl/src/core/android/SDL_android.h"
+
 #include "headers/OwnShip.h"
 
 const double PI = 3.14159265358979323846;
@@ -25,5 +28,9 @@ OwnShip::~OwnShip() {
 }
 
 void OwnShip::move() {
+    float accelerometer_values[3];
+    Android_JNI_GetAccelerometerValues(accelerometer_values);
 
+    this->x += (20 * accelerometer_values[0]);
+    this->y += (20 * accelerometer_values[1]);
 }

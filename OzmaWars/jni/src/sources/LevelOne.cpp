@@ -49,23 +49,14 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
     //     LOGI("Sprite m n'a pas pu être crée");
     // }
 
-    // Weapon canon(100, &missile_image);
-    // Weapon canon(100, &(this->game.missile_image));
-    // Weapon canon(100, &(this->game.sprites["missile"]));
 
-    // Ship ship1(0, 0, 100, canon, &(this->sprites["ship"]));
-    // Ship ship1(0, 0, 100, canon, &ship_image);
-    // // // Ship ship1(0, 0, 100, canon, &s);
-    // this->ships.push_back(ship1);
-
-    // Ship ship2(200, 200, 100, canon, &(this->sprites["ship"]));
-    // Ship ship2(200, 200, 100, canon, &ship_image);
-    // // // Ship ship2(200, 200, 100, canon, &s);
-    // this->ships.push_back(ship2);
 
     int w = this->window.get_width();
 
     Weapon canon(100, &(this->game.missile_image));
+
+    OwnShip own_ship(0, 0, 100, canon, &(this->game.own_ship_image));
+    this->game.own_ship = own_ship;
 
     EnemyShip enemy_ship_1(0, 0, 100, canon, &(this->game.enemy_ship_image));
     enemy_ship_1.set_destination(w, 0);
@@ -104,6 +95,8 @@ void LevelOne::handle_events() {
 }
 
 void LevelOne::logic() {
+    this->game.own_ship.move();
+
     this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
 
@@ -146,7 +139,7 @@ void LevelOne::render() {
         enemy_ship.render(this->window.renderer);
     }
 
-    // this->game.own_ship.render(this->window.renderer);
+    this->game.own_ship.render(this->window.renderer);
 
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
