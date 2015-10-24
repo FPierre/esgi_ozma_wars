@@ -9,7 +9,7 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Game::Game() {
-    LOGI("Constructeur trivial");
+    // LOGI("Constructeur trivial");
 }
 
 Game::Game(int _score, Window _window) : score(_score),
@@ -17,6 +17,12 @@ Game::Game(int _score, Window _window) : score(_score),
 
     // LOGI("Constructeur");
     // TTF_Font *test = TTF_OpenFont("fonts/consola.ttf", 20);
+
+    TTF_Init();
+    TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
+    this->font = font;
+    SDL_Color text_color = { 0, 0, 0 };
+    this->text_color = text_color;
 
     Rgb blue_background(0, 255, 255);
     Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
@@ -86,20 +92,31 @@ int Game::update_score(int points) {
 }
 
 void Game::render_score() {
+    char buffer[4];
+    int score = this->score;
+    int ret = snprintf(buffer, sizeof(buffer), "%d", score);
+    char *text = buffer;
 
-// TTF_Init();
-// TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
-// SDL_Color text_color = { 0, 0, 0 };
-// SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
-// SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
-// int mWidth = message->w;
-// int mHeight = message->h;
-// SDL_Rect test = { 10, 10, mWidth, mHeight };
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
+    int mWidth = message->w;
+    int mHeight = message->h;
+    SDL_Rect test = { 100, 10, mWidth, mHeight };
 
-// SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+    SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+}
 
+void Game::render_life() {
+    char buffer[4];
+    int number = this->own_ship.get_health();
+    int ret = snprintf(buffer, sizeof(buffer), "%d", number);
+    char *text = buffer;
 
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
+    int mWidth = message->w;
+    int mHeight = message->h;
+    SDL_Rect test = { 200, 10, mWidth, mHeight };
 
-// TTF_CloseFont(font);
-// TTF_Quit();
+    SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }

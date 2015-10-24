@@ -125,7 +125,7 @@ void LevelOne::render() {
 
 // TTF_Init();
 // TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
-// SDL_Color text_color = { 0, 0, 0 };
+// SDL_Color text_color = { 255, 255, 255 };
 // SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
 // SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
 // int mWidth = message->w;
@@ -134,8 +134,8 @@ void LevelOne::render() {
 
 // SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
-// this->game.render_score();
-
+    this->game.render_score();
+    this->game.render_life();
 
     for (EnemyShip enemy_ship : this->enemy_ships) {
         enemy_ship.render(this->window.renderer);

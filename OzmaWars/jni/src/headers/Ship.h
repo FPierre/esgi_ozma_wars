@@ -26,6 +26,7 @@ class Ship {
     Ship(const Ship& _ship);
     ~Ship();
     void set_sprite(Sprite *_image);
+    int get_health();
     void render(SDL_Renderer *_renderer);
     void fire(int _x, int _y);
     virtual void move() = 0;

@@ -48,6 +48,10 @@ Ship::~Ship() {
 
 }
 
+int Ship::get_health() {
+    return this->health;
+}
+
 void Ship::set_sprite(Sprite *_image) {
     this->image = _image;
 }
