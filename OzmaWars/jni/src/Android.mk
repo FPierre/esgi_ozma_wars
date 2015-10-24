@@ -13,11 +13,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
                     $(LOCAL_PATH)/$(SDL_TTF_PATH)
 
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
-<<<<<<< HEAD
     main.cpp sources/EnemyShip.cpp sources/Game.cpp sources/Window.cpp sources/Rgb.cpp sources/Sprite.cpp sources/Weapon.cpp sources/Ship.cpp sources/GameState.cpp sources/LevelOne.cpp sources/LevelTwo.cpp sources/OwnShip.cpp
-=======
-	main.c ship.c weapon.c sprite.c star.c
->>>>>>> d14f08cf6476552571784e34fd45c2e720be22f2
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_ttf
 

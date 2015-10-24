@@ -6,6 +6,8 @@
          Version Control Systems. -->
     <property file="local.properties" />
 
+    <exec executable="${ndk.dir}/ndk-build.cmd" failonerror="true" />
+
     <!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.
          This is the place to change some Ant specific build properties.
