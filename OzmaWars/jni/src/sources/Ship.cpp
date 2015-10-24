@@ -48,7 +48,6 @@ Ship::~Ship() {
 
 }
 
-<<<<<<< HEA
 int Ship::get_x() { return this->x; }
 int Ship::get_y() { return this->y; }
 Sprite *Ship::get_sprite() { return this->sprite; }
