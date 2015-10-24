@@ -100,6 +100,12 @@ void LevelOne::logic() {
     this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
 
+    if ( this->game.check_collision(this->game.own_ship, this->enemy_ships[0]) ) {
+        LOGI("COLLISION FOUND");
+    } else {
+        LOGI("NOT COLLISION");
+    }
+
     // this->enemy_ships[0].move(w, 0);
     // // // this->enemy_ships[0].fire(300, 400);
 

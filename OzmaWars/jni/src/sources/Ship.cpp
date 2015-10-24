@@ -48,6 +48,10 @@ Ship::~Ship() {
 
 }
 
+int Ship::get_x() { return this->x; }
+int Ship::get_y() { return this->y; }
+Sprite *Ship::get_sprite() { return this->sprite; }
+
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
         this->sprite->render(this->x, this->y, _renderer);

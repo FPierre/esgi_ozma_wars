@@ -27,6 +27,36 @@ class Game {
     ~Game();
     int update_score(int points);
     void render_score();
+
+    template<class S1, class S2>
+    bool check_collision(S1 a, S2 b) {
+        // Initialisation des variables
+        int leftA,   leftB;
+        int rightA,  rightB;
+        int topA,    topB;
+        int bottomA, bottomB;
+
+        // Calcule les côtés du 1er objet (A)
+        leftA =     a.get_x();
+        rightA =    leftA + a.get_sprite()->get_width();
+        topA =      a.get_y();
+        bottomA =   topA + a.get_sprite()->get_height();
+
+        // Calcule les côtés du 2nd objet (B)
+        leftB =     b.get_x();
+        rightB =    leftB + b.get_sprite()->get_width();
+        topB =      b.get_y();
+        bottomB =   topB + b.get_sprite()->get_height();
+
+        // Si un seul des côtés de B est hors zone A, alors il n'y a pas de collision possible
+        if( bottomB <= topA ) { /*LOGI("A");*/ return false; }
+        if( topB >= bottomA ) { /*LOGI("B");*/ return false; }
+        if( rightB <= leftA ) { /*LOGI("C");*/ return false; }
+        if( leftB >= rightA ) { /*LOGI("D");*/ return false; }
+
+        // Si aucun des côtés de B est hors zone A, alors il y a collision
+        return true;
+    }
 };
 
 #endif

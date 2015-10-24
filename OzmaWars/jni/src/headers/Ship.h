@@ -25,6 +25,9 @@ class Ship {
     Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image);
     Ship(const Ship& _ship);
     ~Ship();
+    int get_x();
+    int get_y();
+    Sprite *get_sprite()
     void render(SDL_Renderer *_renderer);
     void fire(int _x, int _y);
     virtual void move() = 0;
