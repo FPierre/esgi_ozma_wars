@@ -6,7 +6,7 @@
 #include "SDL_ttf.h"
 
 #include "Rgb.h"
-#include "Ship.h"
+#include "OwnShip.h"
 #include "Sprite.h"
 #include "Window.h"
 
@@ -19,8 +19,8 @@ class Game {
     public:
     Sprite missile_image;
     Sprite enemy_ship_image;
-    Sprite ship_image;
-    Ship ship;
+    Sprite own_ship_image;
+    OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
     Game(const Game& _game);

@@ -3,8 +3,6 @@
 
 #include "headers/Ship.h"
 
-const double PI = 3.14159265358979323846;
-
 #define LOG_TAG "Ship"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
@@ -12,27 +10,38 @@ const double PI = 3.14159265358979323846;
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Ship::Ship() {
-    LOGI("Constructeur trivial");
+    // LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
-                                                                         y(_y),
-                                                                         health(_health),
-                                                                         weapon(_weapon),
-                                                                         image(_image) {
-                                                                            LOGI("Consructeur");
+Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_sprite) : x(_x),
+                                                                           y(_y),
+                                                                           health(_health),
+                                                                           weapon(_weapon),
+                                                                           sprite(_sprite) {
+    // LOGI("Constructeur");
+
     this->weapon.x = _x;
     this->weapon.y = _y;
+    this->length_x = 0;
+    this->length_y = 0;
+    this->destination_x = 0;
+    this->destination_y = 0;
+    // TODO Passer les valeurs de l'attribut screen de l'objet Window
+    this->area_limits = { 0, 0, 1920, 1080 };
 }
 
 Ship::Ship(const Ship& _ship) {
-    LOGI("Constructeur par copie");
+    // LOGI("Constructeur par copie");
 
     x = _ship.x;
     y = _ship.y;
+    length_x = _ship.length_x;
+    length_y = _ship.length_y;
+    destination_x = _ship.destination_x;
+    destination_y = _ship.destination_y;
     health = _ship.health;
     weapon = _ship.weapon;
-    image = _ship.image;
+    sprite = _ship.sprite;
 }
 
 Ship::~Ship() {
@@ -41,7 +50,7 @@ Ship::~Ship() {
 
 void Ship::render(SDL_Renderer *_renderer) {
     if (this->health > 0) {
-        this->image->render(this->x, this->y, _renderer);
+        this->sprite->render(this->x, this->y, _renderer);
 
         if (this->weapon.x != this->x || this->weapon.y != this->y) {
             this->weapon.render(_renderer);
@@ -53,41 +62,6 @@ void Ship::render(SDL_Renderer *_renderer) {
     }
 }
 
-void Ship::move(int _x, int _y) {
-    double val = 180.0 / PI;
-    double diff_x = _x - this->x;
-    double diff_y = _y - this->y;
-    double length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    double angle = atan2(diff_y, diff_x) * val;
-
-    this->image->angle = angle;
-
-    // TODO Gérer la vitesse par ce / 100
-    if (this->x < _x) {
-        this->x += diff_x / 100;
-    }
-
-    if (this->y < _y) {
-        this->y += diff_y / 100;
-    }
-
-    // if (_x < this->border_limits.x) {
-    //     _x = 0;
-    // }
-
-    // if (_x > this->border_limits.w) {
-    //     _x = this->border_limits.w;
-    // }
-
-    // if (_y < this->border_limits.y) {
-    //     _y = 0;
-    // }
-
-    // if (_y > this->border_limits.h) {
-    //     _y = this->border_limits.h;
-    // }
-}
-
 void Ship::fire(int _x, int _y) {
-    this->weapon.move(this->x, this->y, _x, _y);
+    this->weapon.set_destination(_x, _y);
 }

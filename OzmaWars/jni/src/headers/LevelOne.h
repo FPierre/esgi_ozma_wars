@@ -7,14 +7,14 @@
 #include "Game.h"
 #include "GameState.h"
 #include "Window.h"
-#include "Ship.h"
+#include "EnemyShip.h"
 #include "Weapon.h"
 
 class LevelOne : public GameState {
     private:
     Game game;
     Window window;
-    std::vector<Ship> ships;
+    std::vector<EnemyShip> enemy_ships;
 
     public:
     LevelOne();

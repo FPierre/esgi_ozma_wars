@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
     // Temporaire, à déplacer dans le constructeur de Window ?
     int w, h;
     SDL_GetWindowSize(window.screen, &w, &h);
-    //LOGI("%d", w);
-    //LOGI("%d", h);
+    // LOGI("%d", w);
+    // LOGI("%d", h);
 
     window.set_width(w);
     window.set_height(h);

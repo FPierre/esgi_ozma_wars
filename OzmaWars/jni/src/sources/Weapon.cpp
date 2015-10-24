@@ -8,15 +8,25 @@ Weapon::Weapon() {
 
 }
 
-Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
-                                                image(_image) {
+Weapon::Weapon(int _strength, Sprite *_sprite) : strength(_strength),
+                                                sprite(_sprite) {
     this->x = 0;
     this->y = 0;
+    this->length_x = 0;
+    this->length_y = 0;
+    this->destination_x = 0;
+    this->destination_y = 0;
 }
 
 Weapon::Weapon(const Weapon& _weapon) {
+    x = _weapon.x;
+    y = _weapon.y;
+    length_x = _weapon.length_x;
+    length_y = _weapon.length_y;
+    destination_x = _weapon.destination_x;
+    destination_y = _weapon.destination_y;
     strength = _weapon.strength;
-    image = _weapon.image;
+    sprite = _weapon.sprite;
 }
 
 Weapon::~Weapon() {
@@ -24,23 +34,43 @@ Weapon::~Weapon() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->image->render(this->x, this->y, _renderer);
+    this->sprite->render(this->x, this->y, _renderer);
 }
 
-void Weapon::move(int _start_x, int _start_y, int _target_x, int _target_y) {
-    double val = 180.0 / PI;
-    double diff_x = _target_x - _start_x;
-    double diff_y = _target_y - _start_y;
-    double length = sqrt(diff_x * diff_x + diff_y * diff_y);
-    double angle = atan2(diff_y, diff_x) * val;
+void Weapon::set_destination(int _x, int _y) {
+    int diff_x = _x - this->x;
+    int diff_y = _y - this->y;
+    double angle = atan2(diff_x, diff_y) * (180.0 / PI);
 
-    this->image->angle = angle;
+    // LOGI("this->x : %d", this->x);
+    // LOGI("this->y : %d", this->y);
+    // LOGI("_x : %d", _x);
+    // LOGI("_y : %d", _y);
+    // LOGI("diff_x : %d", diff_x);
+    // LOGI("diff_y : %d", diff_y);
+    // LOGI("Angle : %f", angle);
 
-    if (this->x < _target_x) {
-        this->x += diff_x / 100;
+    // TODO Faire des struct Target (avec x et y) pour gérer les points
+    this->destination_x = _x;
+    this->destination_y = _y;
+    this->length_x = diff_x;
+    this->length_y = diff_y;
+
+    this->sprite->set_angle(angle);
+}
+
+void Weapon::move() {
+    // LOGI("this->x : %d", this->x);
+    // LOGI("this->y : %d", this->y);
+    // LOGI("this->destination_x : %d", this->destination_x);
+    // LOGI("this->destination_y : %d", this->destination_y);
+
+    // TODO Gérer la vitesse par / 100
+    if (this->x < this->destination_x) {
+        this->x += this->length_x / 50;
     }
 
-    if (this->y < _target_y) {
-        this->y += diff_y / 100;
+    if (this->y < this->destination_y) {
+        this->y += this->length_y / 50;
     }
 }

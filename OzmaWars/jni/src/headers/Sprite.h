@@ -12,17 +12,18 @@ class Sprite {
     int y;
     int w;
     int h;
+    double angle;
     Rgb background;
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Rect image_location;
 
     public:
-    double angle;
     Sprite();
     Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *_renderer);
     Sprite(const Sprite& _sprite);
     ~Sprite();
+    void set_angle(double _angle);
     void render(int _x, int _y, SDL_Renderer *_renderer);
 };
 

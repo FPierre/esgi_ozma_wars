@@ -8,7 +8,6 @@
 class LevelTwo : public GameState {
     private:
     Window window;
-    Ship ship;
 
     public:
     LevelTwo(Window _window);

@@ -13,7 +13,8 @@
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
 
-                                                    LOGI("Constructeur");
+    // LOGI("Constructeur");
+
     // Rgb blue_background(0, 255, 255);
     // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     // this->sprites["missile"] = missile_image;
@@ -62,24 +63,28 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
     // // // Ship ship2(200, 200, 100, canon, &s);
     // this->ships.push_back(ship2);
 
+    int w = this->window.get_width();
+
     Weapon canon(100, &(this->game.missile_image));
 
-    Ship enemy_ship_1(0, 0, 100, canon, &(this->game.enemy_ship_image));
-    this->ships.push_back(enemy_ship_1);
+    EnemyShip enemy_ship_1(0, 0, 100, canon, &(this->game.enemy_ship_image));
+    enemy_ship_1.set_destination(w, 0);
+    enemy_ship_1.fire(1000, 800);
+    this->enemy_ships.push_back(enemy_ship_1);
 
-    Ship enemy_ship_2(50, 0, 100, canon, &(this->game.enemy_ship_image));
-    this->ships.push_back(enemy_ship_2);
+    // EnemyShip enemy_ship_2(50, 0, 100, canon, &(this->game.enemy_ship_image));
+    // this->enemy_ships.push_back(enemy_ship_2);
 
-    Ship enemy_ship_3(100, 0, 100, canon, &(this->game.enemy_ship_image));
-    this->ships.push_back(enemy_ship_3);
+    // EnemyShip enemy_ship_3(100, 0, 100, canon, &(this->game.enemy_ship_image));
+    // this->enemy_ships.push_back(enemy_ship_3);
 }
 
 LevelOne::LevelOne(const LevelOne& _level_one) {
-    LOGI("Constructeur par copie");
+    // LOGI("Constructeur par copie");
 
     game = _level_one.game;
     window = _level_one.window;
-    ships = _level_one.ships;
+    enemy_ships = _level_one.enemy_ships;
 }
 
 LevelOne::~LevelOne() {
@@ -99,15 +104,16 @@ void LevelOne::handle_events() {
 }
 
 void LevelOne::logic() {
-    int w = this->window.get_width();
+    this->enemy_ships[0].move();
+    this->enemy_ships[0].weapon.move();
 
-    this->ships[0].move(w, 0);
-    // // this->ships[0].fire(300, 400);
+    // this->enemy_ships[0].move(w, 0);
+    // // // this->enemy_ships[0].fire(300, 400);
 
-    this->ships[1].move(550, 0);
-    // // this->ships[1].fire(700, 200);
+    // this->enemy_ships[1].move(550, 0);
+    // // // this->enemy_ships[1].fire(700, 200);
 
-    this->ships[2].move(600, 0);
+    // this->enemy_ships[2].move(600, 0);
 
     // If the dot went to the exit
     // if (check_collision(myDot, exit) == true) {
@@ -136,16 +142,16 @@ void LevelOne::render() {
 // this->game.render_score();
 
 
-    for (Ship enemy_ship : this->ships) {
+    for (EnemyShip enemy_ship : this->enemy_ships) {
         enemy_ship.render(this->window.renderer);
     }
 
-    this->game.ship.render(this->window.renderer);
+    // this->game.own_ship.render(this->window.renderer);
 
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-    SDL_Delay(100);
+    SDL_Delay(10);
 }

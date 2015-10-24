@@ -9,13 +9,13 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Game::Game() {
- LOGI("Constructeur trivial");
+    LOGI("Constructeur trivial");
 }
 
 Game::Game(int _score, Window _window) : score(_score),
                                          window(_window) {
 
-                                             LOGI("Constructeur");
+    LOGI("Constructeur");
     // TTF_Font *test = TTF_OpenFont("fonts/consola.ttf", 20);
 
     Rgb blue_background(0, 255, 255);
@@ -38,38 +38,32 @@ Game::Game(int _score, Window _window) : score(_score),
         LOGI("Sprite enemy_ship_image n'a pas pu être crée");
     }
 
-    Sprite ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+    Sprite own_ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
 
-    if (&ship_image != nullptr) {
-        this->ship_image = ship_image;
+    if (&own_ship_image != nullptr) {
+        this->own_ship_image = own_ship_image;
     }
     else {
         LOGI("Sprite missile_image n'a pas pu être crée");
     }
 
-    // Rgb blue_background(0, 255, 255);
-    // Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
-
     Weapon canon(100, &(this->missile_image));
 
-    // Rgb pink_background(255, 0, 255);
-    // Sprite ship_image(155, 303, 30, 28, 180, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+    OwnShip own_ship(500, 500, 100, canon, &(this->own_ship_image));
 
-    Ship ship(500, 500, 100, canon, &(this->ship_image));
-
-    this->ship = ship;
+    this->own_ship = own_ship;
 }
 
 Game::Game(const Game& _game) {
- LOGI("Constructeur par copie");
+    LOGI("Constructeur par copie");
 
     score = _game.score;
     font = _game.font;
     window = _game.window;
-    ship = _game.ship;
+    own_ship = _game.own_ship;
     missile_image = _game.missile_image;
     enemy_ship_image = _game.enemy_ship_image;
-    ship_image = _game.ship_image;
+    own_ship_image = _game.own_ship_image;
 }
 
 Game::~Game() {
