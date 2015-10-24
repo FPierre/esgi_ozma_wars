@@ -23,6 +23,8 @@ class Sprite {
     Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *_renderer);
     Sprite(const Sprite& _sprite);
     ~Sprite();
+    int get_width();
+    int get_height();
     void set_angle(double _angle);
     void render(int _x, int _y, SDL_Renderer *_renderer);
 };

@@ -48,6 +48,14 @@ Sprite::~Sprite() {
 
 }
 
+int Sprite::get_width() {
+    return this->w;
+}
+
+int Sprite::get_height() {
+    return this->h;
+}
+
 void Sprite::set_angle(double _angle) {
     this->angle = _angle;
 }

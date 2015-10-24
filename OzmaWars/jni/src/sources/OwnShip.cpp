@@ -31,6 +31,18 @@ void OwnShip::move() {
     float accelerometer_values[3];
     Android_JNI_GetAccelerometerValues(accelerometer_values);
 
-    this->x += (20 * accelerometer_values[0]);
-    this->y += (20 * accelerometer_values[1]);
+    float tmp_x_value = this->x + (20 * accelerometer_values[0]);
+    float tmp_y_value = this->y + (20 * accelerometer_values[1]);
+
+    // TODO Passer cette partie dans constructeur (ce calcul n'est pas a faire ici)
+    int ship_width = this->sprite->get_width() * 2;
+    int ship_height = this->sprite->get_height() * 2;
+
+    if (tmp_x_value >= this->area_limits.x && tmp_x_value <= (this->area_limits.w - ship_width)) {
+        this->x = tmp_x_value;
+    }
+
+    if (tmp_y_value >= this->area_limits.y && tmp_y_value <= (this->area_limits.h - ship_height)) {
+        this->y = tmp_y_value;
+    }
 }
