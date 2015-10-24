@@ -12,12 +12,11 @@ Game::Game() {
     // LOGI("Constructeur trivial");
 }
 
+// TODO Faire le destructeur spécial de TTF
 Game::Game(int _score, Window _window) : score(_score),
                                          window(_window) {
 
     // LOGI("Constructeur");
-    // TTF_Font *test = TTF_OpenFont("fonts/consola.ttf", 20);
-
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
     this->font = font;
