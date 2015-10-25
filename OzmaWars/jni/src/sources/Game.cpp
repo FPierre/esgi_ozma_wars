@@ -24,6 +24,7 @@ Game::Game(int _score, Window _window) : score(_score),
     this->text_color = text_color;
 
     Rgb blue_background(0, 255, 255);
+
     Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
 
     if (&missile_image != nullptr) {
@@ -33,7 +34,17 @@ Game::Game(int _score, Window _window) : score(_score),
         LOGI("Sprite missile_image n'a pas pu être crée");
     }
 
+    Sprite explosion_image(3, 152, 75, 65, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+
+    if (&explosion_image != nullptr) {
+        this->explosion_image = explosion_image;
+    }
+    else {
+        LOGI("Sprite explosion_image n'a pas pu être crée");
+    }
+
     Rgb pink_background(255, 0, 255);
+
     Sprite enemy_ship_image(155, 303, 30, 28, 180.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
 
     if (&enemy_ship_image != nullptr) {
@@ -53,14 +64,14 @@ Game::Game(int _score, Window _window) : score(_score),
         this->own_ship_image_right = own_ship_image_right;
     }
     else {
-        LOGI("Sprite missile_image n'a pas pu être crée");
+        LOGI("Sprite own_ship_image n'a pas pu être crée");
     }
 
     Weapon canon(100, &(this->missile_image));
 
-    OwnShip own_ship(500, 500, 100, canon, &(this->own_ship_image),
-                                           &own_ship_image_left,
-                                           &own_ship_image_right);
+    OwnShip own_ship(500, 500, 100, canon, &(this->explosion_image),
+                                           &explosion_image,
+                                           &explosion_image);
 
     this->own_ship = own_ship;
 }
@@ -81,6 +92,10 @@ Game::Game(const Game& _game) {
 
 Game::~Game() {
 
+}
+
+int Game::get_score() {
+    return this->score;
 }
 
 /**

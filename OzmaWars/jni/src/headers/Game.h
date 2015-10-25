@@ -23,11 +23,13 @@ class Game {
     Sprite own_ship_image;
     Sprite own_ship_image_left;
     Sprite own_ship_image_right;
+    Sprite explosion_image;
     OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
     Game(const Game& _game);
     ~Game();
+    int get_score();
     int update_score(int points);
     void render_life();
     void render_score();
