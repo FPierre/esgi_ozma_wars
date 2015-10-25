@@ -27,7 +27,7 @@ Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path,
         exit(0);
     }
 
-    SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
+    // SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
 
     this->texture = SDL_CreateTextureFromSurface(_renderer, this->surface);
     this->image_location = { this->x, this->y, this->w, this->h };;

@@ -49,15 +49,7 @@ LevelOne::~LevelOne() {
 }
 
 void LevelOne::handle_events() {
-    SDL_Event event;
 
-    while (SDL_PollEvent(&event)) {
-        // myDot.handle_input();
-
-        if (event.type == SDL_QUIT) {
-            // set_next_state(STATE_EXIT);
-        }
-    }
 }
 
 void LevelOne::logic() {
@@ -66,37 +58,17 @@ void LevelOne::logic() {
     this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
 
-    // this->enemy_ships[0].move(w, 0);
-    // // // this->enemy_ships[0].fire(300, 400);
+    if (this->game.get_score() > 5) {
+        set_next_state(STATE_LEVEL_TWO);
+    }
 
-    // this->enemy_ships[1].move(550, 0);
-    // // // this->enemy_ships[1].fire(700, 200);
-
-    // this->enemy_ships[2].move(600, 0);
-
-    // If the dot went to the exit
-    // if (check_collision(myDot, exit) == true) {
-    //     // Go to the overworld
-    //     set_next_state(STATE_GREEN_OVERWORLD);
-    // }
-
-    // // Move the dot
-    // myDot.move();
+    if (this->game.own_ship.alive() == false) {
+        set_next_state(STATE_EXIT);
+    }
 }
 
 void LevelOne::render() {
     SDL_RenderClear(this->window.renderer);
-
-// TTF_Init();
-// TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
-// SDL_Color text_color = { 255, 255, 255 };
-// SDL_Surface *message = TTF_RenderText_Solid(font, "test", text_color);
-// SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
-// int mWidth = message->w;
-// int mHeight = message->h;
-// SDL_Rect test = { 10, 10, mWidth, mHeight };
-
-// SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 
     this->game.render_score();
     this->game.render_life();
@@ -108,8 +80,8 @@ void LevelOne::render() {
     this->game.own_ship.render(this->window.renderer);
 
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
     SDL_Delay(10);
