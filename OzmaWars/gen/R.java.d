@@ -4,7 +4,7 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\borde
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_white.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\cinematic_details.jpg \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\cinematic_final.jpg \
-C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\cinematic_intro.jpg \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\cinematic_pilot.jpg \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-hdpi\ic_launcher.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-hdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-mdpi\ic_launcher.png \

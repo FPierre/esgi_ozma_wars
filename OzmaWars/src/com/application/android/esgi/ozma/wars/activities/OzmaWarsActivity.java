@@ -12,6 +12,7 @@ import android.view.Display;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.graphics.Point;
+import java.lang.Runnable;
 import com.squareup.picasso.Picasso;
 
 import com.application.android.esgi.ozma.wars.R;
@@ -30,6 +31,8 @@ public class OzmaWarsActivity extends Activity {
     private static final String DEBUG_TAG = "//-- OzmaWarsActivity";
     private SharedPreferences prefs;
     private FrameLayout frame;
+    private int introStep,
+                imageSize;
 
     // Setup
     @Override
@@ -48,9 +51,25 @@ public class OzmaWarsActivity extends Activity {
         //             .add(R.id.main_frame, FragmentStart.newInstance(), OzmaUtils.START_TAG)
         //             .commit();
         // } else {
+            // Prepare the animation
+            Runnable introRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    playIntroduction(introStep);
+                    introStep++;
+
+                    if (introStep > 2) {
+                        frame.removeCallbacks(this);
+                        return;
+                    }
+
+                    // Loop
+                    frame.postDelayed(this, 6000);
+                }
+            };
             // Call the introduction
             frame = (FrameLayout) findViewById(R.id.main_frame);
-            playIntroduction();
+            frame.postDelayed(introRunnable, 1000);
             // Save the state introduction
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(OzmaUtils.P__INTRO, true);
@@ -80,16 +99,35 @@ public class OzmaWarsActivity extends Activity {
     }
 
     // Introduction
-    private void playIntroduction() {
+    private void playIntroduction(int i) {
         // Show images and text
         ImageView screen = new ImageView(this);
         frame.addView(screen);
 
-        final Point displySize = getDisplaySize(getWindowManager().getDefaultDisplay());
-        final int size = (int) Math.ceil(Math.sqrt(displySize.x * displySize.y));
+        // Get images
+        int idImage;
+        switch(i) {
+            case 0: default:
+                idImage = R.drawable.cinematic_details;
+                break;
+            case 1:
+                idImage = R.drawable.cinematic_pilot;
+                break;
+            case 2:
+                idImage = R.drawable.cinematic_final;
+                break;
+        }
+
+        // Prepare image sizes
+        if (imageSize == 0) {
+            final Point displySize = getDisplaySize(getWindowManager().getDefaultDisplay());
+            imageSize = (int) Math.ceil(Math.sqrt(displySize.x * displySize.y));
+        }
+
+        // Show images
         Picasso.with(this)
-                .load(R.drawable.cinematic_details)
-                .resize(size*2, size)
+                .load(idImage)
+                .resize(imageSize, imageSize)
                 .centerCrop()
                 .into(screen);
         // Preparation de l'animation

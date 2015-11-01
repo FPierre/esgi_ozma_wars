@@ -4,6 +4,7 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\ap
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\GameActivity$SDLCommandHandler.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\GameActivity$ShowTextInputTask.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\GameActivity.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\OzmaWarsActivity$1.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\OzmaWarsActivity.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\SDLGenericMotionListener_API12.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\activities\SDLInputConnection.class \
