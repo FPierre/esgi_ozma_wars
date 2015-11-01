@@ -47,3 +47,4 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\ap
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\R.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\utils\OzmaUtils.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\widgets\OzmaText.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\dexedLibs\picasso-2.5.2-17a77fe6c3277adb926bd66ef5db070d.jar \
