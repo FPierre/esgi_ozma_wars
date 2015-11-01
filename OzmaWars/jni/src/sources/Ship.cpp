@@ -13,9 +13,10 @@ Ship::Ship() {
     // LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
+Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image) : x(_x),
                                                                           y(_y),
                                                                           health(_health),
+                                                                          status(_status),
                                                                           weapon(_weapon),
                                                                           image(_image) {
     // LOGI("Constructeur");
@@ -40,6 +41,7 @@ Ship::Ship(const Ship& _ship) {
     destination_x = _ship.destination_x;
     destination_y = _ship.destination_y;
     health = _ship.health;
+    status = _ship.status;
     weapon = _ship.weapon;
     image = _ship.image;
 }
@@ -50,32 +52,38 @@ Ship::~Ship() {
 
 int Ship::get_x() { return this->x; }
 int Ship::get_y() { return this->y; }
-Sprite *Ship::get_sprite() { return this->sprite; }
 
-int Ship::get_health() {
-    return this->health;
+void Ship::set_sprite(Sprite *_image) {
+    this->image = _image;
 }
+Sprite *Ship::get_sprite() { return this->image; }
+
+void Ship::set_status(int _status) {
+    this->status -= _status;
+}
+int Ship::get_status() { return this->status; }
+
+void Ship::set_health(int _health) {
+    this->health = _health;
+}
+int Ship::get_health() { return this->health; }
 
 bool Ship::alive() {
     return this->get_health() > 0;
 }
 
-void Ship::set_sprite(Sprite *_image) {
-    this->image = _image;
-}
+void Ship::render(SDL_Renderer *_renderer, Sprite *_image) {
+    // if (this->alive()) {
+        _image->render(this->x, this->y, _renderer);
 
-void Ship::render(SDL_Renderer *_renderer) {
-    if (this->alive()) {
-        this->image->render(this->x, this->y, _renderer);
-
-        if (this->weapon.x != this->x || this->weapon.y != this->y) {
-            this->weapon.render(_renderer);
-        }
-    }
-    else {
-        // Sprite d'une explosion
-        // Render d'un bonus ici ?
-    }
+        // if (this->weapon.x != this->x || this->weapon.y != this->y) {
+        //     this->weapon.render(_renderer);
+        // }
+    // }
+    // else {
+    //     // Sprite d'une explosion
+    //     // Render d'un bonus ici ?
+    // }
 }
 
 void Ship::fire(int _x, int _y) {

@@ -59,6 +59,10 @@ void Weapon::set_destination(int _x, int _y) {
     this->image->set_angle(angle);
 }
 
+int Weapon::get_x() { return this->x; }
+int Weapon::get_y() { return this->y; }
+Sprite *Weapon::get_sprite() { return this->image; }
+
 void Weapon::move() {
     // LOGI("this->x : %d", this->x);
     // LOGI("this->y : %d", this->y);

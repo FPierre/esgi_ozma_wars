@@ -23,6 +23,9 @@ class Game {
     Sprite own_ship_image;
     Sprite own_ship_image_left;
     Sprite own_ship_image_right;
+    Sprite destroyed_ship_image_step1;
+    Sprite destroyed_ship_image_step2;
+    Sprite destroyed_ship_image_step3;
     OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
@@ -31,6 +34,7 @@ class Game {
     int update_score(int points);
     void render_life();
     void render_score();
+    void render_destroy(Ship& _ship);
 
     template<class S1, class S2>
     bool check_collision(S1 a, S2 b) {

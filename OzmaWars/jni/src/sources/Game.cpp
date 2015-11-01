@@ -58,11 +58,25 @@ Game::Game(int _score, Window _window) : score(_score),
 
     Weapon canon(100, &(this->missile_image));
 
-    OwnShip own_ship(500, 500, 100, canon, &(this->own_ship_image),
-                                           &own_ship_image_left,
-                                           &own_ship_image_right);
+    OwnShip own_ship(500, 500, 100, 4, canon, &(this->own_ship_image),
+                                                &own_ship_image_left,
+                                                &own_ship_image_right);
 
     this->own_ship = own_ship;
+
+    // Création des spites pour la destruction de vaisseau
+    Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step2(78, 132, 90, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step3(168, 132, 103, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+
+    if (&destroyed_ship_image_step1 != nullptr) {
+        this->destroyed_ship_image_step1 = destroyed_ship_image_step1;
+        this->destroyed_ship_image_step2 = destroyed_ship_image_step2;
+        this->destroyed_ship_image_step3 = destroyed_ship_image_step3;
+    }
+    else {
+        LOGI("Sprite destroyed_ship_image n'a pas pu être créée");
+    }
 }
 
 Game::Game(const Game& _game) {
@@ -118,4 +132,27 @@ void Game::render_life() {
     SDL_Rect test = { 200, 10, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+}
+
+void Game::render_destroy(Ship& _ship) {
+    LOGI("Statut du vaisseau (start) : %d", _ship.get_status());
+
+    // On décrémente le statut du vaisseau
+    _ship.set_status( 1 ); // status -= 1;
+
+    // En fonction du statut, on affiche les étapes de l'explosion
+    if (_ship.get_status() == 3) 
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step1));
+    } 
+    else if (_ship.get_status() == 2) 
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step2));
+    } 
+    else if (_ship.get_status() == 1)
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step3));
+    }
+
+    LOGI("Statut du vaisseau (end) : %d", _ship.get_status());
 }
