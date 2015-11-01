@@ -22,6 +22,7 @@ import com.application.android.esgi.ozma.wars.fragments.FragmentStart;
 public class OzmaWarsActivity extends Activity {
 
     private static final String DEBUG_TAG = "//-- OzmaWarsActivity";
+    private SharedPreferences prefs;
 
     // Setup
     @Override
@@ -30,8 +31,12 @@ public class OzmaWarsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ozma_activity);
 
-        // Display Start fragment
-        if (savedInstanceState == null) {
+        // Get preferences
+        prefs = getSharedPreferences(OzmaUtils.PREFS, Activity.MODE_PRIVATE);
+
+        // If already start a game
+        if ( prefs.getBoolean(OzmaUtils.P__INTRO, false) ) {
+            // Display Start fragment
             getFragmentManager().beginTransaction()
                     .add(R.id.main_frame, FragmentStart.newInstance(), OzmaUtils.START_TAG)
                     .commit();
@@ -46,6 +51,15 @@ public class OzmaWarsActivity extends Activity {
         transaction.replace(R.id.main_frame, fragment, tag);
         if (addToBackStack) transaction.addToBackStack(tag);
         transaction.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Save the state introduction
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(OzmaUtils.P__INTRO, true);
+        editor.apply();
     }
 
     // OnBackPressed method
