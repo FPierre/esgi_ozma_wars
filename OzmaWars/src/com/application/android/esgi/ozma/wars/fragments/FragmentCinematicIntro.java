@@ -23,7 +23,7 @@ import com.squareup.picasso.Callback;
 
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
-import com.application.android.esgi.ozma.wars.utils.TransformPicasso;
+import com.application.android.esgi.ozma.wars.utils.AnimatePicasso;
 import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 
 /**
@@ -39,10 +39,11 @@ public class FragmentCinematicIntro extends Fragment {
     private static final String DEBUG_TAG = "//-- FragmentCinematicIntro";
 
     // Context
-    private Activity activity;
-    private ImageView screen;
-    private int introStep,
-                imageSize;
+    private Activity 	activity;
+    private ImageView 	screen;
+    private TextView 	legend;
+    private int 		introStep,
+                		imageSize;
 
     public FragmentCinematicIntro() { }
 
@@ -78,6 +79,8 @@ public class FragmentCinematicIntro extends Fragment {
         View v = inflater.inflate(R.layout.fragment_cinematic, container, false);
         // Prepare views
         screen = (ImageView) v.findViewById(R.id.cinematic_image);
+        legend = (TextView) v.findViewById(R.id.cinematic_legends);
+        legend.setText(activity.getResources().getString(R.string.cinematic_presents));
         // Prepare the animation
         Runnable introRunnable = new Runnable() {
             @Override
@@ -95,7 +98,7 @@ public class FragmentCinematicIntro extends Fragment {
             }
         };
         // Call the introduction
-        screen.post(introRunnable);
+        screen.postDelayed(introRunnable, 6000);
 
         return v;
     }
@@ -131,7 +134,10 @@ public class FragmentCinematicIntro extends Fragment {
         		.into(screen,  new Callback() {
 		            @Override
 		            public void onSuccess() {
-				        TransformPicasso.with(activity).animate(screen, i);
+				        AnimatePicasso.init(activity)
+				        			  .on(screen)
+				        			  .with(legend)
+				        			  .animate(i);
 		            }
 		            @Override
 		            public void onError() { }

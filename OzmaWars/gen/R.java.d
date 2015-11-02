@@ -2,6 +2,8 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\gen\com\applicatio
  : C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_left.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_right.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_top.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_text_in_left.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_text_in_right.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_grey.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_red.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable\border_white.xml \
