@@ -1,4 +1,6 @@
-package com.application.android.esgi.ozma.wars.activities;
+package com.application.android.esgi.ozma.wars.fragments;
+
+import java.lang.Runnable;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,18 +8,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Build;
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.graphics.Point;
-import java.lang.Runnable;
-import com.squareup.picasso.Picasso;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Callback;
 
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
+import com.application.android.esgi.ozma.wars.utils.TransformPicasso;
 import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 
 /**
@@ -85,7 +91,7 @@ public class FragmentCinematicIntro extends Fragment {
                 }
 
                 // Loop
-                screen.postDelayed(this, 8000);
+                screen.postDelayed(this, 10000);
             }
         };
         // Call the introduction
@@ -95,7 +101,7 @@ public class FragmentCinematicIntro extends Fragment {
     }
 
     // Introduction
-    private void playIntroduction(int i) {
+    private void playIntroduction(final int i) {
         // Prepare texts
 
         // Get images
@@ -118,15 +124,18 @@ public class FragmentCinematicIntro extends Fragment {
             imageSize = (int) Math.ceil(Math.sqrt(displySize.x * displySize.y));
         }
 
-        // Show images
+        // Show images with animation
         Picasso.with(activity)
-                .load(idImage)
-                .resize(imageSize + (imageSize/2), imageSize)
-                // .centerInside()
-                .into(screen);
-
-        // Preparation de l'animation
-        // ...
+        		.load(idImage)
+        		.resize(imageSize + (imageSize/2), imageSize)
+        		.into(screen,  new Callback() {
+		            @Override
+		            public void onSuccess() {
+				        TransformPicasso.with(activity).animate(screen, i);
+		            }
+		            @Override
+		            public void onError() { }
+		        });
     }
 
     public Point getDisplaySize(Display display) {
