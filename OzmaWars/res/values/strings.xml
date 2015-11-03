@@ -3,6 +3,8 @@
     <string name="app_name">Ozma Wars</string>
     <string name="cinematic_presents">Far away, a legendary war has exploded</string>
     <string name="cinematic_context">The enemies left behind them only ruins</string>
-    <string name="cinematic_heros">I am the only one who survive...</string>
+    <string name="cinematic_heros">I am the only one who survived...</string>
     <string name="cinematic_revenge">And I will revenge my people!</string>
+    <string name="cinematic_game">Play</string>
+    <string name="cinematic_skip">Skip</string>
 </resources>

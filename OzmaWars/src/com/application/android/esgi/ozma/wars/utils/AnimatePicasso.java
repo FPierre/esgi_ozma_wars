@@ -31,6 +31,11 @@ public class AnimatePicasso {
     private Context 			  _context;
     private ImageView 			  _target;
     private TextView 			  _legend;
+    private AnimateCallbacks      _callbacks;
+
+    public interface AnimateCallbacks {
+        void end();
+    }
 
     public static AnimatePicasso init(Context _context) {
     	if (_instance == null) {
@@ -61,8 +66,9 @@ public class AnimatePicasso {
 	}
 
 	// Get the aimation
-	public void animate(int _transform) {
+	public void animate(int _transform, AnimateCallbacks _callbacks) {
 		if (_target != null && _legend != null) {
+            this._callbacks = _callbacks;
     		translate(_transform);
 		}
 	}
@@ -75,21 +81,42 @@ public class AnimatePicasso {
         	case 0:
         		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_right);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_left);
+
         		_legend.setText(_context.getResources().getString(R.string.cinematic_context));
+
         		a_text.setFillAfter(true);
         		break;
         	case 1:
         		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_left);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_right);
+
         		_legend.setText(_context.getResources().getString(R.string.cinematic_heros));
+
         		a_text.setFillAfter(true);
         		break;
         	case 2:
         		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_top);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.fade_text_in);
+
         		_legend.setText(_context.getResources().getString(R.string.cinematic_revenge));
+
         		a_img.setFillAfter(true);
         		a_text.setFillAfter(true);
+
+                a_img.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) { }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Animation end_text = AnimationUtils.loadAnimation(_context, R.anim.fade_text_out);
+                        end_text.setFillAfter(true);
+                        
+                        _legend.startAnimation(end_text);
+                        _callbacks.end();
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) { }
+                });
         		break;
         }
 

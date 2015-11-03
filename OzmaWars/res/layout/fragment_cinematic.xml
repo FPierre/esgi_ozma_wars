@@ -23,4 +23,18 @@
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="center"
         android:background="#59000000"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/cinematic_button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/cinematic_game"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center_horizontal"
+        android:background="@drawable/border_red"
+        android:visibility="gone"/>
 </FrameLayout>

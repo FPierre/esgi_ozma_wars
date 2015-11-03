@@ -74,8 +74,7 @@ public class FragmentStart extends Fragment {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((OzmaWarsActivity) activity).handleFragment(FragmentSettings.newInstance(), 
-                    OzmaUtils.SETTINGS_TAG, true);
+                ((OzmaWarsActivity) activity).handleFragment(FragmentSettings.newInstance(),  OzmaUtils.SETTINGS_TAG, true);
             }
         });
         // Display a new game

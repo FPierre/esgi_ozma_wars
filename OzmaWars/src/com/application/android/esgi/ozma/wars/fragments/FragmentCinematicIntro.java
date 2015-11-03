@@ -41,7 +41,8 @@ public class FragmentCinematicIntro extends Fragment {
     // Context
     private Activity 	activity;
     private ImageView 	screen;
-    private TextView 	legend;
+    private TextView 	legend,
+                        play;
     private int 		introStep,
                 		imageSize;
 
@@ -79,7 +80,8 @@ public class FragmentCinematicIntro extends Fragment {
         View v = inflater.inflate(R.layout.fragment_cinematic, container, false);
         // Prepare views
         screen = (ImageView) v.findViewById(R.id.cinematic_image);
-        legend = (TextView) v.findViewById(R.id.cinematic_legends);
+        legend = (TextView)  v.findViewById(R.id.cinematic_legends);
+        play   = (TextView)  v.findViewById(R.id.cinematic_button_play);
         legend.setText(activity.getResources().getString(R.string.cinematic_presents));
         // Prepare the animation
         Runnable introRunnable = new Runnable() {
@@ -137,11 +139,32 @@ public class FragmentCinematicIntro extends Fragment {
 				        AnimatePicasso.init(activity)
 				        			  .on(screen)
 				        			  .with(legend)
-				        			  .animate(i);
+				        			  .animate(i, callback);
 		            }
 		            @Override
 		            public void onError() { }
 		        });
+    }
+
+    // Callback when cinematic animation ends
+    private AnimatePicasso.AnimateCallbacks callback = new AnimatePicasso.AnimateCallbacks() {
+        @Override
+        public void end() {
+            play.setVisibility(View.VISIBLE);
+            // Go to start fragment
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchStartFragment();
+                }
+            });
+        }
+    };
+
+    // Start fragment transisition
+    private void launchStartFragment() {
+        play.setVisibility(View.GONE);
+        ((OzmaWarsActivity) activity).handleFragment(FragmentStart.newInstance(), OzmaUtils.START_TAG, false);
     }
 
     public Point getDisplaySize(Display display) {
