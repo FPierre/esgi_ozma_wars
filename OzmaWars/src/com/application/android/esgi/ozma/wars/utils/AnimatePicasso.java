@@ -73,19 +73,23 @@ public class AnimatePicasso {
 
         switch (_transform) {
         	case 0:
-        		a_img = AnimationUtils.loadAnimation(_context, R.anim.slide_in_right);
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_right);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_left);
         		_legend.setText(_context.getResources().getString(R.string.cinematic_context));
+        		a_text.setFillAfter(true);
         		break;
         	case 1:
-        		a_img = AnimationUtils.loadAnimation(_context, R.anim.slide_in_left);
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_left);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_right);
         		_legend.setText(_context.getResources().getString(R.string.cinematic_heros));
+        		a_text.setFillAfter(true);
         		break;
         	case 2:
-        		a_img = AnimationUtils.loadAnimation(_context, R.anim.slide_in_top);
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_top);
+        		a_text = AnimationUtils.loadAnimation(_context, R.anim.fade_text_in);
         		_legend.setText(_context.getResources().getString(R.string.cinematic_revenge));
         		a_img.setFillAfter(true);
+        		a_text.setFillAfter(true);
         		break;
         }
 

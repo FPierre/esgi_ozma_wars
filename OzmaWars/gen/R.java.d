@@ -1,5 +1,6 @@
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\gen\com\application\android\esgi\ozma\wars\R.java \
- : C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_left.xml \
+ : C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\fade_text_in.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_left.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_right.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_in_top.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\anim\slide_text_in_left.xml \
