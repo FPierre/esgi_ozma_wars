@@ -28,4 +28,12 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\ozma_ac
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\values\colors.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\values\strings.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\values\styles.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-hdpi\ic_launcher.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-hdpi\ic_settings.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-mdpi\ic_launcher.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-mdpi\ic_settings.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xhdpi\ic_launcher.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xhdpi\ic_settings.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xxhdpi\ic_settings.png \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\res\drawable-xxxhdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\AndroidManifest.xml \

@@ -12,24 +12,24 @@ import com.application.android.esgi.ozma.wars.R;
 
 
 /**
-  * ---- FragmentSettings
+  * ---- SettingsFragment
   * Object: User settings (sounds, vibrate, score, etc)
   * Used by: OzmaWarsActivity
   *
   * @author Pierre (Pierre Flauder) &amp; Fllo (Florent Blot)
 **/
-public class FragmentSettings extends Fragment {
+public class SettingsFragment extends Fragment {
 	
     // Debug
-    private static final String DEBUG_TAG = "//-- FragmentSettings";
+    private static final String DEBUG_TAG = "//-- SettingsFragment";
 
     // Context
     private Activity activity;
 
-    public FragmentSettings() { }
+    public SettingsFragment() { }
 
-    public static FragmentSettings newInstance() {
-    	FragmentSettings frag = new FragmentSettings();
+    public static SettingsFragment newInstance() {
+    	SettingsFragment frag = new SettingsFragment();
     	return frag;
     }
 

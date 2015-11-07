@@ -27,16 +27,16 @@ import com.application.android.esgi.ozma.wars.utils.AnimatePicasso;
 import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 
 /**
-  * ---- FragmentCinematicIntro
+  * ---- IntroductionFragment
   * Object: Handle and display specific fragments
   * Used by: OzmaWarsActivity, FragmentSettings
   *
   * @author Pierre (Pierre Flauder) &amp; Fllo (Florent Blot)
 **/
-public class FragmentCinematicIntro extends Fragment {
+public class IntroductionFragment extends Fragment {
 
 	// Debug
-    private static final String DEBUG_TAG = "//-- FragmentCinematicIntro";
+    private static final String DEBUG_TAG = "//-- Introduction";
 
     // Context
     private Activity 	activity;
@@ -46,10 +46,10 @@ public class FragmentCinematicIntro extends Fragment {
     private int 		introStep,
                 		imageSize;
 
-    public FragmentCinematicIntro() { }
+    public IntroductionFragment() { }
 
-    public static FragmentCinematicIntro newInstance() {
-    	FragmentCinematicIntro frag = new FragmentCinematicIntro();
+    public static IntroductionFragment newInstance() {
+    	IntroductionFragment frag = new IntroductionFragment();
     	return frag;
     }
 
@@ -72,6 +72,7 @@ public class FragmentCinematicIntro extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // setRetainInstance(true);
     }
 
     @Override
@@ -96,11 +97,11 @@ public class FragmentCinematicIntro extends Fragment {
                 }
 
                 // Loop
-                screen.postDelayed(this, 10000);
+                screen.postDelayed(this, 5500);
             }
         };
         // Call the introduction
-        screen.postDelayed(introRunnable, 6000);
+        screen.postDelayed(introRunnable, 4500);
 
         return v;
     }

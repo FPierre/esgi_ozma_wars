@@ -5,6 +5,7 @@ import android.os.Build;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,8 +19,8 @@ import com.squareup.picasso.Picasso;
 
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
-import com.application.android.esgi.ozma.wars.fragments.FragmentStart;
-import com.application.android.esgi.ozma.wars.fragments.FragmentCinematicIntro;
+import com.application.android.esgi.ozma.wars.fragments.HomeFragment;
+import com.application.android.esgi.ozma.wars.fragments.IntroductionFragment;
 
 /**
   * ---- OzmaWarsActivity
@@ -31,6 +32,7 @@ import com.application.android.esgi.ozma.wars.fragments.FragmentCinematicIntro;
 public class OzmaWarsActivity extends Activity {
 
     private static final String DEBUG_TAG = "//-- OzmaWarsActivity";
+    private IntroductionFragment mIntroductionFrag;
     private SharedPreferences prefs;
 
     // Setup
@@ -43,16 +45,21 @@ public class OzmaWarsActivity extends Activity {
         // Get preferences
         prefs = getSharedPreferences(OzmaUtils.PREFS, Activity.MODE_PRIVATE);
 
+        // Get fragment introduction
+        FragmentManager fragmentManager = getFragmentManager();
+        mIntroductionFrag = (IntroductionFragment) fragmentManager.findFragmentByTag(OzmaUtils.INTRO_TAG);
+
         // If user already started a game
-        if ( prefs.getBoolean(OzmaUtils.P__INTRO, false) && inState == null ) {
+        if ( prefs.getBoolean(OzmaUtils.P__INTRO, false) && mIntroductionFrag == null ) {
         //     // Display Start fragment
         //     getFragmentManager().beginTransaction()
-        //             .add(R.id.main_frame, FragmentStart.newInstance(), OzmaUtils.START_TAG)
+        //             .add(R.id.main_frame, HomeFragment.newInstance(), OzmaUtils.START_TAG)
         //             .commit();
         // } else {
             // Display Intro cinematic fragment
-            getFragmentManager().beginTransaction()
-                    .add(R.id.main_frame, FragmentCinematicIntro.newInstance(), OzmaUtils.INTRO_TAG)
+            mIntroductionFrag = IntroductionFragment.newInstance();
+            fragmentManager.beginTransaction()
+                    .add(R.id.main_frame, mIntroductionFrag, OzmaUtils.INTRO_TAG)
                     .commit();
             // Save the state introduction
             SharedPreferences.Editor editor = prefs.edit();

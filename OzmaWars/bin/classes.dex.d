@@ -25,6 +25,17 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\ap
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentStart$1.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentStart$2.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\FragmentStart.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\HomeFragment$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\HomeFragment$2.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\HomeFragment.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\IntroductionFragment$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\IntroductionFragment$2.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\IntroductionFragment$3$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\IntroductionFragment$3.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\IntroductionFragment.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SettingsFragment$1.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\fragments\SettingsFragment.class \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\OzmaApplication.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\R$anim.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\R$attr.class \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes\com\application\android\esgi\ozma\wars\R$color.class \
