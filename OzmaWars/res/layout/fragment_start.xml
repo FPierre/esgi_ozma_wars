@@ -63,7 +63,7 @@
         <com.application.android.esgi.ozma.wars.widgets.OzmaText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Let's travel &amp; Fight"
+            android:text="@string/baseline"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"/>

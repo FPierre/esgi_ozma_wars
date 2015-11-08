@@ -79,30 +79,20 @@ public class AnimatePicasso {
 
         switch (_transform) {
         	case 0:
-        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_right);
-        		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_left);
-
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_image_r_to_l);
+        		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_l_to_r);
         		_legend.setText(_context.getResources().getString(R.string.cinematic_context));
-
-        		a_text.setFillAfter(true);
         		break;
         	case 1:
-        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_left);
-        		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_in_right);
-
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_image_l_to_r);
+        		a_text = AnimationUtils.loadAnimation(_context, R.anim.slide_text_r_to_l);
         		_legend.setText(_context.getResources().getString(R.string.cinematic_heros));
-
-        		a_text.setFillAfter(true);
         		break;
         	case 2:
-        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_in_top);
+        		a_img  = AnimationUtils.loadAnimation(_context, R.anim.slide_image_t_to_b);
         		a_text = AnimationUtils.loadAnimation(_context, R.anim.fade_text_in);
-
         		_legend.setText(_context.getResources().getString(R.string.cinematic_revenge));
-
-        		a_img.setFillAfter(true);
-        		a_text.setFillAfter(true);
-
+                
                 a_img.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) { }
@@ -119,6 +109,9 @@ public class AnimatePicasso {
                 });
         		break;
         }
+
+        a_img.setFillAfter(true);
+        a_text.setFillAfter(true);
 
         if (a_img==null || _target==null) return;
         _target.startAnimation(a_img);

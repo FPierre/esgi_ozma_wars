@@ -1,7 +1,7 @@
 # view AndroidManifest.xml #generated:11
 -keep class com.application.android.esgi.ozma.wars.OzmaApplication { <init>(...); }
 
-# view AndroidManifest.xml #generated:31
+# view AndroidManifest.xml #generated:32
 -keep class com.application.android.esgi.ozma.wars.activities.GameActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:20

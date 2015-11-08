@@ -11,6 +11,4 @@ public class OzmaApplication extends Application {
     public void onCreate() {
         super.onCreate();
     }
-
-
 }

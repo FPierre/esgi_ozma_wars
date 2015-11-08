@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ozma Wars</string>
+    <string name="baseline">Let\'s travel &amp; fight</string>
     <string name="cinematic_presents">Far away, a legendary war has exploded</string>
     <string name="cinematic_context">The enemies left behind them only ruins</string>
     <string name="cinematic_heros">I am the only one who survived...</string>
