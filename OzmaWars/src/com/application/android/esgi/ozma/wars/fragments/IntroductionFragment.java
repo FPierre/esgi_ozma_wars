@@ -97,7 +97,7 @@ public class IntroductionFragment extends Fragment {
         play   = (TextView)  v.findViewById(R.id.cinematic_button_game);
         legend.setText(activity.getResources().getString(R.string.cinematic_presents));
         // Prepare the animation
-        Runnable introRunnable = new Runnable() {
+        final Runnable introRunnable = new Runnable() {
             @Override
             public void run() {
                 Log.v(DEBUG_TAG, "fragment.new Runnable()");
@@ -110,12 +110,9 @@ public class IntroductionFragment extends Fragment {
                 }
 
                 // Loop
-                screen.postDelayed(this, 4600);
+                screen.postDelayed(this, 6000);
             }
         };
-        // Call the introduction
-        screen.postDelayed(introRunnable, 3600);
-
         // Hide the 1st text after 3sec
         legend.postDelayed(new Runnable() {
             @Override
@@ -123,6 +120,8 @@ public class IntroductionFragment extends Fragment {
                 Animation a_out  = AnimationUtils.loadAnimation(activity, R.anim.fade_text_out);
                 a_out.setFillAfter(true);
                 legend.startAnimation(a_out);
+                // Call the next screen
+                screen.post(introRunnable);
             }
         }, 3000);
 
@@ -179,7 +178,7 @@ public class IntroductionFragment extends Fragment {
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    launchStartFragment();
+                    launchHomeFragment();
                 }
             });
         }
@@ -200,9 +199,9 @@ public class IntroductionFragment extends Fragment {
     }
 
     // Start fragment transisition
-    private void launchStartFragment() {
+    private void launchHomeFragment() {
         play.setVisibility(View.GONE);
-        Log.v(DEBUG_TAG, "fragment.launchStartFragment()");
+        Log.v(DEBUG_TAG, "fragment.launchHomeFragment()");
 
         Animation a_img  = AnimationUtils.loadAnimation(activity, R.anim.slide_image_t_to_b_out);
         a_img.setFillAfter(true);
@@ -212,8 +211,12 @@ public class IntroductionFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 Log.v(DEBUG_TAG, "fragment.onAnimationEnd()");
-                ((OzmaWarsActivity) activity).handleFragment(
-                    FragmentStart.newInstance(), OzmaUtils.START_TAG, false);
+                if (activity.getFragmentManager().findFragmentByTag(OzmaUtils.SETTINGS_TAG) != null) {
+                    activity.getFragmentManager().popBackStack();
+                } else {
+                    ((OzmaWarsActivity) activity).handleFragment(
+                        HomeFragment.newInstance(), OzmaUtils.HOME_FRAG, false);
+                }
             }
             @Override
             public void onAnimationRepeat(Animation animation) { }

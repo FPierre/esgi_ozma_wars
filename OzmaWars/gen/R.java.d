@@ -23,8 +23,8 @@ C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-xhdpi
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-xxhdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\drawable-xxxhdpi\ic_settings.png \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_cinematic.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_home.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_settings.xml \
-C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\fragment_start.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\game_activity.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\layout\ozma_activity.xml \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\res\values\colors.xml \

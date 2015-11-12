@@ -46,26 +46,27 @@ public final class R {
         public static final int ic_settings=0x7f020008;
     }
     public static final class id {
-        public static final int button_clear_score=0x7f080008;
-        public static final int button_continue_game=0x7f08000c;
-        public static final int button_controls_gyroscope=0x7f080006;
-        public static final int button_controls_joystick=0x7f080007;
-        public static final int button_new_game=0x7f08000b;
-        public static final int button_settings=0x7f08000a;
+        public static final int button_clear_score=0x7f08000c;
+        public static final int button_continue_game=0x7f080007;
+        public static final int button_controls_gyroscope=0x7f08000a;
+        public static final int button_controls_joystick=0x7f08000b;
+        public static final int button_new_game=0x7f080006;
+        public static final int button_see_intro=0x7f08000d;
+        public static final int button_settings=0x7f080005;
         public static final int cinematic_button_game=0x7f080003;
         public static final int cinematic_frame=0x7f080000;
         public static final int cinematic_image=0x7f080001;
         public static final int cinematic_legends=0x7f080002;
-        public static final int game_frame=0x7f08000d;
-        public static final int main_frame=0x7f08000e;
-        public static final int settings_checkbox_sound=0x7f080004;
-        public static final int settings_checkbox_vibrate=0x7f080005;
-        public static final int text_highscore=0x7f080009;
+        public static final int game_frame=0x7f08000e;
+        public static final int main_frame=0x7f08000f;
+        public static final int settings_checkbox_sound=0x7f080008;
+        public static final int settings_checkbox_vibrate=0x7f080009;
+        public static final int text_highscore=0x7f080004;
     }
     public static final class layout {
         public static final int fragment_cinematic=0x7f030000;
-        public static final int fragment_settings=0x7f030001;
-        public static final int fragment_start=0x7f030002;
+        public static final int fragment_home=0x7f030001;
+        public static final int fragment_settings=0x7f030002;
         public static final int game_activity=0x7f030003;
         public static final int ozma_activity=0x7f030004;
     }

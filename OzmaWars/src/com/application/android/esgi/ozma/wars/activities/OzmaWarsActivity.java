@@ -51,11 +51,11 @@ public class OzmaWarsActivity extends Activity {
 
         // If user already started a game
         if ( prefs.getBoolean(OzmaUtils.P__INTRO, false) && mIntroductionFrag == null ) {
-        //     // Display Start fragment
-        //     getFragmentManager().beginTransaction()
-        //             .add(R.id.main_frame, HomeFragment.newInstance(), OzmaUtils.START_TAG)
-        //             .commit();
-        // } else {
+            // Display Start fragment
+            getFragmentManager().beginTransaction()
+                    .add(R.id.main_frame, HomeFragment.newInstance(), OzmaUtils.HOME_FRAG)
+                    .commit();
+        } else {
             // Display Intro cinematic fragment
             mIntroductionFrag = IntroductionFragment.newInstance();
             fragmentManager.beginTransaction()

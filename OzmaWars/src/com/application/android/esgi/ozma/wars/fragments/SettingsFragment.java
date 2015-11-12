@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
+import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
+import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 
 
 /**
@@ -65,6 +67,16 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 activity.getFragmentManager().popBackStack();
+            }
+        });
+
+        TextView btnSeeIntro = (TextView) v.findViewById(R.id.button_see_intro);
+        // Display intro cinematic
+        btnSeeIntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OzmaWarsActivity) activity).handleFragment(
+                    IntroductionFragment.newInstance(), OzmaUtils.INTRO_TAG, true);
             }
         });
 
