@@ -164,7 +164,7 @@ void LevelOne::render() {
         this->game.own_ship.render(this->window.renderer, this->game.own_ship.get_sprite());
     } else {
         // On affiche l'écran GameOver
-        
+        this->game.render_over();
     }
 
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);

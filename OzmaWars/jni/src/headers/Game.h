@@ -14,7 +14,8 @@ class Game {
     private:
     int score;
     TTF_Font *font;
-    SDL_Color text_color;
+    SDL_Color text_black;
+    SDL_Color text_red;
     Window window;
 
     public:
@@ -36,6 +37,7 @@ class Game {
     void render_life();
     void render_score();
     void render_destroy(Ship& _ship);
+    void render_over();
 
     template<class S1, class S2>
     bool check_collision(S1 a, S2 b) {

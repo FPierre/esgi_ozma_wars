@@ -26,8 +26,11 @@ Game::Game(int _score, Window _window) : score(_score),
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
     this->font = font;
-    SDL_Color text_color = { 0, 0, 0 };
-    this->text_color = text_color;
+    SDL_Color text_black = { 0, 0, 0 };
+    this->text_black = text_black;
+    
+    SDL_Color text_red = { 221, 75, 57 };
+    this->text_red = text_red;
 
     Rgb blue_background(0, 255, 255);
     Sprite missile_image(55, 390, 50, 20, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
@@ -122,7 +125,7 @@ void Game::render_score() {
     int ret = snprintf(buffer, sizeof(buffer), "%d", score);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
@@ -137,7 +140,7 @@ void Game::render_life() {
     int ret = snprintf(buffer, sizeof(buffer), "%d", number);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
@@ -171,4 +174,20 @@ void Game::render_destroy(Ship& _ship) {
     }
 
     LOGI("Statut du vaisseau (end) : %d", _ship.get_status());
+}
+
+void Game::render_over() {
+    char buffer[10];
+    snprintf(buffer, sizeof(buffer), "GAME OVER");
+    char *text = buffer;
+
+    SDL_Surface *title = TTF_RenderText_Solid(this->font, text, this->text_red);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, title);
+    int mWidth = title->w;
+    int mHeight = title->h;
+    int mX = (this->window.get_width() / 2) - (mWidth/2);
+    int mY = (this->window.get_height() / 2) - (mHeight/2);
+    SDL_Rect gameover = { mX, mY, mWidth, mHeight };
+
+    SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);
 }
