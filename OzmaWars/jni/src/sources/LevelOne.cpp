@@ -151,10 +151,11 @@ void LevelOne::render() {
     }
     
 /** NOT WORKING **/
-    // if ( !this->game.own_ship.alive() ) {
-    //     // Méthode d'affichage de la destruction
-    //     this->game.render_destroy(this->game.own_ship);
-    // }
+    if ( !this->game.own_ship.alive() ) {
+        // Méthode d'affichage de la destruction
+        this->game.render_destroy(this->game.own_ship);
+        LOGI("Sprite changed!")
+    }
 
     // Render du Sprite
     this->game.own_ship.render(this->window.renderer, this->game.own_ship.get_sprite());

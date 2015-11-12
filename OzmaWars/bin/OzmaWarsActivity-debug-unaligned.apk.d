@@ -1,6 +1,7 @@
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\OzmaWarsActivity-debug-unaligned.apk : \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\OzmaWarsActivity.ap_ \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\classes.dex \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\libs\picasso-2.5.2.jar \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\libs\arm64-v8a\libmain.so \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\libs\arm64-v8a\libSDL2.so \
 C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\libs\arm64-v8a\libSDL2_ttf.so \
