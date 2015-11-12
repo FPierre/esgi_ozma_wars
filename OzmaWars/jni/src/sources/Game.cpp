@@ -12,6 +12,7 @@ const int STATUS_DESTROY        = 100;
 const int STATUS_DESTROY_STEP_1 = 75;
 const int STATUS_DESTROY_STEP_2 = 50;
 const int STATUS_DESTROY_STEP_3 = 25;
+const int STATUS_DESTROY_END    = 0;
 
 Game::Game() {
     // LOGI("Constructeur trivial");
@@ -73,11 +74,13 @@ Game::Game(int _score, Window _window) : score(_score),
     Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     Sprite destroyed_ship_image_step2(78, 132, 90, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     Sprite destroyed_ship_image_step3(168, 132, 103, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step4(0, 0, 0, 0, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
 
     if (&destroyed_ship_image_step1 != nullptr) {
         this->destroyed_ship_image_step1 = destroyed_ship_image_step1;
         this->destroyed_ship_image_step2 = destroyed_ship_image_step2;
         this->destroyed_ship_image_step3 = destroyed_ship_image_step3;
+        this->destroyed_ship_image_step4 = destroyed_ship_image_step4;
     }
     else {
         LOGI("Sprite destroyed_ship_image n'a pas pu être créée");
@@ -99,6 +102,7 @@ Game::Game(const Game& _game) {
     destroyed_ship_image_step1 = _game.destroyed_ship_image_step1;
     destroyed_ship_image_step2 = _game.destroyed_ship_image_step2;
     destroyed_ship_image_step3 = _game.destroyed_ship_image_step3;
+    destroyed_ship_image_step4 = _game.destroyed_ship_image_step4;
 }
 
 Game::~Game() {
@@ -160,6 +164,10 @@ void Game::render_destroy(Ship& _ship) {
     else if (_ship.get_status() < STATUS_DESTROY_STEP_2 && _ship.get_status() >= STATUS_DESTROY_STEP_3)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step3));
+    }
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_3 && _ship.get_status() >= STATUS_DESTROY_END)
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step4));
     }
 
     LOGI("Statut du vaisseau (end) : %d", _ship.get_status());

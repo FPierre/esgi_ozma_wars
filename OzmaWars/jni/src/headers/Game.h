@@ -26,6 +26,7 @@ class Game {
     Sprite destroyed_ship_image_step1;
     Sprite destroyed_ship_image_step2;
     Sprite destroyed_ship_image_step3;
+    Sprite destroyed_ship_image_step4;
     OwnShip own_ship;
     Game();
     Game(int _score, Window _window);
