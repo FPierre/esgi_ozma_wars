@@ -34,6 +34,7 @@ class Ship {
     void set_health(int _health);
     int get_status();
     void set_status(int _status);
+    void dec_status(int _status);
     bool alive();
     void render(SDL_Renderer *_renderer, Sprite *_sprite);
     void fire(int _x, int _y);

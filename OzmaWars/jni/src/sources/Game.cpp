@@ -8,6 +8,11 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
+const int STATUS_DESTROY        = 100;
+const int STATUS_DESTROY_STEP_1 = 75;
+const int STATUS_DESTROY_STEP_2 = 50;
+const int STATUS_DESTROY_STEP_3 = 25;
+
 Game::Game() {
     // LOGI("Constructeur trivial");
 }
@@ -141,18 +146,18 @@ void Game::render_destroy(Ship& _ship) {
     LOGI("Statut du vaisseau (start) : %d", _ship.get_status());
 
     // On décrémente le statut du vaisseau
-    _ship.set_status( 1 ); // status -= 1;
+    _ship.dec_status( 1 ); // status -= 1;
 
     // En fonction du statut, on affiche les étapes de l'explosion
-    if (_ship.get_status() == 3) 
+    if (_ship.get_status() < STATUS_DESTROY && _ship.get_status() >= STATUS_DESTROY_STEP_1) 
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step1));
     } 
-    else if (_ship.get_status() == 2) 
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_1 && _ship.get_status() >= STATUS_DESTROY_STEP_2) 
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step2));
     } 
-    else if (_ship.get_status() == 1)
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_2 && _ship.get_status() >= STATUS_DESTROY_STEP_3)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step3));
     }

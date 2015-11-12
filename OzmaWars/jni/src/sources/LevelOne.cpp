@@ -11,6 +11,9 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
+const int STATUS_DESTROY     = 100;
+const int STATUS_DESTROY_END = 0;
+
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
 
@@ -20,12 +23,12 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
 
     Weapon canon(100, &(this->game.missile_image));
 
-    OwnShip own_ship(200, 550, 100, 4, canon, &(this->game.own_ship_image),
+    OwnShip own_ship(200, 550, 100, STATUS_DESTROY, canon, &(this->game.own_ship_image),
                                             &(this->game.own_ship_image_left),
                                             &(this->game.own_ship_image_right));
     this->game.own_ship = own_ship;
 
-    EnemyShip enemy_ship_1(80, 350, 100, 4, canon, &(this->game.enemy_ship_image));
+    EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
     enemy_ship_1.set_destination(w, 0);
     enemy_ship_1.fire(1000, 800);
     this->enemy_ships.push_back(enemy_ship_1);
@@ -65,7 +68,7 @@ void LevelOne::logic() {
     // Vérification des status des vaisseaux
     for (int i = 0; i != this->enemy_ships.size(); ++i) {
         // Si le vaisseau est mort, on le retire du vector
-        if (!this->enemy_ships[i].alive() && this->enemy_ships[i].get_status() == 0) {
+        if (!this->enemy_ships[i].alive() && this->enemy_ships[i].get_status() == STATUS_DESTROY_END) {
             this->enemy_ships.erase(this->enemy_ships.begin() + i);
         }
     }
@@ -149,19 +152,25 @@ void LevelOne::render() {
         // Render du Sprite
         enemy_ship.render(this->window.renderer, enemy_ship.get_sprite());
     }
-    
-    if ( !this->game.own_ship.alive() ) {
-        // Méthode d'affichage de la destruction
-        this->game.render_destroy(this->game.own_ship);
-    }
 
-    // Render du Sprite
-    this->game.own_ship.render(this->window.renderer, this->game.own_ship.get_sprite());
+    // On vérifie que le Ship n'a toujours pas explosé
+    if ( this->game.own_ship.get_status() != STATUS_DESTROY_END ) {
+        // S'il n'est plus en vie, on gère l'animation de l'explosion
+        if ( !this->game.own_ship.alive() ) {
+            // Méthode d'affichage de la destruction
+            this->game.render_destroy(this->game.own_ship);
+        }
+        // Render du Sprite
+        this->game.own_ship.render(this->window.renderer, this->game.own_ship.get_sprite());
+    } else {
+        // On affiche l'écran GameOver
+        
+    }
 
     // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-    SDL_Delay(1000);
+    SDL_Delay(10);
 }

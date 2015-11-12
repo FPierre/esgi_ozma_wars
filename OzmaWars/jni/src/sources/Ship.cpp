@@ -58,8 +58,11 @@ void Ship::set_sprite(Sprite *_image) {
 }
 Sprite *Ship::get_sprite() { return this->image; }
 
-void Ship::set_status(int _status) {
+void Ship::dec_status(int _status) {
     this->status -= _status;
+}
+void Ship::set_status(int _status) {
+    this->status = _status;
 }
 int Ship::get_status() { return this->status; }
 
