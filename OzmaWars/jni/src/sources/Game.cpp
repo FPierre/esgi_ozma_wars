@@ -91,6 +91,9 @@ Game::Game(const Game& _game) {
     own_ship_image = _game.own_ship_image;
     own_ship_image_left = _game.own_ship_image_left;
     own_ship_image_right = _game.own_ship_image_right;
+    destroyed_ship_image_step1 = _game.destroyed_ship_image_step1;
+    destroyed_ship_image_step2 = _game.destroyed_ship_image_step2;
+    destroyed_ship_image_step3 = _game.destroyed_ship_image_step3;
 }
 
 Game::~Game() {

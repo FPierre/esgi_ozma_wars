@@ -150,11 +150,9 @@ void LevelOne::render() {
         enemy_ship.render(this->window.renderer, enemy_ship.get_sprite());
     }
     
-/** NOT WORKING **/
     if ( !this->game.own_ship.alive() ) {
         // Méthode d'affichage de la destruction
         this->game.render_destroy(this->game.own_ship);
-        LOGI("Sprite changed!")
     }
 
     // Render du Sprite
