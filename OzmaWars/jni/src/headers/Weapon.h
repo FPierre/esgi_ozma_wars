@@ -28,6 +28,9 @@ class Weapon {
     bool get_fired();
     void render(SDL_Renderer *_renderer);
     void set_destination(int _x, int _y);
+    int get_x();
+    int get_y();
+    Sprite *get_sprite();
     // TODO Passer en private ? N'est à utiliser que dans le fire de Ship
     void move();
 };

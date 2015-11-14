@@ -8,6 +8,12 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
+const int STATUS_DESTROY        = 100;
+const int STATUS_DESTROY_STEP_1 = 75;
+const int STATUS_DESTROY_STEP_2 = 50;
+const int STATUS_DESTROY_STEP_3 = 25;
+const int STATUS_DESTROY_END    = 0;
+
 Game::Game() {
     // LOGI("Constructeur trivial");
 }
@@ -20,8 +26,13 @@ Game::Game(int _score, Window _window) : score(_score),
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
     this->font = font;
-    SDL_Color text_color = { 0, 0, 0 };
-    this->text_color = text_color;
+    SDL_Color text_black = { 0, 0, 0, 255 };
+    this->text_black = text_black;
+    
+    TTF_Font *font_title = TTF_OpenFont("fonts/consola.ttf", 120); // BUG: taille de police n'est pas prise en compte
+    this->font_title = font_title;
+    SDL_Color text_red = { 255, 0, 0, 255 }; // BUG: couleur rouge ne semble pas marcher
+    this->text_red = text_red;
 
     Rgb blue_background(0, 255, 255);
 
@@ -34,14 +45,14 @@ Game::Game(int _score, Window _window) : score(_score),
         LOGI("Sprite missile_image n'a pas pu être crée");
     }
 
-    Sprite explosion_image(3, 152, 75, 65, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    // Sprite explosion_image(3, 152, 75, 65, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
 
-    if (&explosion_image != nullptr) {
-        this->explosion_image = explosion_image;
-    }
-    else {
-        LOGI("Sprite explosion_image n'a pas pu être crée");
-    }
+    // if (&explosion_image != nullptr) {
+    //     this->explosion_image = explosion_image;
+    // }
+    // else {
+    //     LOGI("Sprite explosion_image n'a pas pu être crée");
+    // }
 
     Rgb pink_background(255, 0, 255);
 
@@ -69,11 +80,27 @@ Game::Game(int _score, Window _window) : score(_score),
 
     Weapon canon(100, &(this->missile_image));
 
-    OwnShip own_ship(500, 500, 100, canon, &(this->explosion_image),
-                                           &explosion_image,
-                                           &explosion_image);
+    OwnShip own_ship(500, 500, 100, 4, canon, &(this->own_ship_image),
+                                                &own_ship_image_left,
+                                                &own_ship_image_right);
 
     this->own_ship = own_ship;
+
+    // Création des spites pour la destruction de vaisseau
+    Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step2(78, 132, 90, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step3(168, 132, 103, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step4(0, 0, 0, 0, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+
+    if (&destroyed_ship_image_step1 != nullptr) {
+        this->destroyed_ship_image_step1 = destroyed_ship_image_step1;
+        this->destroyed_ship_image_step2 = destroyed_ship_image_step2;
+        this->destroyed_ship_image_step3 = destroyed_ship_image_step3;
+        this->destroyed_ship_image_step4 = destroyed_ship_image_step4;
+    }
+    else {
+        LOGI("Sprite destroyed_ship_image n'a pas pu être créée");
+    }
 }
 
 Game::Game(const Game& _game) {
@@ -88,6 +115,10 @@ Game::Game(const Game& _game) {
     own_ship_image = _game.own_ship_image;
     own_ship_image_left = _game.own_ship_image_left;
     own_ship_image_right = _game.own_ship_image_right;
+    destroyed_ship_image_step1 = _game.destroyed_ship_image_step1;
+    destroyed_ship_image_step2 = _game.destroyed_ship_image_step2;
+    destroyed_ship_image_step3 = _game.destroyed_ship_image_step3;
+    destroyed_ship_image_step4 = _game.destroyed_ship_image_step4;
 }
 
 Game::~Game() {
@@ -111,7 +142,7 @@ void Game::render_score() {
     int ret = snprintf(buffer, sizeof(buffer), "%d", score);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
@@ -126,11 +157,71 @@ void Game::render_life() {
     int ret = snprintf(buffer, sizeof(buffer), "%d", number);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_color);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
     SDL_Rect test = { 200, 10, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+}
+
+void Game::render_destroy(Ship& _ship) {
+    LOGI("Statut du vaisseau (start) : %d", _ship.get_status());
+
+    // On décrémente le statut du vaisseau
+    _ship.dec_status( 1 ); // status -= 1;
+
+    // En fonction du statut, on affiche les étapes de l'explosion
+    if (_ship.get_status() < STATUS_DESTROY && _ship.get_status() >= STATUS_DESTROY_STEP_1) 
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step1));
+    } 
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_1 && _ship.get_status() >= STATUS_DESTROY_STEP_2) 
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step2));
+    } 
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_2 && _ship.get_status() >= STATUS_DESTROY_STEP_3)
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step3));
+    }
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_3 && _ship.get_status() >= STATUS_DESTROY_END)
+    {
+        _ship.set_sprite(&(this->destroyed_ship_image_step4));
+    }
+
+    LOGI("Statut du vaisseau (end) : %d", _ship.get_status());
+}
+
+void Game::render_over() {
+    // Fenêtre de dialogue
+    SDL_Rect rect = { ((this->window.get_width() / 2) - 225), ((this->window.get_width() / 2) - 320), 450, 250 };
+    SDL_SetRenderDrawColor(this->window.renderer, 0, 0, 0, 10); // BUG: opacité ne fonctionne pas...
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+    SDL_RenderFillRect(this->window.renderer, &rect);
+
+    // Bouton droit de quitter
+    rect = { ((this->window.get_width() / 2) - 200), ((this->window.get_width() / 2) - 180), 180, 80 };
+    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+
+    // Bouton gauche de recommencer
+    rect = { ((this->window.get_width() / 2) + 20), ((this->window.get_width() / 2) - 180), 180, 80 };
+    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+
+    // Titre de dialogue
+    char buffer[70];
+    snprintf(buffer, sizeof(buffer), "GAME OVER");
+    char *text = buffer;
+
+    SDL_Surface* title = TTF_RenderText_Solid(this->font, text, this->text_red); // BUG: title rouge ne fonctionne pas TOUT le tps
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, title);
+    int mWidth = title->w;
+    int mHeight = title->h;
+    int mX = (this->window.get_width() / 2) - (mWidth/2);
+    int mY = (this->window.get_height() / 2) - (mHeight/2) - 50;
+    SDL_Rect gameover = { mX, mY, mWidth, mHeight };
+
+    SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);
 }

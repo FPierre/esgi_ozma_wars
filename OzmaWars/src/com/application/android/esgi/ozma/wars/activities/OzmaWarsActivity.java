@@ -12,6 +12,7 @@ import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.fragments.FragmentStart;
 
+
 /**
   * ---- OzmaWarsActivity
   * Object: Handle and display specific fragments
