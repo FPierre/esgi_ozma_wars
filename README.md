@@ -25,7 +25,7 @@ Student project: build an Android game with NDK library
 * Musique d'ambiance
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
 * Image de l'espace en background
-* Son lors d'une collision ?
+* (OK) Son lors d'une collision ?
 * Bug sur Own ship lorsqu'il tourne, les sprites "clignotent"
 * Ajouter des vaisseaux ennemis dans LevelOne
 * Le système de tir random des vaisseaux ennemi doit être passé en OOP
@@ -35,4 +35,4 @@ Student project: build an Android game with NDK library
 * Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
-OK * Repasser la taille de l'écran en dynamique (actuellement mis en dur)
+* Repasser la taille de l'écran en dynamique (actuellement mis en dur)
