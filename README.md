@@ -18,10 +18,16 @@ Student project: build an Android game with NDK library
 
 ## TODO ##
 
-* life bar system
-* score system
-* end of game case
-* levels system enhancement
-* "story maker", to fill levels
-* collisions system
-* sounds when events occurs
+* Commenter le code
+* Dans toutes les classes, passer par des getters/setters
+* Lors d'un impact d'un missile ennemi, prendre en compte la force de l'arme (Own ship ne part pas forcément tous ses points de vie d'un coup)
+* Lors de la destruction d'un vaisseau ennemi, augmenter le score
+* Musique d'ambiance
+* Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
+* Image de l'espace en background
+* Son lors d'une collision ?
+* Bug sur Own ship lorsqu'il tourne, les sprites "clignotent"
+* Ajouter des vaisseaux ennemis dans LevelOne
+* Le système de tir random des vaisseaux ennemi doit être passé en OOP
+* Si score supérieur à X, passer au niveau suivant. A faire OOP
+* Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
