@@ -15,7 +15,7 @@ class OwnShip : public Ship {
     OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right);
     OwnShip(const OwnShip& _ship);
     ~OwnShip();
-    void fire();
+    bool fire();
     void move();
 };
 

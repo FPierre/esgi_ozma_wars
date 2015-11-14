@@ -57,10 +57,10 @@ void LevelOne::handle_events() {
     while (SDL_PollEvent(&event)) {
         // Si "tap" sur l'écran, Own ship tire
         if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
-            this->game.own_ship.fire();
-            // TODO Mieux encapsuler cette méthode
-            // TODO Pour le moment fait le son même si le missile n'est pas tiré (cf limite de tir)
-            Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
+            if (this->game.own_ship.fire()) {
+                // TODO Mieux encapsuler cette méthode
+                Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
+            }
         }
     }
 }

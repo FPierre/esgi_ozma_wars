@@ -12,7 +12,7 @@ class EnemyShip : public Ship {
     EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image);
     // EnemyShip(const EnemyShip& _ship);
     // ~EnemyShip();
-    void fire(int _x, int _y);
+    bool fire(int _x, int _y);
     void set_destination(int _x, int _y);
     void move();
     int get_propability_fire();
