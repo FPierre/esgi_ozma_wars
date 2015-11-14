@@ -16,8 +16,8 @@ OwnShip::OwnShip() : Ship() {
 
 }
 
-OwnShip::OwnShip(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right) :
-    Ship(_x, _y, _health, _weapon, _image) {
+OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right) :
+    Ship(_x, _y, _health, _status, _weapon, _image) {
 
     // LOGI("Constructeur");
     this->image_front = _image;
@@ -32,6 +32,7 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     x = _ship.x;
     y = _ship.y;
     health = _ship.health;
+    status = _ship.status;
     weapon = _ship.weapon;
     image = _ship.image;
     image_front = _ship.image_front;
