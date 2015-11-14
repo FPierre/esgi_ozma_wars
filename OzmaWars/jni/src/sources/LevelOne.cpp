@@ -65,6 +65,10 @@ void LevelOne::logic() {
     // Pour tous les missiles tirés de notre vaiseau
     for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
         fired_weapon->move();
+
+        // if (fired_weapon->y <= 0) {
+        //     delete fired_weapon;
+        // }
     }
 
     this->enemy_ships[0].move();

@@ -20,6 +20,7 @@ class Weapon {
     int destination_y;
     Sprite *image;
     Mix_Chunk *launch_sound;
+    SDL_Rect area_limits;  // Zone de laquelle le missile est détruit de la mémoire s'il sort
     Weapon();
     Weapon(int _strength, Sprite *_image);
     Weapon(const Weapon& _weapon);

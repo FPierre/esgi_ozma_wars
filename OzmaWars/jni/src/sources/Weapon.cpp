@@ -25,6 +25,9 @@ Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
     this->destination_x = 0;
     this->destination_y = 0;
 
+    // TODO Passer les valeurs de l'attribut screen de l'objet Window
+    this->area_limits = { 0, 0, 1920, 1080 };
+
     this->launch_sound = Mix_LoadWAV("sounds/missile_launch.wav");
 
     if (this->launch_sound == NULL) {

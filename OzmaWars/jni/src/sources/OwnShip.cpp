@@ -79,6 +79,9 @@ void OwnShip::move() {
  * Tire des missiles vers le haut de l'écran uniquement
  *
  * Utilisation : ship.fire
+ *
+ * TODO Le bruit de tir ne doit se faire que si le missile est effectivement tiré (actuellement il se fait
+ *      même si la limite est atteinte et que le missile n'est pas tiré)
  */
 void OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
