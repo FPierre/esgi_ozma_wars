@@ -26,10 +26,12 @@ Game::Game(int _score, Window _window) : score(_score),
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
     this->font = font;
-    SDL_Color text_black = { 0, 0, 0 };
+    SDL_Color text_black = { 0, 0, 0, 255 };
     this->text_black = text_black;
     
-    SDL_Color text_red = { 221, 75, 57 };
+    TTF_Font *font_title = TTF_OpenFont("fonts/consola.ttf", 120); // BUG: taille de police n'est pas prise en compte
+    this->font_title = font_title;
+    SDL_Color text_red = { 255, 0, 0, 255 }; // BUG: couleur rouge ne semble pas marcher
     this->text_red = text_red;
 
     Rgb blue_background(0, 255, 255);
@@ -177,16 +179,33 @@ void Game::render_destroy(Ship& _ship) {
 }
 
 void Game::render_over() {
-    char buffer[10];
+    // Fenêtre de dialogue
+    SDL_Rect rect = { ((this->window.get_width() / 2) - 225), ((this->window.get_width() / 2) - 320), 450, 250 };
+    SDL_SetRenderDrawColor(this->window.renderer, 0, 0, 0, 10); // BUG: opacité ne fonctionne pas...
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+    SDL_RenderFillRect(this->window.renderer, &rect);
+
+    // Bouton droit de quitter
+    rect = { ((this->window.get_width() / 2) - 200), ((this->window.get_width() / 2) - 180), 180, 80 };
+    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+
+    // Bouton gauche de recommencer
+    rect = { ((this->window.get_width() / 2) + 20), ((this->window.get_width() / 2) - 180), 180, 80 };
+    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
+    SDL_RenderDrawRect(this->window.renderer, &rect);
+
+    // Titre de dialogue
+    char buffer[70];
     snprintf(buffer, sizeof(buffer), "GAME OVER");
     char *text = buffer;
 
-    SDL_Surface *title = TTF_RenderText_Solid(this->font, text, this->text_red);
+    SDL_Surface* title = TTF_RenderText_Solid(this->font, text, this->text_red); // BUG: title rouge ne fonctionne pas TOUT le tps
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, title);
     int mWidth = title->w;
     int mHeight = title->h;
     int mX = (this->window.get_width() / 2) - (mWidth/2);
-    int mY = (this->window.get_height() / 2) - (mHeight/2);
+    int mY = (this->window.get_height() / 2) - (mHeight/2) - 50;
     SDL_Rect gameover = { mX, mY, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);

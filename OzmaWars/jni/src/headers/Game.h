@@ -14,6 +14,7 @@ class Game {
     private:
     int score;
     TTF_Font *font;
+    TTF_Font *font_title;
     SDL_Color text_black;
     SDL_Color text_red;
     Window window;
