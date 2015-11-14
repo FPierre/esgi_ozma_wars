@@ -69,3 +69,7 @@ void EnemyShip::move() {
         this->y += this->length_y / 200;
     }
 }
+
+void EnemyShip::fire(int _x, int _y) {
+    this->weapon.set_destination(_x, _y);
+}

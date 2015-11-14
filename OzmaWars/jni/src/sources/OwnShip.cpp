@@ -72,3 +72,20 @@ void OwnShip::move() {
         this->y = tmp_y_value;
     }
 }
+
+/**
+ * Tire des missiles vers le haut de l'écran uniquement
+ *
+ * Utilisation : ship.fire
+ */
+void OwnShip::fire() {
+    Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+
+    fired_weapon->x = this->x;
+    fired_weapon->y = this->y;
+    fired_weapon->set_destination(this->x, 0);
+    // fired_weapon.set_fired(true);
+
+    // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
+    this->fired_weapons.push_back(fired_weapon);
+}

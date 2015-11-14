@@ -4,6 +4,7 @@
 #include "../sdl/src/core/android/SDL_android.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include <string>
 
 #include "headers/Game.h"
@@ -44,6 +45,10 @@ int main(int argc, char *argv[]) {
 
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
+    }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        LOGI("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
     }
 
     // Temporaire, à déplacer dans le constructeur de Window ?

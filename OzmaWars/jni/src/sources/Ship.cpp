@@ -20,14 +20,15 @@ Ship::Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image) : x(_x),
                                                                           image(_image) {
     // LOGI("Constructeur");
 
-    this->weapon.x = _x;
-    this->weapon.y = _y;
     this->length_x = 0;
     this->length_y = 0;
     this->destination_x = 0;
     this->destination_y = 0;
     // TODO Passer les valeurs de l'attribut screen de l'objet Window
     this->area_limits = { 0, 0, 1920, 1080 };
+
+    this->weapon.x = _x;
+    this->weapon.y = _y;
 }
 
 Ship::Ship(const Ship& _ship) {
@@ -42,6 +43,8 @@ Ship::Ship(const Ship& _ship) {
     health = _ship.health;
     weapon = _ship.weapon;
     image = _ship.image;
+    area_limits = _ship.area_limits;
+    fired_weapons = _ship.fired_weapons;
 }
 
 Ship::~Ship() {
@@ -61,19 +64,12 @@ void Ship::set_sprite(Sprite *_image) {
 }
 
 void Ship::render(SDL_Renderer *_renderer) {
-    if (this->alive()) {
-        this->image->render(this->x, this->y, _renderer);
+    this->image->render(this->x, this->y, _renderer);
 
-        if (this->weapon.x != this->x || this->weapon.y != this->y) {
-            this->weapon.render(_renderer);
-        }
+    for (Weapon *fired_weapon : this->fired_weapons) {
+        // if (fired_weapon.get_fired() == true) {
+        // if (this->weapon.x != this->x || this->weapon.y != this->y) {
+            fired_weapon->render(_renderer);
+        // }
     }
-    else {
-        // Sprite d'une explosion
-        // Render d'un bonus ici ?
-    }
-}
-
-void Ship::fire(int _x, int _y) {
-    this->weapon.set_destination(_x, _y);
 }

@@ -12,7 +12,6 @@
 
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
-
     // LOGI("Constructeur");
 
     int w = this->window.get_width();
@@ -49,21 +48,38 @@ LevelOne::~LevelOne() {
 }
 
 void LevelOne::handle_events() {
+    SDL_Event event;
 
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
+            this->game.own_ship.fire();
+            // TODO Mieux encapsuler cette méthode
+            Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
+        }
+    }
 }
 
 void LevelOne::logic() {
     this->game.own_ship.move();
 
+    // Pour tous les missiles tirés de notre vaiseau
+    for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
+        fired_weapon->move();
+    }
+
     this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
 
+    // Niveau suivant
+    // Pas encore effectif
     if (this->game.get_score() > 5) {
-        set_next_state(STATE_LEVEL_TWO);
+        // set_next_state(STATE_LEVEL_TWO);
     }
 
+    // Sortie de jeu
+    // Pas encore effectif
     if (this->game.own_ship.alive() == false) {
-        set_next_state(STATE_EXIT);
+        // set_next_state(STATE_EXIT);
     }
 }
 

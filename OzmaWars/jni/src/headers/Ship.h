@@ -1,6 +1,7 @@
 #ifndef SHIP_H
 #define SHIP_H
 
+#include <vector>
 #include "SDL.h"
 
 #include "Weapon.h"
@@ -20,6 +21,7 @@ class Ship {
     SDL_Rect area_limits;
 
     public:
+    std::vector<Weapon*> fired_weapons;
     Weapon weapon;
     Ship();
     Ship(int _x, int _y, int _health, Weapon _weapon, Sprite *_image);
@@ -29,7 +31,6 @@ class Ship {
     int get_health();
     bool alive();
     void render(SDL_Renderer *_renderer);
-    void fire(int _x, int _y);
     virtual void move() = 0;
 };
 
