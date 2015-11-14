@@ -35,4 +35,4 @@ Student project: build an Android game with NDK library
 * Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
-* Repasser la taille de l'écran en dynamique (actuellement mis en dur)
+OK * Repasser la taille de l'écran en dynamique (actuellement mis en dur)
