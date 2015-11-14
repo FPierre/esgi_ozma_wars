@@ -9,27 +9,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.android.esgi.ozma.wars.R;
+import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
+import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 
 
 /**
-  * ---- FragmentSettings
+  * ---- SettingsFragment
   * Object: User settings (sounds, vibrate, score, etc)
   * Used by: OzmaWarsActivity
   *
   * @author Pierre (Pierre Flauder) &amp; Fllo (Florent Blot)
 **/
-public class FragmentSettings extends Fragment {
+public class SettingsFragment extends Fragment {
 	
     // Debug
-    private static final String DEBUG_TAG = "//-- FragmentSettings";
+    private static final String DEBUG_TAG = "//-- SettingsFragment";
 
     // Context
     private Activity activity;
 
-    public FragmentSettings() { }
+    public SettingsFragment() { }
 
-    public static FragmentSettings newInstance() {
-    	FragmentSettings frag = new FragmentSettings();
+    public static SettingsFragment newInstance() {
+    	SettingsFragment frag = new SettingsFragment();
     	return frag;
     }
 
@@ -65,6 +67,16 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 activity.getFragmentManager().popBackStack();
+            }
+        });
+
+        TextView btnSeeIntro = (TextView) v.findViewById(R.id.button_see_intro);
+        // Display intro cinematic
+        btnSeeIntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OzmaWarsActivity) activity).handleFragment(
+                    IntroductionFragment.newInstance(), OzmaUtils.INTRO_TAG, true);
             }
         });
 

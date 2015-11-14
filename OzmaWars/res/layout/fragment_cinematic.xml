@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cinematic_frame"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <ImageView
+        android:id="@+id/cinematic_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:adjustViewBounds="true" />
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/cinematic_legends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_margin="15dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:gravity="center"
+        android:background="#59000000"/>
+
+    <com.application.android.esgi.ozma.wars.widgets.OzmaText
+        android:id="@+id/cinematic_button_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/baseline"
+        android:textColor="@color/light_red"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center_horizontal"
+        android:background="@drawable/border_light_red"
+        android:visibility="gone"/>
+</FrameLayout>

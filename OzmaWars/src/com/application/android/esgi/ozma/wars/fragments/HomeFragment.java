@@ -18,24 +18,24 @@ import com.application.android.esgi.ozma.wars.activities.GameActivity;
 
 
 /**
-  * ---- FragmentStart
+  * ---- HomeFragment
   * Object: Start/Continue a game
   * Used by: OzmaWarsActivity
   *
   * @author Pierre (Pierre Flauder) &amp; Fllo (Florent Blot)
 **/
-public class FragmentStart extends Fragment {
+public class HomeFragment extends Fragment {
 	
     // Debug
-    private static final String DEBUG_TAG = "//-- FragmentStart";
+    private static final String DEBUG_TAG = "//-- HomeFragment";
 
     // Context
     private Activity activity;
 
-    public FragmentStart() { }
+    public HomeFragment() { }
 
-    public static FragmentStart newInstance() {
-    	FragmentStart frag = new FragmentStart();
+    public static HomeFragment newInstance() {
+    	HomeFragment frag = new HomeFragment();
     	return frag;
     }
 
@@ -63,7 +63,7 @@ public class FragmentStart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_start, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         TextView textHighScore = (TextView) v.findViewById(R.id.text_highscore);
         ImageView btnSettings = (ImageView) v.findViewById(R.id.button_settings);
@@ -74,8 +74,8 @@ public class FragmentStart extends Fragment {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((OzmaWarsActivity) activity).handleFragment(FragmentSettings.newInstance(), 
-                    OzmaUtils.SETTINGS_TAG, true);
+                ((OzmaWarsActivity) activity).handleFragment(
+                    SettingsFragment.newInstance(), OzmaUtils.SETTINGS_TAG, true);
             }
         });
         // Display a new game

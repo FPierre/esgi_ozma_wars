@@ -9,6 +9,7 @@
         android:targetSdkVersion="21" />
 
     <application 
+        android:name="OzmaApplication"
         android:label="@string/app_name" 
         android:icon="@drawable/ic_launcher"
         android:theme="@style/OzmaTheme"

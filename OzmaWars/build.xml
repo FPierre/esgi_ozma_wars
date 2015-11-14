@@ -91,8 +91,8 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
  
-    <!-- Start the application when installed
-
+    <!-- 
+        Start the application when installed:
         Automatic launch application right after installed with adb 
     -->
     <target name="run">
