@@ -29,8 +29,8 @@ Student project: build an Android game with NDK library
 * Bug sur Own ship lorsqu'il tourne, les sprites "clignotent"
 * (OK) Ajouter des vaisseaux ennemis dans LevelOne
 * (OK) Le système de tir random des vaisseaux ennemi doit être passé en OOP
-* Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
-* Tirs renvoient un boolean, si TRUE, tir fait (déclenche le son à partir de ce boolean). FALSE si nombre max de missile atteint
+* (OK) Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
+* (OK) Tirs renvoient un boolean, si TRUE, tir fait (déclenche le son à partir de ce boolean). FALSE si nombre max de missile atteint
 * Si score supérieur à X, passer au niveau suivant. A faire OOP
 * Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
