@@ -4,4 +4,4 @@
 *.ap_.d
 OzmaWars/local.properties
 OzmaWars/obj/**
-OzmaWars/libs/**
+OzmaWars/gen/**
