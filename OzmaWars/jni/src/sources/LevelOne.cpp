@@ -27,16 +27,16 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                             &(this->game.own_ship_image_right));
     this->game.own_ship = own_ship;
 
+    // Ennemi 1
     EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
     enemy_ship_1.set_destination(w, 0);
-    enemy_ship_1.fire(1000, 800);
+    // enemy_ship_1.fire(1000, 800);
     this->enemy_ships.push_back(enemy_ship_1);
 
-    // EnemyShip enemy_ship_2(50, 0, 100, canon, &(this->game.enemy_ship_image));
-    // this->enemy_ships.push_back(enemy_ship_2);
-
-    // EnemyShip enemy_ship_3(100, 0, 100, canon, &(this->game.enemy_ship_image));
-    // this->enemy_ships.push_back(enemy_ship_3);
+    // Ennemi 2
+    EnemyShip enemy_ship_2(100, 100, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
+    enemy_ship_2.set_destination(w, 200);
+    this->enemy_ships.push_back(enemy_ship_2);
 }
 
 LevelOne::LevelOne(const LevelOne& _level_one) {
@@ -55,6 +55,7 @@ void LevelOne::handle_events() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
+        // Si "tap" sur l'écran, Own ship tire
         if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
             this->game.own_ship.fire();
             // TODO Mieux encapsuler cette méthode
@@ -70,6 +71,25 @@ void LevelOne::logic() {
         // Si le vaisseau est mort, on le retire du vector
         if (!this->enemy_ships[i].alive() && this->enemy_ships[i].get_status() == STATUS_DESTROY_END) {
             this->enemy_ships.erase(this->enemy_ships.begin() + i);
+        }
+        else {
+            this->enemy_ships[i].move();
+
+            int random_number = rand() % 100 + 1;
+
+            if (random_number < this->enemy_ships[i].get_propability_fire()) {
+                // Vise Own ship
+                this->enemy_ships[i].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
+            }
+
+            // Pour tous les missiles tirés du vaisseau ennemi
+            for (Weapon *fired_weapon : this->enemy_ships[i].fired_weapons) {
+                fired_weapon->move();
+
+                // if (fired_weapon->y <= 0) {
+                //     delete fired_weapon;
+                // }
+            }
         }
     }
 
@@ -118,26 +138,8 @@ void LevelOne::logic() {
     // Mouvements des objets
     this->game.own_ship.move();
 
-    // Pour tous les missiles tirés de notre vaiseau
+    // Pour tous les missiles tirés par Own ship
     for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
-        fired_weapon->move();
-
-        // if (fired_weapon->y <= 0) {
-        //     delete fired_weapon;
-        // }
-    }
-
-    this->enemy_ships[0].move();
-
-    int random_number = rand() % 100 + 1;
-
-    if (random_number < this->enemy_ships[0].get_propability_fire()) {
-        // Vise Own ship
-        this->enemy_ships[0].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
-    }
-
-    // Pour tous les missiles tirés du vaisseau ennemi
-    for (Weapon *fired_weapon : this->enemy_ships[0].fired_weapons) {
         fired_weapon->move();
 
         // if (fired_weapon->y <= 0) {
