@@ -8,7 +8,6 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-
 // TODO Utiliser SDL_GetWindowSize
 Window::Window() {
     SDL_Window *screen;

@@ -8,6 +8,7 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
+// TODO Commenter
 const int STATUS_DESTROY        = 100;
 const int STATUS_DESTROY_STEP_1 = 75;
 const int STATUS_DESTROY_STEP_2 = 50;
@@ -23,16 +24,21 @@ Game::Game(int _score, Window _window) : score(_score),
                                          window(_window) {
 
     // LOGI("Constructeur");
+
+    // Polices d'écriture
+
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
     this->font = font;
     SDL_Color text_black = { 0, 0, 0, 255 };
     this->text_black = text_black;
-    
+
     TTF_Font *font_title = TTF_OpenFont("fonts/consola.ttf", 120); // BUG: taille de police n'est pas prise en compte
     this->font_title = font_title;
     SDL_Color text_red = { 255, 0, 0, 255 }; // BUG: couleur rouge ne semble pas marcher
     this->text_red = text_red;
+
+    // Sprites
 
     Rgb blue_background(0, 255, 255);
 
@@ -173,14 +179,14 @@ void Game::render_destroy(Ship& _ship) {
     _ship.dec_status( 1 ); // status -= 1;
 
     // En fonction du statut, on affiche les étapes de l'explosion
-    if (_ship.get_status() < STATUS_DESTROY && _ship.get_status() >= STATUS_DESTROY_STEP_1) 
+    if (_ship.get_status() < STATUS_DESTROY && _ship.get_status() >= STATUS_DESTROY_STEP_1)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step1));
-    } 
-    else if (_ship.get_status() < STATUS_DESTROY_STEP_1 && _ship.get_status() >= STATUS_DESTROY_STEP_2) 
+    }
+    else if (_ship.get_status() < STATUS_DESTROY_STEP_1 && _ship.get_status() >= STATUS_DESTROY_STEP_2)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step2));
-    } 
+    }
     else if (_ship.get_status() < STATUS_DESTROY_STEP_2 && _ship.get_status() >= STATUS_DESTROY_STEP_3)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step3));

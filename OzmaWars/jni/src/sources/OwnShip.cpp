@@ -24,6 +24,12 @@ OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprit
     this->image_left = _image_left;
     this->image_right = _image_right;
     this->fired_weapon_limit = 100;
+
+    this->destroy_sound = Mix_LoadWAV("sounds/explosion.wav");
+
+    if (this->destroy_sound == NULL) {
+        LOGI("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+    }
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
@@ -39,6 +45,7 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     image_left = _ship.image_left;
     image_right = _ship.image_right;
     fired_weapon_limit = _ship.fired_weapon_limit;
+    destroy_sound = _ship.destroy_sound;
 }
 
 OwnShip::~OwnShip() {

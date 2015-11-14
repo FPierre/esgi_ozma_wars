@@ -84,15 +84,27 @@ void LevelOne::logic() {
             continue;
 
         // Si un missile du Own Ship touche un Enemy Ship
-        if ( this->game.check_collision(this->game.own_ship.weapon, enemy_ship) ) {
-            LOGI("Collision between own weapon and enemy ship");
-            enemy_ship.set_health(0);
+        // TODO Enlever le missile du vector
+        for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
+            if ( this->game.check_collision(*fired_weapon, enemy_ship) ) {
+                LOGI("Collision between own weapon and enemy ship");
+                enemy_ship.set_health(0);
+                break;
+            }
         }
 
         // Si un missile des Enemy Ships touche le Own Ship
-        if ( this->game.check_collision(this->game.own_ship, enemy_ship.weapon) ) {
-            LOGI("Collision between enemy weapon and own ship");
-            this->game.own_ship.set_health(0);
+        // TODO Enlever le missile du vector
+        for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
+            if ( this->game.check_collision(this->game.own_ship, *fired_weapon) ) {
+                LOGI("Collision between enemy weapon and own ship");
+                this->game.own_ship.set_health(0);
+                // TODO Mieux encapsuler cette méthode
+                // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
+                //      il ne perd pas forcément tous ses points de vie)
+                Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
+                break;
+            }
         }
 
         // Si un des Enemy Ships touche le Own Ship
@@ -119,11 +131,11 @@ void LevelOne::logic() {
 
     int random_number = rand() % 100 + 1;
 
-    if (random_number >= 95) {
+    if (random_number >= 99) {
         this->enemy_ships[0].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
     }
 
-  // Pour tous les missiles tirés du vaisseau ennemi
+    // Pour tous les missiles tirés du vaisseau ennemi
     for (Weapon *fired_weapon : this->enemy_ships[0].fired_weapons) {
         fired_weapon->move();
 

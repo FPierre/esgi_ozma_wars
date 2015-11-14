@@ -5,11 +5,13 @@
 
 class Window {
     private:
-    int w;
-    int h;
+    int w; // Largeur de l'écran
+    int h; // Hauteur de l'écran
 
     public:
+    // TODO A passer en private, getter/setter
     SDL_Window *screen;
+    // TODO A passer en private, getter/setter
     SDL_Renderer *renderer;
     Window();
     Window(const Window& _window);
