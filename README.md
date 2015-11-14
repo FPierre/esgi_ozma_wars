@@ -27,7 +27,7 @@ Student project: build an Android game with NDK library
 * Image de l'espace en background
 * (OK) Son lors d'une collision ?
 * Bug sur Own ship lorsqu'il tourne, les sprites "clignotent"
-* Ajouter des vaisseaux ennemis dans LevelOne
+* (OK) Ajouter des vaisseaux ennemis dans LevelOne
 * (OK) Le système de tir random des vaisseaux ennemi doit être passé en OOP
 * Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
 * Tirs renvoient un boolean, si TRUE, tir fait (déclenche le son à partir de ce boolean). FALSE si nombre max de missile atteint
