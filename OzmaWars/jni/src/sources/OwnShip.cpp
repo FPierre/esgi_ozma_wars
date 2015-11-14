@@ -23,7 +23,7 @@ OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprit
     this->image_front = _image;
     this->image_left = _image_left;
     this->image_right = _image_right;
-    this->fired_weapon_limit = 5;
+    this->fired_weapon_limit = 100;
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
