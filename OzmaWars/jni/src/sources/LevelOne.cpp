@@ -131,7 +131,8 @@ void LevelOne::logic() {
 
     int random_number = rand() % 100 + 1;
 
-    if (random_number >= 99) {
+    if (random_number < this->enemy_ships[0].get_propability_fire()) {
+        // Vise Own ship
         this->enemy_ships[0].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
     }
 

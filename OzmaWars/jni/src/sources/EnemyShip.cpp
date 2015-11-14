@@ -16,6 +16,8 @@ EnemyShip::EnemyShip() : Ship() {
 
 EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image) : Ship(_x, _y, _health, _status, _weapon, _image) {
     // LOGI("Constructeur");
+
+    this->propability_fire = 3;
 }
 
 // EnemyShip::EnemyShip(const EnemyShip& _ship) {
@@ -86,4 +88,8 @@ void EnemyShip::fire(int _x, int _y) {
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);
     }
+}
+
+int EnemyShip::get_propability_fire() {
+    return this->propability_fire;
 }
