@@ -58,6 +58,7 @@ void LevelOne::handle_events() {
         if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
             this->game.own_ship.fire();
             // TODO Mieux encapsuler cette méthode
+            // TODO Pour le moment fait le son même si le missile n'est pas tiré (cf limite de tir)
             Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
         }
     }
@@ -115,7 +116,23 @@ void LevelOne::logic() {
     }
 
     this->enemy_ships[0].move();
-    this->enemy_ships[0].weapon.move();
+
+    int random_number = rand() % 100 + 1;
+
+    if (random_number >= 95) {
+        this->enemy_ships[0].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
+    }
+
+  // Pour tous les missiles tirés du vaisseau ennemi
+    for (Weapon *fired_weapon : this->enemy_ships[0].fired_weapons) {
+        fired_weapon->move();
+
+        // if (fired_weapon->y <= 0) {
+        //     delete fired_weapon;
+        // }
+    }
+
+    // this->enemy_ships[0].weapon.move();
 
     // Niveau suivant
     // Pas encore effectif

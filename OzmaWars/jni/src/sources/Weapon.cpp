@@ -101,10 +101,10 @@ void Weapon::move() {
     // S'il ne touche pas un vaisseau, il sort de l'écran
     // TODO Gérer la vitesse par / 50
     // if (this->x < this->destination_x) {
-        this->x += this->length_x / 80;
+        this->x += this->length_x / 60;
     // }
 
     // if (this->y < this->destination_y) {
-        this->y += this->length_y / 80;
+        this->y += this->length_y / 60;
     // }
 }
