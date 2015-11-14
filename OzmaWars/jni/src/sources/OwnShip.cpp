@@ -23,6 +23,7 @@ OwnShip::OwnShip(int _x, int _y, int _health, Weapon _weapon, Sprite *_image, Sp
     this->image_front = _image;
     this->image_left = _image_left;
     this->image_right = _image_right;
+    this->fired_weapon_limit = 5;
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
@@ -36,6 +37,7 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     image_front = _ship.image_front;
     image_left = _ship.image_left;
     image_right = _ship.image_right;
+    fired_weapon_limit = _ship.fired_weapon_limit;
 }
 
 OwnShip::~OwnShip() {
@@ -79,13 +81,16 @@ void OwnShip::move() {
  * Utilisation : ship.fire
  */
 void OwnShip::fire() {
-    Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+    // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
+    if (this->fired_weapons.size() < this->fired_weapon_limit) {
+        Weapon *fired_weapon = new Weapon(100, this->weapon.image);
 
-    fired_weapon->x = this->x;
-    fired_weapon->y = this->y;
-    fired_weapon->set_destination(this->x, 0);
-    // fired_weapon.set_fired(true);
+        fired_weapon->x = this->x;
+        fired_weapon->y = this->y;
+        fired_weapon->set_destination(this->x, 0);
+        // fired_weapon.set_fired(true);
 
-    // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
-    this->fired_weapons.push_back(fired_weapon);
+        // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
+        this->fired_weapons.push_back(fired_weapon);
+    }
 }

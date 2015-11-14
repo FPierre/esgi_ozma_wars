@@ -8,17 +8,19 @@
 #include "Sprite.h"
 
 // TODO Transformer en virtuelle pure ?
+// TODO Utiliser des getter/setter
 class Ship {
     protected:
     int x;
     int y;
     int length_x;
     int length_y;
-    int destination_x;
-    int destination_y;
-    int health;
+    int destination_x;      // Point x de destination du vaisseau
+    int destination_y;      // Point y de destination du vaisseau
+    int health;             // Points de vie du vaisseau
     Sprite *image;
-    SDL_Rect area_limits;
+    SDL_Rect area_limits;   // Zone de laquelle le vaisseau ne peut pas sortir
+    int fired_weapon_limit; // Nombre maximum de missiles tirés sans qu'ils ne soit détruits en mémoire
 
     public:
     std::vector<Weapon*> fired_weapons;
