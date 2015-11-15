@@ -37,3 +37,4 @@ Student project: build an Android game with NDK library
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
 * Repasser la taille de l'écran en dynamique (actuellement mis en dur)
 * Déplacement des vaisseaux ennemis (random comme pour le tir ?)
+* Own ship doit être crée dans Game, pas LevelOne
