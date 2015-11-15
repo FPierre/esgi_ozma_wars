@@ -26,7 +26,7 @@ Student project: build an Android game with NDK library
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
 * Image de l'espace en background
 * (OK) Son lors d'une collision ?
-* Bug sur Own ship lorsqu'il tourne, les sprites "clignotent"
+* Bug : lorsque Own ship tourne, les sprites "clignotent"
 * (OK) Ajouter des vaisseaux ennemis dans LevelOne
 * (OK) Le système de tir random des vaisseaux ennemi doit être passé en OOP
 * (OK) Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
