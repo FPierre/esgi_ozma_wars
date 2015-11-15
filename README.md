@@ -39,3 +39,4 @@ Student project: build an Android game with NDK library
 * Déplacement des vaisseaux ennemis (random comme pour le tir ?)
 * Own ship doit être crée dans Game, pas LevelOne
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missilles sont rapides
+* Mettre en place LevelTwo
