@@ -30,7 +30,7 @@ class Ship {
     // TODO Passer en private avec getter/setter
     Weapon weapon;
     Ship();
-    Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image);
+    Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height);
     Ship(const Ship& _ship);
     ~Ship();
     int get_x();

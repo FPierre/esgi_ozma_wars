@@ -22,7 +22,7 @@ class Weapon {
     Mix_Chunk *launch_sound;
     SDL_Rect area_limits;  // Zone de laquelle le missile est détruit de la mémoire s'il sort
     Weapon();
-    Weapon(int _strength, Sprite *_image);
+    Weapon(int _strength, Sprite *_image, int screen_width, int screen_height);
     Weapon(const Weapon& _weapon);
     ~Weapon();
     void set_fired(bool _fired);

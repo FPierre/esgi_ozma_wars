@@ -13,12 +13,13 @@ Ship::Ship() {
     // LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image) : x(_x),
-                                                                          y(_y),
-                                                                          health(_health),
-                                                                          status(_status),
-                                                                          weapon(_weapon),
-                                                                          image(_image) {
+Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height) :
+                                                                                                              x(_x),
+                                                                                                              y(_y),
+                                                                                                              health(_health),
+                                                                                                              status(_status),
+                                                                                                              weapon(_weapon),
+                                                                                                              image(_image) {
     // LOGI("Constructeur");
 
     this->length_x = 0;
@@ -26,7 +27,7 @@ Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_im
     this->destination_x = 0;
     this->destination_y = 0;
     // TODO Passer les valeurs de l'attribut screen de l'objet Window
-    this->area_limits = { 0, 0, 1920, 1080 };
+    this->area_limits = { 0, 0, screen_width, screen_height };
 
     this->weapon.x = _x;
     this->weapon.y = _y;

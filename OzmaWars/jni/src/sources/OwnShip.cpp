@@ -16,8 +16,8 @@ OwnShip::OwnShip() : Ship() {
 
 }
 
-OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right) :
-    Ship(_x, _y, _health, _status, _weapon, _image) {
+OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right, int screen_width, int screen_height) :
+    Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
 
     // LOGI("Constructeur");
     this->image_front = _image;
@@ -92,8 +92,10 @@ void OwnShip::move() {
 bool OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
-        Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        Weapon *fired_weapon = &(this->weapon);
 
+        // TODO Getter/setter
         fired_weapon->x = this->x;
         fired_weapon->y = this->y;
         fired_weapon->set_destination(this->x, 0);

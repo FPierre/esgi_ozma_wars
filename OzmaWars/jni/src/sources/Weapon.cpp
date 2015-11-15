@@ -15,8 +15,8 @@ Weapon::Weapon() {
 
 }
 
-Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
-                                                image(_image) {
+Weapon::Weapon(int _strength, Sprite *_image, int screen_width, int screen_height) : strength(_strength),
+                                                                                     image(_image) {
     // this->x = 0;
     // this->y = 0;
     this->fired = false;
@@ -26,7 +26,7 @@ Weapon::Weapon(int _strength, Sprite *_image) : strength(_strength),
     this->destination_y = 0;
 
     // TODO Passer les valeurs de l'attribut screen de l'objet Window
-    this->area_limits = { 0, 0, 1920, 1080 };
+    this->area_limits = { 0, 0, screen_width, screen_height };
 
     this->launch_sound = Mix_LoadWAV("sounds/missile_launch.wav");
 
@@ -45,6 +45,7 @@ Weapon::Weapon(const Weapon& _weapon) {
     destination_y = _weapon.destination_y;
     strength = _weapon.strength;
     image = _weapon.image;
+    area_limits = _weapon.area_limits;
     launch_sound = _weapon.launch_sound;
 }
 
@@ -86,9 +87,17 @@ void Weapon::set_destination(int _x, int _y) {
     this->image->set_angle(angle);
 }
 
-int Weapon::get_x() { return this->x; }
-int Weapon::get_y() { return this->y; }
-Sprite *Weapon::get_sprite() { return this->image; }
+int Weapon::get_x() {
+    return this->x;
+}
+
+int Weapon::get_y() {
+    return this->y;
+}
+
+Sprite *Weapon::get_sprite() {
+    return this->image;
+}
 
 void Weapon::move() {
     // LOGI("this->x : %d", this->x);

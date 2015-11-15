@@ -84,13 +84,13 @@ Game::Game(int _score, Window _window) : score(_score),
         LOGI("Sprite own_ship_image n'a pas pu être crée");
     }
 
-    Weapon canon(100, &(this->missile_image));
+    // Weapon canon(100, &(this->missile_image));
 
-    OwnShip own_ship(500, 500, 100, 4, canon, &(this->own_ship_image),
-                                                &own_ship_image_left,
-                                                &own_ship_image_right);
+    // OwnShip own_ship(500, 500, 100, 4, canon, &(this->own_ship_image),
+    //                                             &own_ship_image_left,
+    //                                             &own_ship_image_right);
 
-    this->own_ship = own_ship;
+    // this->own_ship = own_ship;
 
     // Création des spites pour la destruction de vaisseau
     Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);

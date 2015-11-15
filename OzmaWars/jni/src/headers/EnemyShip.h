@@ -9,7 +9,7 @@ class EnemyShip : public Ship {
 
     public:
     EnemyShip();
-    EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image);
+    EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height);
     // EnemyShip(const EnemyShip& _ship);
     // ~EnemyShip();
     bool fire(int _x, int _y);

@@ -18,24 +18,25 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
     // LOGI("Constructeur");
 
-    int w = this->window.get_width();
+    int screen_width = this->window.get_width();
+    int screen_height = this->window.get_height();
 
-    Weapon canon(100, &(this->game.missile_image));
+    Weapon canon(100, &(this->game.missile_image), screen_width, screen_height);
 
     OwnShip own_ship(200, 550, 100, STATUS_DESTROY, canon, &(this->game.own_ship_image),
-                                            &(this->game.own_ship_image_left),
-                                            &(this->game.own_ship_image_right));
+                                                           &(this->game.own_ship_image_left),
+                                                           &(this->game.own_ship_image_right),
+                                                           screen_width, screen_height);
     this->game.own_ship = own_ship;
 
     // Ennemi 1
-    EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
-    enemy_ship_1.set_destination(w, 0);
-    // enemy_ship_1.fire(1000, 800);
+    EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    enemy_ship_1.set_destination(screen_width, 0);
     this->enemy_ships.push_back(enemy_ship_1);
 
     // Ennemi 2
-    EnemyShip enemy_ship_2(100, 100, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
-    enemy_ship_2.set_destination(w, 200);
+    EnemyShip enemy_ship_2(100, 100, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    enemy_ship_2.set_destination(screen_width, 200);
     this->enemy_ships.push_back(enemy_ship_2);
 }
 

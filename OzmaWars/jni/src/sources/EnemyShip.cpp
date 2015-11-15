@@ -14,7 +14,8 @@ EnemyShip::EnemyShip() : Ship() {
 
 }
 
-EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image) : Ship(_x, _y, _health, _status, _weapon, _image) {
+EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height) :
+                                                        Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
     // LOGI("Constructeur");
 
     this->propability_fire = 2;
@@ -76,8 +77,10 @@ void EnemyShip::move() {
 bool EnemyShip::fire(int _x, int _y) {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
-        Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        Weapon *fired_weapon = &(this->weapon);
 
+        // TODO Getter/setter
         fired_weapon->x = this->x;
         fired_weapon->y = this->y;
         fired_weapon->set_destination(_x, _y);
