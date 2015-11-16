@@ -86,6 +86,9 @@ void LevelOne::logic() {
         if ( this->game.check_collision(this->game.own_ship.weapon, enemy_ship) ) {
             LOGI("Collision between own weapon and enemy ship");
             enemy_ship.set_health(0);
+            // On augmente les points du joueur
+            this->game.update_score(5);
+            LOGI("Score: %d", this->game.get_score());
         }
 
         // Si un missile des Enemy Ships touche le Own Ship
@@ -114,7 +117,7 @@ void LevelOne::logic() {
         // }
     }
 
-    this->enemy_ships[0].move();
+    // this->enemy_ships[0].move();
     this->enemy_ships[0].weapon.move();
 
     // Niveau suivant
@@ -142,7 +145,7 @@ void LevelOne::render() {
             this->game.render_destroy(enemy_ship);
         }
         // Render du Sprite
-        enemy_ship.render(this->window.renderer); //, enemy_ship.get_sprite());
+        enemy_ship.render(this->window.renderer);
     }
 
     // On vérifie que le Ship n'a toujours pas explosé
@@ -153,7 +156,7 @@ void LevelOne::render() {
             this->game.render_destroy(this->game.own_ship);
         }
         // Render du Sprite
-        this->game.own_ship.render(this->window.renderer); //, this->game.own_ship.get_sprite());
+        this->game.own_ship.render(this->window.renderer);
     } else {
         // On affiche l'écran GameOver
         this->game.render_over();
