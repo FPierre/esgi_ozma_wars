@@ -9,7 +9,7 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 // TODO Commenter
-const int STATUS_DESTROY        = 80;
+const int STATUS_NORMAL         = 80;
 const int STATUS_DESTROY_STEP_1 = 60;
 const int STATUS_DESTROY_STEP_2 = 40;
 const int STATUS_DESTROY_STEP_3 = 20;
@@ -93,9 +93,9 @@ Game::Game(int _score, Window _window) : score(_score),
     // this->own_ship = own_ship;
 
     // Création des spites pour la destruction de vaisseau
-    Sprite destroyed_ship_image_step1(0, 132, 40, 45, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
-    Sprite destroyed_ship_image_step2(78, 132, 40, 45, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
-    Sprite destroyed_ship_image_step3(168, 132, 40, 45, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step2(78, 132, 90, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
+    Sprite destroyed_ship_image_step3(168, 132, 103, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     Sprite destroyed_ship_image_step4(0, 0, 0, 0, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
 
     if (&destroyed_ship_image_step1 != nullptr) {
@@ -179,7 +179,7 @@ void Game::render_destroy(Ship& _ship) {
     _ship.dec_status( 1 ); // status -= 1;
 
     // En fonction du statut, on affiche les étapes de l'explosion
-    if (_ship.get_status() < STATUS_DESTROY && _ship.get_status() >= STATUS_DESTROY_STEP_1)
+    if (_ship.get_status() < STATUS_NORMAL && _ship.get_status() >= STATUS_DESTROY_STEP_1)
     {
         _ship.set_sprite(&(this->destroyed_ship_image_step1));
     }
