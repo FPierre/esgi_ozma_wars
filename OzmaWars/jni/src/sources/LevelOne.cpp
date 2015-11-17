@@ -115,6 +115,8 @@ void LevelOne::logic() {
                 // On augmente les points du joueur
                 this->game.update_score(5);
                 LOGI("Score: %d", this->game.get_score());
+
+                // TODO Détruire le missile
                 break;
             }
         }
@@ -129,6 +131,8 @@ void LevelOne::logic() {
                 // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
                 //      il ne perd pas forcément tous ses points de vie)
                 Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
+                
+                // TODO Détruire le missile
                 break;
             }
         }
