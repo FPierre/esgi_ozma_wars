@@ -17,6 +17,7 @@
 #include "headers/LevelOne.h"
 #include "headers/LevelTwo.h"
 
+// TODO Commenter
 enum GameStates {
     STATE_NULL,
     STATE_LEVEL_ONE,
@@ -41,17 +42,17 @@ void change_state(Game& game, Window& window);
 int main(int argc, char *argv[]) {
     Window window;
 
-// LOGI("1");
-
+    // Initialisation de la fenêtre
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &(window.screen), &(window.renderer)) < 0) {
         exit(2);
     }
 
+    // Initialisation du son
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         LOGI("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
     }
 
-    // Temporaire, à déplacer dans le constructeur de Window ?
+    // TODO A déplacer dans le constructeur de Window ? (bien tester !)
     int w, h;
     SDL_GetWindowSize(window.screen, &w, &h);
     // LOGI("%d", w);
@@ -60,36 +61,22 @@ int main(int argc, char *argv[]) {
     window.set_width(w);
     window.set_height(h);
 
-// LOGI("2");
-
+    // Initialisation du jeu, avec un score 0
     Game game(0, window);
-
-// LOGI("3");
 
     Uint8 done = 0;
     SDL_Event event;
 
+    // Initialisation du 1er niveau de jeu
     state_id = STATE_LEVEL_ONE;
     current_state = new LevelOne(game, window);
 
-// LOGI("4");
-
     while (state_id != STATE_EXIT) {
-
-// LOGI("5");
-
         current_state->handle_events();
         current_state->logic();
-        // Change state if needed
         // change_state(game, window);
-
-// LOGI("6");
-
-        // Do state rendering
         current_state->render();
     }
-
-// LOGI("7");
 
     // SDL_DestroyTexture(tex);
     // SDL_DestroyTexture(tex2);

@@ -20,14 +20,17 @@ class Ship {
     int health;             // Points de vie du vaisseau
     int status;             // Statut pour la destruction d'un vaisseau
     Sprite *image;
-    SDL_Rect area_limits;   // Zone de laquelle le vaisseau ne peut pas sortir
-    int fired_weapon_limit; // Nombre maximum de missiles tirés sans qu'ils ne soit détruits en mémoire
+    SDL_Rect area_limits;   // Zone depuis laquelle le vaisseau ne peut pas sortir
+    int fired_weapon_limit; // Nombre maximum de missiles tirés sans qu'ils ne soient détruits en mémoire
 
     public:
+    Mix_Chunk *destroy_sound; // Son lorsque le vaisseau est détruit
+    // TODO Passer en private avec getter/setter
     std::vector<Weapon*> fired_weapons;
+    // TODO Passer en private avec getter/setter
     Weapon weapon;
     Ship();
-    Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image);
+    Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height);
     Ship(const Ship& _ship);
     ~Ship();
     int get_x();

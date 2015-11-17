@@ -12,10 +12,10 @@ class OwnShip : public Ship {
 
     public:
     OwnShip();
-    OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right);
+    OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right, int screen_width, int screen_height);
     OwnShip(const OwnShip& _ship);
     ~OwnShip();
-    void fire();
+    bool fire();
     void move();
 };
 

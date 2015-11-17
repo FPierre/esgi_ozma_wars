@@ -11,32 +11,33 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-const int STATUS_DESTROY     = 100;
+const int STATUS_DESTROY     = 80;
 const int STATUS_DESTROY_END = 0;
 
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
     // LOGI("Constructeur");
 
-    int w = this->window.get_width();
+    int screen_width = this->window.get_width();
+    int screen_height = this->window.get_height();
 
-    Weapon canon(100, &(this->game.missile_image));
+    Weapon canon(100, &(this->game.missile_image), screen_width, screen_height);
 
     OwnShip own_ship(200, 550, 100, STATUS_DESTROY, canon, &(this->game.own_ship_image),
-                                            &(this->game.own_ship_image_left),
-                                            &(this->game.own_ship_image_right));
+                                                           &(this->game.own_ship_image_left),
+                                                           &(this->game.own_ship_image_right),
+                                                           screen_width, screen_height);
     this->game.own_ship = own_ship;
 
-    EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image));
-    enemy_ship_1.set_destination(w, 0);
-    enemy_ship_1.fire(1000, 800);
+    // Ennemi 1
+    EnemyShip enemy_ship_1(80, 350, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    enemy_ship_1.set_destination(screen_width, 0);
     this->enemy_ships.push_back(enemy_ship_1);
 
-    // EnemyShip enemy_ship_2(50, 0, 100, canon, &(this->game.enemy_ship_image));
-    // this->enemy_ships.push_back(enemy_ship_2);
-
-    // EnemyShip enemy_ship_3(100, 0, 100, canon, &(this->game.enemy_ship_image));
-    // this->enemy_ships.push_back(enemy_ship_3);
+    // Ennemi 2
+    EnemyShip enemy_ship_2(100, 100, 100, STATUS_DESTROY, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    enemy_ship_2.set_destination(screen_width, 200);
+    this->enemy_ships.push_back(enemy_ship_2);
 }
 
 LevelOne::LevelOne(const LevelOne& _level_one) {
@@ -55,10 +56,12 @@ void LevelOne::handle_events() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
+        // Si "tap" sur l'écran, Own ship tire
         if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
-            this->game.own_ship.fire();
-            // TODO Mieux encapsuler cette méthode
-            Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
+            if (this->game.own_ship.fire()) {
+                // TODO Mieux encapsuler cette méthode
+                Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
+            }
         }
     }
 }
@@ -70,10 +73,29 @@ void LevelOne::logic() {
         if (!this->enemy_ships[i].alive() && this->enemy_ships[i].get_status() == STATUS_DESTROY_END) {
             this->enemy_ships.erase(this->enemy_ships.begin() + i);
         }
+        else {
+            this->enemy_ships[i].move();
+
+            int random_number = rand() % 100 + 1;
+
+            if (random_number < this->enemy_ships[i].get_propability_fire()) {
+                // Vise Own ship
+                this->enemy_ships[i].fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
+            }
+
+            // Pour tous les missiles tirés du vaisseau ennemi
+            for (Weapon *fired_weapon : this->enemy_ships[i].fired_weapons) {
+                fired_weapon->move();
+
+                // if (fired_weapon->y <= 0) {
+                //     delete fired_weapon;
+                // }
+            }
+        }
     }
 
     // Vérification des collisions
-    for (EnemyShip enemy_ship : this->enemy_ships) {
+    for (EnemyShip& enemy_ship : this->enemy_ships) {
         // Si le Own Ship est mort, on évite les calculs pour tous
         if ( !this->game.own_ship.alive() )
             break;
@@ -83,18 +105,30 @@ void LevelOne::logic() {
             continue;
 
         // Si un missile du Own Ship touche un Enemy Ship
-        if ( this->game.check_collision(this->game.own_ship.weapon, enemy_ship) ) {
-            LOGI("Collision between own weapon and enemy ship");
-            enemy_ship.set_health(0);
-            // On augmente les points du joueur
-            this->game.update_score(5);
-            LOGI("Score: %d", this->game.get_score());
+        // TODO Enlever le missile du vector
+        for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
+            if ( this->game.check_collision(*fired_weapon, enemy_ship) ) {
+                LOGI("Collision between own weapon and enemy ship");
+                enemy_ship.set_health(0);
+                // On augmente les points du joueur
+                this->game.update_score(5);
+                LOGI("Score: %d", this->game.get_score());
+                break;
+            }
         }
 
         // Si un missile des Enemy Ships touche le Own Ship
-        if ( this->game.check_collision(this->game.own_ship, enemy_ship.weapon) ) {
-            LOGI("Collision between enemy weapon and own ship");
-            this->game.own_ship.set_health(0);
+        // TODO Enlever le missile du vector
+        for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
+            if ( this->game.check_collision(this->game.own_ship, *fired_weapon) ) {
+                LOGI("Collision between enemy weapon and own ship");
+                this->game.own_ship.set_health(0);
+                // TODO Mieux encapsuler cette méthode
+                // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
+                //      il ne perd pas forcément tous ses points de vie)
+                Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
+                break;
+            }
         }
 
         // Si un des Enemy Ships touche le Own Ship
@@ -108,7 +142,7 @@ void LevelOne::logic() {
     // Mouvements des objets
     this->game.own_ship.move();
 
-    // Pour tous les missiles tirés de notre vaiseau
+    // Pour tous les missiles tirés par Own ship
     for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
         fired_weapon->move();
 
@@ -118,7 +152,7 @@ void LevelOne::logic() {
     }
 
     // this->enemy_ships[0].move();
-    this->enemy_ships[0].weapon.move();
+    // this->enemy_ships[0].weapon.move();
 
     // Niveau suivant
     // Pas encore effectif
@@ -139,11 +173,14 @@ void LevelOne::render() {
     this->game.render_score();
     this->game.render_life();
 
-    for (EnemyShip enemy_ship : this->enemy_ships) {
-        if ( enemy_ship.get_health() == 0 ) {
+    for (EnemyShip& enemy_ship : this->enemy_ships) {
+        LOGI("Health of enemy ship: %d", enemy_ship.get_health());
+        if ( !enemy_ship.alive() ) {
+            LOGI("Enemy ship - not alive");
             // Méthode d'affichage de la destruction
             this->game.render_destroy(enemy_ship);
         }
+        LOGI("Enemy ship - render");
         // Render du Sprite
         enemy_ship.render(this->window.renderer);
     }
@@ -167,5 +204,5 @@ void LevelOne::render() {
     SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-    SDL_Delay(10);
+    SDL_Delay(100);
 }

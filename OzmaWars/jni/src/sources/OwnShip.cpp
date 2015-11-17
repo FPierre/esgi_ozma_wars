@@ -16,14 +16,20 @@ OwnShip::OwnShip() : Ship() {
 
 }
 
-OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right) :
-    Ship(_x, _y, _health, _status, _weapon, _image) {
+OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right, int screen_width, int screen_height) :
+    Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
 
     // LOGI("Constructeur");
     this->image_front = _image;
     this->image_left = _image_left;
     this->image_right = _image_right;
     this->fired_weapon_limit = 100;
+
+    this->destroy_sound = Mix_LoadWAV("sounds/explosion.wav");
+
+    if (this->destroy_sound == NULL) {
+        LOGI("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+    }
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
@@ -39,6 +45,7 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     image_left = _ship.image_left;
     image_right = _ship.image_right;
     fired_weapon_limit = _ship.fired_weapon_limit;
+    destroy_sound = _ship.destroy_sound;
 }
 
 OwnShip::~OwnShip() {
@@ -79,16 +86,16 @@ void OwnShip::move() {
 /**
  * Tire des missiles vers le haut de l'écran uniquement
  *
- * Utilisation : ship.fire
- *
  * TODO Le bruit de tir ne doit se faire que si le missile est effectivement tiré (actuellement il se fait
  *      même si la limite est atteinte et que le missile n'est pas tiré)
  */
-void OwnShip::fire() {
+bool OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
-        Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        Weapon *fired_weapon = &(this->weapon);
 
+        // TODO Getter/setter
         fired_weapon->x = this->x;
         fired_weapon->y = this->y;
         fired_weapon->set_destination(this->x, 0);
@@ -96,5 +103,9 @@ void OwnShip::fire() {
 
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);
+
+        return true;
     }
+
+    return false;
 }

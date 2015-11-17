@@ -14,8 +14,12 @@ EnemyShip::EnemyShip() : Ship() {
 
 }
 
-EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image) : Ship(_x, _y, _health, _status, _weapon, _image) {
+EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height) :
+                                                        Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
     // LOGI("Constructeur");
+
+    this->propability_fire = 2;
+    this->fired_weapon_limit = 10;
 }
 
 // EnemyShip::EnemyShip(const EnemyShip& _ship) {
@@ -70,6 +74,26 @@ void EnemyShip::move() {
     }
 }
 
-void EnemyShip::fire(int _x, int _y) {
-    this->weapon.set_destination(_x, _y);
+bool EnemyShip::fire(int _x, int _y) {
+    // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
+    if (this->fired_weapons.size() < this->fired_weapon_limit) {
+        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        Weapon *fired_weapon = &(this->weapon);
+
+        // TODO Getter/setter
+        fired_weapon->x = this->x;
+        fired_weapon->y = this->y;
+        fired_weapon->set_destination(_x, _y);
+
+        // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
+        this->fired_weapons.push_back(fired_weapon);
+
+        return true;
+    }
+
+    return false;
+}
+
+int EnemyShip::get_propability_fire() {
+    return this->propability_fire;
 }
