@@ -77,7 +77,7 @@ void LevelOne::logic() {
             this->enemy_ships.pop_back();
         }
         // S'il n'est pas en train d'être détruit, on exécute les actions
-        else if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
+        else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
             enemy_ship.move();
 
             int random_number = rand() % 100 + 1;
@@ -141,8 +141,10 @@ void LevelOne::logic() {
         }
     }
 
-    // Mouvements des objets
-    this->game.own_ship.move();
+    // Mouvements des objets seulement si encore en vie
+    if ( this->game.own_ship.alive() ) {
+        this->game.own_ship.move();
+    }
 
     // Pour tous les missiles tirés par Own ship
     for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
