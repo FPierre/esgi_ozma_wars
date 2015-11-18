@@ -20,10 +20,11 @@ Game::Game() {
 }
 
 // TODO Faire le destructeur spécial de TTF
-Game::Game(int _score, Window _window) : score(_score),
-                                         window(_window) {
+Game::Game(Window _window) : window(_window) {
 
     // LOGI("Constructeur");
+
+    this->score = 0;
 
     // Polices d'écriture
 
@@ -132,6 +133,10 @@ Game::Game(const Game& _game) {
 
 Game::~Game() {
 
+}
+
+Window Game::get_window() {
+    return this->window;
 }
 
 int Game::get_score() {

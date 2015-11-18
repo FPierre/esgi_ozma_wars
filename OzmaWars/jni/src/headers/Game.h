@@ -31,9 +31,10 @@ class Game {
     Sprite destroyed_ship_image_step4;
     OwnShip own_ship;
     Game();
-    Game(int _score, Window _window);
+    Game(Window _window);
     Game(const Game& _game);
     ~Game();
+    Window get_window();
     int get_score();
     int update_score(int points);
     void render_life();
@@ -42,7 +43,7 @@ class Game {
     void render_over();
 
     // Tempate pour la gestion de collisions
-    template<class S1, class S2> 
+    template<class S1, class S2>
     bool check_collision( S1 a, S2 b ) {
         // Initialisation des variables
         int leftA,   leftB;

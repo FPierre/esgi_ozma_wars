@@ -13,12 +13,11 @@
 class LevelOne : public GameState {
     private:
     Game game;
-    Window window;
     std::vector<EnemyShip> enemy_ships;
 
     public:
     LevelOne();
-    LevelOne(Game _game, Window _window);
+    LevelOne(Game _game);
     LevelOne(const LevelOne& _level_one);
     ~LevelOne();
     void handle_events();

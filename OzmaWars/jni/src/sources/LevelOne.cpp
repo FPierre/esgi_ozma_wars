@@ -14,13 +14,11 @@
 const int STATUS_NORMAL      = 80;
 const int STATUS_DESTROY_END = 0;
 
-// TODO Game contient déjà Windows, pas besoin de le passer en param
-LevelOne::LevelOne(Game _game, Window _window) : game(_game),
-                                                 window(_window) {
+LevelOne::LevelOne(Game _game) : game(_game) {
     // LOGI("Constructeur");
 
-    int screen_width = this->window.get_width();
-    int screen_height = this->window.get_height();
+    int screen_width = this->game.get_window().get_width();
+    int screen_height = this->game.get_window().get_height();
 
     Weapon canon(100, &(this->game.missile_image), screen_width, screen_height);
 
@@ -46,7 +44,6 @@ LevelOne::LevelOne(const LevelOne& _level_one) {
     // LOGI("Constructeur par copie");
 
     game = _level_one.game;
-    window = _level_one.window;
     enemy_ships = _level_one.enemy_ships;
 }
 
@@ -104,11 +101,12 @@ void LevelOne::logic() {
         // LOGI("------- ''OUT'' Nombre de enemy : %d", this->enemy_ships.size());
 
         // Mouvements pour tous les missiles tirés du vaisseau ennemi
+        // TODO Pour la limite de destruction des missiles, se servir de la limit_area et de ses méthodes dans Weapon
         for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
             if (fired_weapon->x < 0
                 || fired_weapon->y < 0
-                || fired_weapon->x > this->window.get_width()
-                || fired_weapon->y > this->window.get_height()) {
+                || fired_weapon->x > this->game.get_window().get_width()
+                || fired_weapon->y > this->game.get_window().get_height()) {
                 // LOGI("Weapon dies()");
                 delete fired_weapon;
             } else {
@@ -209,7 +207,7 @@ void LevelOne::logic() {
 }
 
 void LevelOne::render() {
-    SDL_RenderClear(this->window.renderer);
+    SDL_RenderClear(this->game.get_window().renderer);
 
     this->game.render_score();
     this->game.render_life();
@@ -223,7 +221,7 @@ void LevelOne::render() {
         }
         // LOGI("Enemy ship - render");
         // Render du Sprite
-        enemy_ship.render(this->window.renderer);
+        enemy_ship.render(this->game.get_window().renderer);
     }
 
     // On vérifie que le Ship n'a toujours pas explosé
@@ -234,16 +232,16 @@ void LevelOne::render() {
             this->game.render_destroy(this->game.own_ship);
         }
         // Render du Sprite
-        this->game.own_ship.render(this->window.renderer);
+        this->game.own_ship.render(this->game.get_window().renderer);
     } else {
         // On affiche l'écran GameOver
         this->game.render_over();
     }
 
-    SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
-    SDL_RenderPresent(this->window.renderer);
+    SDL_SetRenderDrawColor(this->game.get_window().renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->game.get_window().renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->game.get_window().renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
+    SDL_RenderPresent(this->game.get_window().renderer);
 
     SDL_Delay(50);
 }

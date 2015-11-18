@@ -31,7 +31,7 @@ int next_state = STATE_NULL;
 GameState *current_state = NULL;
 
 void set_next_state(int newState);
-void change_state(Game& game, Window& window);
+void change_state(Game& game);
 
 #define LOG_TAG "main"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -61,15 +61,15 @@ int main(int argc, char *argv[]) {
     window.set_width(w);
     window.set_height(h);
 
-    // Initialisation du jeu, avec un score 0
-    Game game(0, window);
+    // Initialisation du jeu
+    Game game(window);
 
     Uint8 done = 0;
     SDL_Event event;
 
     // Initialisation du 1er niveau de jeu
     state_id = STATE_LEVEL_ONE;
-    current_state = new LevelOne(game, window);
+    current_state = new LevelOne(game);
 
     while (state_id != STATE_EXIT) {
         current_state->handle_events();
@@ -84,15 +84,15 @@ int main(int argc, char *argv[]) {
     exit(0);
 }
 
-void set_next_state(int newState) {
+void set_next_state(int new_state) {
     // If the user doesn't want to exit
     if (next_state != STATE_EXIT) {
         //Set the next state
-        next_state = newState;
+        next_state = new_state;
     }
 }
 
-void change_state(Game& game, Window& window) {
+void change_state(Game& game) {
     // If the state needs to be changed
     if (next_state != STATE_NULL) {
         // Delete the current state
@@ -103,11 +103,11 @@ void change_state(Game& game, Window& window) {
         // Change the state
         switch (next_state) {
             case STATE_LEVEL_ONE:
-                current_state = new LevelOne(game, window);
+                current_state = new LevelOne(game);
                 break;
 
             case STATE_LEVEL_TWO:
-                current_state = new LevelTwo(window);
+                current_state = new LevelTwo(game);
                 break;
         }
 
