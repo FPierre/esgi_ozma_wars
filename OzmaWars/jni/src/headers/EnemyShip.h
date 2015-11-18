@@ -15,7 +15,7 @@ class EnemyShip : public Ship {
     bool fire(int _x, int _y);
     void set_destination(int _x, int _y);
     void move();
-    int get_propability_fire();
+    bool can_fire(int number);
 };
 
 #endif

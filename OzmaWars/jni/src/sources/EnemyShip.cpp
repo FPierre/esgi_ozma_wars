@@ -47,10 +47,6 @@ EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, S
 
 // }
 
-int EnemyShip::get_propability_fire() {
-    return this->propability_fire;
-}
-
 void EnemyShip::set_destination(int _x, int _y) {
     int diff_x = _x - this->x;
     int diff_y = _y - this->y;
@@ -87,6 +83,10 @@ void EnemyShip::move() {
     if (this->y < this->destination_y) {
         this->y += this->length_y / 200;
     }
+}
+
+bool EnemyShip::can_fire(int number) {
+    return number < this->propability_fire;
 }
 
 bool EnemyShip::fire(int _x, int _y) {
