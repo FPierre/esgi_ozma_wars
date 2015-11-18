@@ -91,8 +91,16 @@ int Weapon::get_x() {
     return this->x;
 }
 
+void Weapon::set_x(int _x) {
+    this->x = _x;
+}
+
 int Weapon::get_y() {
     return this->y;
+}
+
+void Weapon::set_y(int _y) {
+    this->y = _y;
 }
 
 Sprite *Weapon::get_sprite() {

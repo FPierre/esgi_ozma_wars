@@ -20,21 +20,36 @@ EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, S
 
     this->propability_fire = 2;
     this->fired_weapon_limit = 10;
+
+    this->destroy_sound = Mix_LoadWAV("sounds/explosion.wav");
+
+    if (this->destroy_sound == NULL) {
+        LOGI("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+    }
 }
 
+// SI DECOMMENTE, ENEMIES SHIPS N'APPARAISSENT PLUS
 // EnemyShip::EnemyShip(const EnemyShip& _ship) {
-//     LOGI("Constructeur par copie");
-//
+//     // LOGI("Constructeur par copie");
+
 //     x = _ship.x;
 //     y = _ship.y;
 //     health = _ship.health;
+//     status = _ship.status;
 //     weapon = _ship.weapon;
 //     image = _ship.image;
+//     fired_weapon_limit = _ship.fired_weapon_limit;
+//     propability_fire = _ship.propability_fire;
+//     destroy_sound = _ship.destroy_sound;
 // }
 
 // EnemyShip::~EnemyShip() {
-//
+
 // }
+
+int EnemyShip::get_propability_fire() {
+    return this->propability_fire;
+}
 
 void EnemyShip::set_destination(int _x, int _y) {
     int diff_x = _x - this->x;
@@ -77,12 +92,11 @@ void EnemyShip::move() {
 bool EnemyShip::fire(int _x, int _y) {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
-        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        // Copie de Weapon actuelle du vaisseau
         Weapon *fired_weapon = &(this->weapon);
 
-        // TODO Getter/setter
-        fired_weapon->x = this->x;
-        fired_weapon->y = this->y;
+        fired_weapon->set_x(this->x);
+        fired_weapon->set_y(this->y);
         fired_weapon->set_destination(_x, _y);
 
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
@@ -92,8 +106,4 @@ bool EnemyShip::fire(int _x, int _y) {
     }
 
     return false;
-}
-
-int EnemyShip::get_propability_fire() {
-    return this->propability_fire;
 }

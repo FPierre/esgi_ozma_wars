@@ -85,21 +85,16 @@ void OwnShip::move() {
 
 /**
  * Tire des missiles vers le haut de l'écran uniquement
- *
- * TODO Le bruit de tir ne doit se faire que si le missile est effectivement tiré (actuellement il se fait
- *      même si la limite est atteinte et que le missile n'est pas tiré)
  */
 bool OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
-        // Weapon *fired_weapon = new Weapon(100, this->weapon.image);
+        // Copie de Weapon actuelle du vaisseau
         Weapon *fired_weapon = &(this->weapon);
 
-        // TODO Getter/setter
-        fired_weapon->x = this->x;
-        fired_weapon->y = this->y;
+        fired_weapon->set_x(this->x);
+        fired_weapon->set_y(this->y);
         fired_weapon->set_destination(this->x, 0);
-        // fired_weapon.set_fired(true);
 
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);

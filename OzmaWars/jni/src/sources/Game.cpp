@@ -84,15 +84,7 @@ Game::Game(int _score, Window _window) : score(_score),
         LOGI("Sprite own_ship_image n'a pas pu être crée");
     }
 
-    // Weapon canon(100, &(this->missile_image));
-
-    // OwnShip own_ship(500, 500, 100, 4, canon, &(this->own_ship_image),
-    //                                             &own_ship_image_left,
-    //                                             &own_ship_image_right);
-
-    // this->own_ship = own_ship;
-
-    // Création des spites pour la destruction de vaisseau
+    // Création des sprites pour la destruction de vaisseau
     Sprite destroyed_ship_image_step1(0, 132, 78, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     Sprite destroyed_ship_image_step2(78, 132, 90, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
     Sprite destroyed_ship_image_step3(168, 132, 103, 90, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
@@ -107,10 +99,21 @@ Game::Game(int _score, Window _window) : score(_score),
     else {
         LOGI("Sprite destroyed_ship_image n'a pas pu être créée");
     }
+
+    int screen_width = this->window.get_width();
+    int screen_height = this->window.get_height();
+
+    Weapon canon(100, &(this->missile_image), screen_width, screen_height);
+
+    OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, &(this->own_ship_image),
+                                                          &(this->own_ship_image_left),
+                                                          &(this->own_ship_image_right),
+                                                          screen_width, screen_height);
+    this->own_ship = own_ship;
 }
 
 Game::Game(const Game& _game) {
-    LOGI("Constructeur par copie");
+    // LOGI("Constructeur par copie");
 
     score = _game.score;
     font = _game.font;
@@ -136,7 +139,7 @@ int Game::get_score() {
 }
 
 /**
- * @param int points Points à rajouter en plus du score actuel.
+ * @param int points Points à rajouter au score actuel.
  */
 int Game::update_score(int points) {
     return this->score += points;

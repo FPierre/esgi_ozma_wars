@@ -14,6 +14,7 @@
 const int STATUS_NORMAL      = 80;
 const int STATUS_DESTROY_END = 0;
 
+// TODO Game contient déjà Windows, pas besoin de le passer en param
 LevelOne::LevelOne(Game _game, Window _window) : game(_game),
                                                  window(_window) {
     // LOGI("Constructeur");
@@ -23,11 +24,12 @@ LevelOne::LevelOne(Game _game, Window _window) : game(_game),
 
     Weapon canon(100, &(this->game.missile_image), screen_width, screen_height);
 
-    OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, &(this->game.own_ship_image),
-                                                           &(this->game.own_ship_image_left),
-                                                           &(this->game.own_ship_image_right),
-                                                           screen_width, screen_height);
-    this->game.own_ship = own_ship;
+    // Own Ship est maintenant crée dans Game
+    // OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, &(this->game.own_ship_image),
+    //                                                        &(this->game.own_ship_image_left),
+    //                                                        &(this->game.own_ship_image_right),
+    //                                                        screen_width, screen_height);
+    // this->game.own_ship = own_ship;
 
     // Ennemi 1
     EnemyShip enemy_ship_1(80, 350, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
@@ -68,10 +70,10 @@ void LevelOne::handle_events() {
 
 void LevelOne::logic() {
     // Vérification des status des vaisseaux et des collisions
-    for (std::vector<EnemyShip>::iterator it_enemy = this->enemy_ships.begin(); 
+    for (std::vector<EnemyShip>::iterator it_enemy = this->enemy_ships.begin();
                 it_enemy != this->enemy_ships.end(); ++it_enemy) {
     // for (EnemyShip& enemy_ship : this->enemy_ships) {
-        LOGI("------- ''IN'' Nombre de enemy : %d", this->enemy_ships.size());
+        // LOGI("------- ''IN'' Nombre de enemy : %d", this->enemy_ships.size());
 
         EnemyShip& enemy_ship = *it_enemy;
 
@@ -99,18 +101,18 @@ void LevelOne::logic() {
             }
         }
 
-        LOGI("------- ''OUT'' Nombre de enemy : %d", this->enemy_ships.size());
+        // LOGI("------- ''OUT'' Nombre de enemy : %d", this->enemy_ships.size());
 
         // Mouvements pour tous les missiles tirés du vaisseau ennemi
         for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
             if (fired_weapon->x < 0
-                || fired_weapon->y < 0 
+                || fired_weapon->y < 0
                 || fired_weapon->x > this->window.get_width()
                 || fired_weapon->y > this->window.get_height()) {
-                LOGI("Weapon dies()");
+                // LOGI("Weapon dies()");
                 delete fired_weapon;
             } else {
-                LOGI("Weapon moves()");
+                // LOGI("Weapon moves()");
                 fired_weapon->move();
             }
         }
@@ -123,13 +125,13 @@ void LevelOne::logic() {
         // TODO Enlever le missile du vector
         for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
             if ( this->game.check_collision(this->game.own_ship, *fired_weapon) ) {
-                LOGI("Collision between enemy weapon and own ship");
+                // LOGI("Collision between enemy weapon and own ship");
                 this->game.own_ship.set_health(0);
                 // TODO Mieux encapsuler cette méthode
                 // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
                 //      il ne perd pas forcément tous ses points de vie)
                 Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
-                
+
                 // TODO Automatiser à l'aide d'un template ?
                 // this->game.remove_item( *fired_weapon, enemy_ship.fired_weapons );
 
@@ -150,11 +152,11 @@ void LevelOne::logic() {
         // TODO Enlever le missile du vector
         for (Weapon *fired_weapon : this->game.own_ship.fired_weapons) {
             if ( this->game.check_collision(*fired_weapon, enemy_ship) ) {
-                LOGI("Collision between own weapon and enemy ship");
+                // LOGI("Collision between own weapon and enemy ship");
                 enemy_ship.set_health(0);
                 // On augmente les points du joueur
                 this->game.update_score(5);
-                LOGI("Score: %d", this->game.get_score());
+                // LOGI("Score: %d", this->game.get_score());
 
                 // TODO Automatiser à l'aide d'un template ?
                 // this->game.remove_item( *fired_weapon, this->game.own_ship.fired_weapons );
@@ -170,7 +172,7 @@ void LevelOne::logic() {
 
         // Si un des Enemy Ships touche le Own Ship
         if ( this->game.check_collision(this->game.own_ship, enemy_ship) ) {
-            LOGI("Collision between enemy and own ships");
+            // LOGI("Collision between enemy and own ships");
             enemy_ship.set_health(0);
             this->game.own_ship.set_health(0);
         }
@@ -213,13 +215,13 @@ void LevelOne::render() {
     this->game.render_life();
 
     for (EnemyShip& enemy_ship : this->enemy_ships) {
-        LOGI("Health of enemy ship: %d", enemy_ship.get_health());
+        // LOGI("Health of enemy ship: %d", enemy_ship.get_health());
         if ( !enemy_ship.alive() ) {
-            LOGI("Enemy ship - not alive");
+            // LOGI("Enemy ship - not alive");
             // Méthode d'affichage de la destruction
             this->game.render_destroy(enemy_ship);
         }
-        LOGI("Enemy ship - render");
+        // LOGI("Enemy ship - render");
         // Render du Sprite
         enemy_ship.render(this->window.renderer);
     }
@@ -238,10 +240,10 @@ void LevelOne::render() {
         this->game.render_over();
     }
 
-    // SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(this->window.renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->window.renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->window.renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->window.renderer);
 
-    SDL_Delay(100);
+    SDL_Delay(50);
 }

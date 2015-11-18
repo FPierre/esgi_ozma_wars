@@ -30,7 +30,9 @@ class Weapon {
     void render(SDL_Renderer *_renderer);
     void set_destination(int _x, int _y);
     int get_x();
+    void set_x(int _x);
     int get_y();
+    void set_y(int _y);
     Sprite *get_sprite();
     // TODO Passer en private ? N'est à utiliser que dans le fire de Ship
     void move();
