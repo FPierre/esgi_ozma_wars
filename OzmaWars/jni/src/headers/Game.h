@@ -41,8 +41,9 @@ class Game {
     void render_destroy(Ship& _ship);
     void render_over();
 
-    template<class S1, class S2>
-    bool check_collision(S1 a, S2 b) {
+    // Tempate pour la gestion de collisions
+    template<class S1, class S2> 
+    bool check_collision( S1 a, S2 b ) {
         // Initialisation des variables
         int leftA,   leftB;
         int rightA,  rightB;

@@ -68,13 +68,24 @@ void LevelOne::handle_events() {
 
 void LevelOne::logic() {
     // Vérification des status des vaisseaux et des collisions
-    for (EnemyShip& enemy_ship : this->enemy_ships) {
-        // Si le vaisseau est mort, on le retire du vector
-        if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END) {
-            // On déplace l'item en dernière place
-            std::swap(enemy_ship, this->enemy_ships.back());
-            // On le supprime du vector
-            this->enemy_ships.pop_back();
+    for (std::vector<EnemyShip>::iterator it_enemy = this->enemy_ships.begin(); 
+                it_enemy != this->enemy_ships.end(); ++it_enemy) {
+    // for (EnemyShip& enemy_ship : this->enemy_ships) {
+        LOGI("------- ''IN'' Nombre de enemy : %d", this->enemy_ships.size());
+
+        EnemyShip& enemy_ship = *it_enemy;
+
+        // Si le vaisseau ennemi est mort et qu'il n'a pas de missile en cours, on le retire du vector
+        if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END
+                && enemy_ship.fired_weapons.size() == 0) {
+
+            // TODO: automatiser à l'aide d'un template ?
+            this->enemy_ships.erase(it_enemy);
+
+            // // On déplace l'item en dernière place
+            // std::swap(enemy_ship, this->enemy_ships.back());
+            // // On le supprime du vector
+            // this->enemy_ships.pop_back();
         }
         // S'il n'est pas en train d'être détruit, on exécute les actions
         else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
@@ -86,21 +97,50 @@ void LevelOne::logic() {
                 // Vise Own ship
                 enemy_ship.fire(this->game.own_ship.get_x(), this->game.own_ship.get_y());
             }
-
-            // Pour tous les missiles tirés du vaisseau ennemi
-            for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
-                fired_weapon->move();
-
-                // if (fired_weapon->y <= 0) {
-                //     delete fired_weapon;
-                // }
-            }
         }
 
+        LOGI("------- ''OUT'' Nombre de enemy : %d", this->enemy_ships.size());
+
+        // Mouvements pour tous les missiles tirés du vaisseau ennemi
+        for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
+            if (fired_weapon->x < 0
+                || fired_weapon->y < 0 
+                || fired_weapon->x > this->window.get_width()
+                || fired_weapon->y > this->window.get_height()) {
+                LOGI("Weapon dies()");
+                delete fired_weapon;
+            } else {
+                LOGI("Weapon moves()");
+                fired_weapon->move();
+            }
+        }
 
         // Si le Own Ship est mort, on évite les calculs pour tous
         if ( !this->game.own_ship.alive() )
             break;
+
+        // Si un missile des Enemy Ships touche le Own Ship
+        // TODO Enlever le missile du vector
+        for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
+            if ( this->game.check_collision(this->game.own_ship, *fired_weapon) ) {
+                LOGI("Collision between enemy weapon and own ship");
+                this->game.own_ship.set_health(0);
+                // TODO Mieux encapsuler cette méthode
+                // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
+                //      il ne perd pas forcément tous ses points de vie)
+                Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
+                
+                // TODO Automatiser à l'aide d'un template ?
+                // this->game.remove_item( *fired_weapon, enemy_ship.fired_weapons );
+
+                // // On déplace l'item en dernière place
+                // std::swap(*fired_weapon, *(enemy_ship.fired_weapons.back()));
+                // // On le supprime du vector
+                // enemy_ship.fired_weapons.pop_back();
+                delete fired_weapon;
+                break;
+            }
+        }
 
         // Si le vaisseau ennemi n'a plus de vie, on passe au suivant
         if ( !enemy_ship.alive() )
@@ -116,23 +156,14 @@ void LevelOne::logic() {
                 this->game.update_score(5);
                 LOGI("Score: %d", this->game.get_score());
 
-                // TODO Détruire le missile
-                break;
-            }
-        }
+                // TODO Automatiser à l'aide d'un template ?
+                // this->game.remove_item( *fired_weapon, this->game.own_ship.fired_weapons );
 
-        // Si un missile des Enemy Ships touche le Own Ship
-        // TODO Enlever le missile du vector
-        for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
-            if ( this->game.check_collision(this->game.own_ship, *fired_weapon) ) {
-                LOGI("Collision between enemy weapon and own ship");
-                this->game.own_ship.set_health(0);
-                // TODO Mieux encapsuler cette méthode
-                // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
-                //      il ne perd pas forcément tous ses points de vie)
-                Mix_PlayChannel(-1, this->game.own_ship.destroy_sound, 0);
-                
-                // TODO Détruire le missile
+                // On déplace l'item en dernière place
+                // std::swap(fired_weapon, this->game.own_ship.fired_weapons.back());
+                // // On le supprime du vector
+                // this->game.own_ship.fired_weapons.pop_back();
+                delete fired_weapon;
                 break;
             }
         }
