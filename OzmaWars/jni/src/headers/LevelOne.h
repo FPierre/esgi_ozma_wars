@@ -12,7 +12,7 @@
 
 class LevelOne : public GameState {
     private:
-    Game game;
+    Game *game;
     std::vector<EnemyShip> enemy_ships;
     SDL_Surface *background;
     SDL_Texture *texture;
@@ -21,7 +21,7 @@ class LevelOne : public GameState {
 
     public:
     LevelOne();
-    LevelOne(Game _game);
+    LevelOne(Game *_game);
     LevelOne(const LevelOne& _level_one);
     ~LevelOne();
     void handle_events();

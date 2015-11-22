@@ -12,12 +12,16 @@
 
 class LevelTwo : public GameState {
     private:
-    Game game;
+    Game *game;
     std::vector<EnemyShip> enemy_ships;
+    SDL_Surface *background;
+    SDL_Texture *texture;
+    SDL_Rect image_location;
+    SDL_Rect test;
 
     public:
     LevelTwo();
-    LevelTwo(Game _game);
+    LevelTwo(Game *_game);
     LevelTwo(const LevelTwo& _level_two);
     ~LevelTwo();
     void handle_events();

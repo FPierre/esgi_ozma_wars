@@ -143,11 +143,15 @@ int Game::get_score() {
     return this->score;
 }
 
+void Game::set_score(int _points) {
+    this->score = _points;
+}
+
 /**
  * @param int points Points à rajouter au score actuel.
  */
-int Game::update_score(int points) {
-    return this->score += points;
+int Game::update_score(int _points) {
+    return this->score += _points;
 }
 
 void Game::render_score() {

@@ -36,7 +36,8 @@ class Game {
     ~Game();
     Window get_window();
     int get_score();
-    int update_score(int points);
+    void set_score(int _points);
+    int update_score(int _points);
     void render_life();
     void render_score();
     void render_destroy(Ship& _ship);
