@@ -34,22 +34,38 @@ LevelOne::LevelOne(Game _game) : game(_game) {
 
     Weapon canon(100, &(this->game.missile_image), screen_width, screen_height);
 
-    // Own Ship est maintenant crée dans Game
-    // OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, &(this->game.own_ship_image),
-    //                                                        &(this->game.own_ship_image_left),
-    //                                                        &(this->game.own_ship_image_right),
-    //                                                        screen_width, screen_height);
-    // this->game.own_ship = own_ship;
-
-    // Ennemi 1
-    EnemyShip enemy_ship_1(80, 350, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
-    // enemy_ship_1.set_destination(screen_width, 0);
+    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_1);
 
-    // Ennemi 2
-    // EnemyShip enemy_ship_2(100, 100, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
-    // enemy_ship_2.set_destination(screen_width, 200);
-    // this->enemy_ships.push_back(enemy_ship_2);
+    EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_2);
+
+    EnemyShip enemy_ship_3(-600, 80, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_3);
+
+    EnemyShip enemy_ship_4(-840, 370, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_4);
+
+    EnemyShip enemy_ship_5(-1200, 40, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_5);
+
+    EnemyShip enemy_ship_6(-2300, 230, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_6);
+
+    EnemyShip enemy_ship_7(-2500, 400, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_7);
+
+    EnemyShip enemy_ship_8(-3000, 270, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_8);
+
+    EnemyShip enemy_ship_9(-3800, 100, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_9);
+
+    EnemyShip enemy_ship_10(-4500, 290, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_10);
+
+    EnemyShip enemy_ship_11(-4800, 70, 100, STATUS_NORMAL, canon, &(this->game.enemy_ship_image), screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_11);
 }
 
 LevelOne::LevelOne(const LevelOne& _level_one) {
@@ -82,17 +98,41 @@ void LevelOne::logic() {
 
     // TESTS déplacement random
 
-    // Déplacement sur x doit être plus important que déplacement sur y
-    int random_number_for_x = rand() % 5 + 1;
-    uint min = -1;
-    uint max = 1;
-    int random_number_for_y = min + (rand() % (int)(max - min + 1));
+    for (EnemyShip& enemy_ship : this->enemy_ships) {
+        // Déplacement sur x doit être plus important que déplacement sur y
+        int random_number_for_x = rand() % 5 + 1;
+        uint min = -10;
+        uint max = 1;
+        int random_number_for_y = min + (rand() % (int)(max - min + 1));
 
-    int test1 = random_number_for_x + this->enemy_ships[0].get_x();
-    int test2 = random_number_for_y + this->enemy_ships[0].get_y();
+        // LOGI("random_number_for_y : %d", random_number_for_y);
 
-    this->enemy_ships[0].set_destination(test1, test2);
-    this->enemy_ships[0].move();
+        int test1 = random_number_for_x + enemy_ship.get_x();
+        int test2 = random_number_for_y + enemy_ship.get_y();
+
+        // LOGI("test2 : %d", test2);
+
+        enemy_ship.set_destination(test1, test2);
+        enemy_ship.move();
+    }
+
+    // // Déplacement sur x doit être plus important que déplacement sur y
+    // int random_number_for_x = rand() % 5 + 1;
+    // uint min = -10;
+    // uint max = 1;
+    // int random_number_for_y = min + (rand() % (int)(max - min + 1));
+
+    // // LOGI("random_number_for_y : %d", random_number_for_y);
+
+    // int test1 = random_number_for_x + this->enemy_ships[0].get_x();
+    // int test2 = random_number_for_y + this->enemy_ships[0].get_y();
+
+    // // LOGI("test2 : %d", test2);
+
+    // this->enemy_ships[0].set_destination(test1, test2);
+    // this->enemy_ships[0].move();
+
+
 
 
 

@@ -70,9 +70,9 @@ void EnemyShip::set_destination(int _x, int _y) {
 }
 
 void EnemyShip::move() {
-    LOGI("this->x : %d", this->x);
-    LOGI("this->length_x : %d", this->length_x);
-    LOGI("this->destination_x : %d", this->destination_x);
+    // LOGI("this->x : %d", this->x);
+    // LOGI("this->length_x : %d", this->length_x);
+    // LOGI("this->destination_x : %d", this->destination_x);
     // LOGI("this->y : %d", this->y);
     // LOGI("this->destination_y : %d", this->destination_y);
 
