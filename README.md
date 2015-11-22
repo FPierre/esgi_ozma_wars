@@ -31,7 +31,7 @@ Student project: build an Android game with NDK library
 * (OK) Le système de tir random des vaisseaux ennemi doit être passé en OOP
 * (OK) Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
 * (OK) Tirs renvoient un boolean, si TRUE, tir fait (déclenche le son à partir de ce boolean). FALSE si nombre max de missile atteint
-* Si score supérieur à X, passer au niveau suivant. A faire OOP
+* (OK) Si score supérieur à X, passer au niveau suivant. A faire OOP
 * Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
@@ -39,5 +39,5 @@ Student project: build an Android game with NDK library
 * (OK) Déplacement des vaisseaux ennemis (random comme pour le tir ?)
 * (OK) Own ship doit être crée dans Game, pas LevelOne
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
-* Mettre en place LevelTwo
+* (OK) Mettre en place LevelTwo
 * (OK) Le déclenchement du son de tir d'OwnShip est dans sa classe plutot que dans LevelOne
