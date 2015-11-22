@@ -17,6 +17,18 @@ const int STATUS_DESTROY_END = 0;
 LevelOne::LevelOne(Game _game) : game(_game) {
     // LOGI("Constructeur");
 
+    this->background = SDL_LoadBMP("images/background.bmp");
+
+    if (this->background == NULL) {
+        LOGI("Sprite non trouve");
+        LOGI("%s\n", SDL_GetError());
+        exit(0);
+    }
+
+    this->texture = SDL_CreateTextureFromSurface(this->game.get_window().renderer, this->background);
+    this->image_location = { 0, 0, 1920, 1080 };
+    this->test = { 0, 0, 1920, 1080};
+
     int screen_width = this->game.get_window().get_width();
     int screen_height = this->game.get_window().get_height();
 
@@ -45,6 +57,10 @@ LevelOne::LevelOne(const LevelOne& _level_one) {
 
     game = _level_one.game;
     enemy_ships = _level_one.enemy_ships;
+    background = _level_one.background;
+    texture = _level_one.texture;
+    image_location = _level_one.image_location;
+    test = _level_one.test;
 }
 
 LevelOne::~LevelOne() {
@@ -57,10 +73,7 @@ void LevelOne::handle_events() {
     while (SDL_PollEvent(&event)) {
         // Si "tap" sur l'écran, Own ship tire
         if (event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
-            if (this->game.own_ship.fire()) {
-                // TODO Mieux encapsuler cette méthode
-                Mix_PlayChannel(-1, this->game.own_ship.weapon.launch_sound, 0);
-            }
+            this->game.own_ship.fire();
         }
     }
 }
@@ -227,6 +240,9 @@ void LevelOne::logic() {
 void LevelOne::render() {
     SDL_RenderClear(this->game.get_window().renderer);
 
+    // Image de background
+    SDL_RenderCopy(this->game.get_window().renderer, this->texture, NULL, NULL);
+
     this->game.render_score();
     this->game.render_life();
 
@@ -256,8 +272,9 @@ void LevelOne::render() {
         this->game.render_over();
     }
 
+
     // SDL_SetRenderDrawColor(this->game.get_window().renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    SDL_SetRenderDrawColor(this->game.get_window().renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
+    // SDL_SetRenderDrawColor(this->game.get_window().renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
     // SDL_SetRenderDrawColor(this->game.get_window().renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->game.get_window().renderer);
 
