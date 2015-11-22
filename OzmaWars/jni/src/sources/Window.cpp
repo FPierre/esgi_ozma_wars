@@ -12,13 +12,8 @@
 Window::Window() {
     SDL_Window *screen;
     SDL_Renderer *renderer;
-
     this->screen = screen;
     this->renderer = renderer;
-
-    // SDL_GetWindowSize(this->screen, &(this->w), &(this->h));
-    // this->w = 1920;
-    // this->h = 1080;
 }
 
 Window::Window(const Window& _window) {
