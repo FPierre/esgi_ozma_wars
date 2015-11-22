@@ -99,6 +99,8 @@ bool OwnShip::fire() {
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);
 
+        Mix_PlayChannel(-1, fired_weapon->launch_sound, 0);
+
         return true;
     }
 

@@ -11,6 +11,7 @@ class Weapon {
     int strength;
     bool fired;
 
+    // Passer les attr. en private
     public:
     int x;
     int y;
