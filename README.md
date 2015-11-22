@@ -40,3 +40,4 @@ Student project: build an Android game with NDK library
 * (OK) Own ship doit être crée dans Game, pas LevelOne
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
 * Mettre en place LevelTwo
+* (OK) Le déclenchement du son de tir d'OwnShip est dans sa classe plutot que dans LevelOne
