@@ -24,7 +24,7 @@ Student project: build an Android game with NDK library
 * Lors de la destruction d'un vaisseau ennemi, augmenter le score
 * Musique d'ambiance
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
-* Image de l'espace en background
+* (OK) Image de l'espace en background
 * (OK) Son lors d'une collision ?
 * Bug : lorsque Own ship tourne, les sprites "clignotent"
 * (OK) Ajouter des vaisseaux ennemis dans LevelOne
