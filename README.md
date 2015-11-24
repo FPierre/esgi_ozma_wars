@@ -41,3 +41,4 @@ Student project: build an Android game with NDK library
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
 * (OK) Mettre en place LevelTwo
 * (OK) Le déclenchement du son de tir d'OwnShip est dans sa classe plutot que dans LevelOne
+* Les vaisseaux ennemis ne doivent tirer que s'ils sont dans la zone de l'écran
