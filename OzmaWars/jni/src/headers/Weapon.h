@@ -19,22 +19,22 @@ class Weapon {
     int length_y;
     int destination_x;
     int destination_y;
-    Sprite *image;
+    Sprite image;
     Mix_Chunk *launch_sound;
     SDL_Rect area_limits;  // Zone de laquelle le missile est détruit de la mémoire s'il sort
     Weapon();
-    Weapon(int _strength, Sprite *_image, int screen_width, int screen_height);
+    Weapon(int _strength, Sprite _image, int screen_width, int screen_height);
     Weapon(const Weapon& _weapon);
     ~Weapon();
     void set_fired(bool _fired);
     bool get_fired();
     void render(SDL_Renderer *_renderer);
-    void set_destination(int _x, int _y);
+    void set_destination(int _x, int _y, bool _force_angle = false);
     int get_x();
     void set_x(int _x);
     int get_y();
     void set_y(int _y);
-    Sprite *get_sprite();
+    Sprite get_sprite();
     // TODO Passer en private ? N'est à utiliser que dans le fire de Ship
     void move();
 };

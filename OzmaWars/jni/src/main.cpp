@@ -72,6 +72,11 @@ int main(int argc, char *argv[]) {
     current_state = new LevelOne(game);
 
     while (state_id != STATE_EXIT) {
+        // Sortie de jeu
+        if (!game->own_ship.alive()) {
+            set_next_state(STATE_EXIT);
+        }
+
         current_state->handle_events();
         current_state->logic();
         // change_state(game);

@@ -13,7 +13,7 @@ Ship::Ship() {
     // LOGI("Constructeur trivial");
 }
 
-Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height) :
+Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, int screen_width, int screen_height) :
                                                                                                               x(_x),
                                                                                                               y(_y),
                                                                                                               health(_health),
@@ -54,13 +54,21 @@ Ship::~Ship() {
 
 }
 
-int Ship::get_x() { return this->x; }
-int Ship::get_y() { return this->y; }
+int Ship::get_x() {
+    return this->x;
+}
 
-void Ship::set_sprite(Sprite *_image) {
+int Ship::get_y() {
+    return this->y;
+}
+
+void Ship::set_sprite(Sprite _image) {
     this->image = _image;
 }
-Sprite *Ship::get_sprite() { return this->image; }
+
+Sprite Ship::get_sprite() {
+    return this->image;
+}
 
 void Ship::dec_status(int _status) {
     this->status -= _status;
@@ -68,20 +76,36 @@ void Ship::dec_status(int _status) {
 void Ship::set_status(int _status) {
     this->status = _status;
 }
-int Ship::get_status() { return this->status; }
+
+int Ship::get_status() {
+    return this->status;
+}
 
 void Ship::set_health(int _health) {
     this->health = _health;
 }
-int Ship::get_health() { return this->health; }
+
+int Ship::get_health() {
+    return this->health;
+}
 
 bool Ship::alive() {
     return this->get_health() > 0;
 }
 
-void Ship::render(SDL_Renderer *_renderer) {
-    this->image->render(this->x, this->y, _renderer);
+bool Ship::in_area_limit() {
+    if (this->get_x() >= this->area_limits.x && this->get_x() <= this->area_limits.w &&
+        this->get_y() >= this->area_limits.y && this->get_y() <= this->area_limits.h) {
+        return true;
+    }
 
+    return false;
+}
+
+void Ship::render(SDL_Renderer *_renderer) {
+    this->image.render(this->x, this->y, _renderer);
+
+    // WTF cette méthode ? Les weapons sont déjà render dans LevelX
     for (Weapon *fired_weapon : this->fired_weapons) {
         // if (fired_weapon.get_fired() == true) {
         // if (this->weapon.x != this->x || this->weapon.y != this->y) {

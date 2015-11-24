@@ -104,11 +104,11 @@ Game::Game(Window _window) : window(_window) {
     int screen_width = this->window.get_width();
     int screen_height = this->window.get_height();
 
-    Weapon canon(100, &(this->missile_image), screen_width, screen_height);
+    Weapon canon(100, this->missile_image, screen_width, screen_height);
 
-    OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, &(this->own_ship_image),
-                                                          &(this->own_ship_image_left),
-                                                          &(this->own_ship_image_right),
+    OwnShip own_ship(200, 550, 100, STATUS_NORMAL, canon, this->own_ship_image,
+                                                          this->own_ship_image_left,
+                                                          this->own_ship_image_right,
                                                           screen_width, screen_height);
     this->own_ship = own_ship;
 }
@@ -193,19 +193,19 @@ void Game::render_destroy(Ship& _ship) {
     // En fonction du statut, on affiche les étapes de l'explosion
     if (_ship.get_status() < STATUS_NORMAL && _ship.get_status() >= STATUS_DESTROY_STEP_1)
     {
-        _ship.set_sprite(&(this->destroyed_ship_image_step1));
+        _ship.set_sprite(this->destroyed_ship_image_step1);
     }
     else if (_ship.get_status() < STATUS_DESTROY_STEP_1 && _ship.get_status() >= STATUS_DESTROY_STEP_2)
     {
-        _ship.set_sprite(&(this->destroyed_ship_image_step2));
+        _ship.set_sprite(this->destroyed_ship_image_step2);
     }
     else if (_ship.get_status() < STATUS_DESTROY_STEP_2 && _ship.get_status() >= STATUS_DESTROY_STEP_3)
     {
-        _ship.set_sprite(&(this->destroyed_ship_image_step3));
+        _ship.set_sprite(this->destroyed_ship_image_step3);
     }
     else if (_ship.get_status() < STATUS_DESTROY_STEP_3 && _ship.get_status() >= STATUS_DESTROY_END)
     {
-        _ship.set_sprite(&(this->destroyed_ship_image_step4));
+        _ship.set_sprite(this->destroyed_ship_image_step4);
     }
 
     LOGI("Statut du vaisseau (end) : %d", _ship.get_status());

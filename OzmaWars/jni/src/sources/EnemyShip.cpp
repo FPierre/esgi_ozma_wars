@@ -14,8 +14,8 @@ EnemyShip::EnemyShip() : Ship() {
 
 }
 
-EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, int screen_width, int screen_height) :
-                                                        Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
+EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, int screen_width, int screen_height) :
+                                                    Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
     // LOGI("Constructeur");
 
     this->propability_fire = 2;
@@ -87,7 +87,12 @@ void EnemyShip::move() {
 }
 
 bool EnemyShip::can_fire(int number) {
-    return number < this->propability_fire;
+    // Probabilité et dans la zone de l'écran
+    if (number < this->propability_fire && this->in_area_limit()) {
+        return true;
+    }
+
+    return false;
 }
 
 bool EnemyShip::fire(int _x, int _y) {

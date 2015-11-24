@@ -27,7 +27,7 @@ Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path,
         exit(0);
     }
 
-    // SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
+    SDL_SetColorKey(this->surface, SDL_TRUE, SDL_MapRGB(this->surface->format, this->background.r, this->background.g, this->background.b));
 
     this->texture = SDL_CreateTextureFromSurface(_renderer, this->surface);
     this->image_location = { this->x, this->y, this->w, this->h };
@@ -42,6 +42,9 @@ Sprite::Sprite(const Sprite& _sprite) {
     h = _sprite.h;
     angle = _sprite.angle;
     background = _sprite.background;
+    surface = _sprite.surface;
+    texture = _sprite.texture;
+    image_location = _sprite.image_location;
 }
 
 Sprite::~Sprite() {
@@ -61,6 +64,6 @@ void Sprite::set_angle(double _angle) {
 }
 
 void Sprite::render(int _x, int _y, SDL_Renderer *_renderer) {
-    SDL_Rect test = { _x, _y, this->w * 3, this->h * 3 };
-    SDL_RenderCopyEx(_renderer, this->texture, &(this->image_location), &test, this->angle, NULL, SDL_FLIP_NONE);
+    SDL_Rect surface = { _x, _y, this->w * 2 + 10, this->h * 2 + 10 };
+    SDL_RenderCopyEx(_renderer, this->texture, &(this->image_location), &surface, this->angle, NULL, SDL_FLIP_NONE);
 }

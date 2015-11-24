@@ -32,9 +32,9 @@ LevelTwo::LevelTwo(Game *_game) : game(_game) {
     int screen_width = this->game->get_window().get_width();
     int screen_height = this->game->get_window().get_height();
 
-    Weapon canon(100, &(this->game->missile_image), screen_width, screen_height);
+    Weapon canon(100, this->game->missile_image, screen_width, screen_height);
 
-    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, &(this->game->enemy_ship_image), screen_width, screen_height);
+    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_1);
 }
 

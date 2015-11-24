@@ -43,7 +43,8 @@ class Game {
     void render_destroy(Ship& _ship);
     void render_over();
 
-    // Tempate pour la gestion de collisions
+    // Template pour la gestion de collisions
+    // TODO Passer par des références ?
     template<class S1, class S2>
     bool check_collision( S1 a, S2 b ) {
         // Initialisation des variables
@@ -54,15 +55,15 @@ class Game {
 
         // Calcule les côtés du 1er objet (A)
         leftA =     a.get_x();
-        rightA =    leftA + a.get_sprite()->get_width();
+        rightA =    leftA + a.get_sprite().get_width();
         topA =      a.get_y();
-        bottomA =   topA + a.get_sprite()->get_height();
+        bottomA =   topA + a.get_sprite().get_height();
 
         // Calcule les côtés du 2nd objet (B)
         leftB =     b.get_x();
-        rightB =    leftB + b.get_sprite()->get_width();
+        rightB =    leftB + b.get_sprite().get_width();
         topB =      b.get_y();
-        bottomB =   topB + b.get_sprite()->get_height();
+        bottomB =   topB + b.get_sprite().get_height();
 
         // Si un seul des côtés de B est hors zone A, alors il n'y a pas de collision possible
         if( bottomB <= topA ) { /*LOGI("A");*/ return false; }

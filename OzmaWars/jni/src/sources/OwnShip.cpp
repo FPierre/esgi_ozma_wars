@@ -16,7 +16,7 @@ OwnShip::OwnShip() : Ship() {
 
 }
 
-OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite *_image, Sprite *_image_left, Sprite *_image_right, int screen_width, int screen_height) :
+OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, Sprite _image_left, Sprite _image_right, int screen_width, int screen_height) :
     Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
 
     // LOGI("Constructeur");
@@ -60,8 +60,8 @@ void OwnShip::move() {
     float tmp_y_value = this->y + (21 * accelerometer_values[1]);
 
     // TODO Passer cette partie dans constructeur (ce calcul n'est pas a faire ici)
-    int ship_width = this->image->get_width() * 2;
-    int ship_height = this->image->get_height() * 2;
+    int ship_width = this->image.get_width() * 2;
+    int ship_height = this->image.get_height() * 2;
 
     // TODO Buggé, à finir (va dans le else, mais ne set pas le sprite image)
     if (this->x > tmp_x_value + 2) {
@@ -94,7 +94,7 @@ bool OwnShip::fire() {
 
         fired_weapon->set_x(this->x);
         fired_weapon->set_y(this->y);
-        fired_weapon->set_destination(this->x, 0);
+        fired_weapon->set_destination(this->x, 0, true);
 
         // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);

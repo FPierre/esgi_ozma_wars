@@ -15,8 +15,8 @@ Weapon::Weapon() {
 
 }
 
-Weapon::Weapon(int _strength, Sprite *_image, int screen_width, int screen_height) : strength(_strength),
-                                                                                     image(_image) {
+Weapon::Weapon(int _strength, Sprite _image, int screen_width, int screen_height) : strength(_strength),
+                                                                                    image(_image) {
     // this->x = 0;
     // this->y = 0;
     this->fired = false;
@@ -54,7 +54,7 @@ Weapon::~Weapon() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->image->render(this->x, this->y, _renderer);
+    this->image.render(this->x, this->y, _renderer);
 }
 
 void Weapon::set_fired(bool _fired) {
@@ -65,10 +65,14 @@ bool Weapon::get_fired() {
     return this->fired;
 }
 
-void Weapon::set_destination(int _x, int _y) {
+void Weapon::set_destination(int _x, int _y, bool _force_angle) {
     int diff_x = _x - this->x;
     int diff_y = _y - this->y;
-    double angle = atan2(diff_x, diff_y) * (180.0 / PI);
+
+    if (!_force_angle) {
+        double angle = atan2(diff_x, diff_y) * (180.0 / PI);
+        this->image.set_angle(angle);
+    }
 
     // LOGI("this->x : %d", this->x);
     // LOGI("this->y : %d", this->y);
@@ -83,8 +87,6 @@ void Weapon::set_destination(int _x, int _y) {
     this->destination_y = _y;
     this->length_x = diff_x;
     this->length_y = diff_y;
-
-    this->image->set_angle(angle);
 }
 
 int Weapon::get_x() {
@@ -103,7 +105,7 @@ void Weapon::set_y(int _y) {
     this->y = _y;
 }
 
-Sprite *Weapon::get_sprite() {
+Sprite Weapon::get_sprite() {
     return this->image;
 }
 
@@ -118,10 +120,10 @@ void Weapon::move() {
     // S'il ne touche pas un vaisseau, il sort de l'écran
     // TODO Gérer la vitesse par / 50
     // if (this->x < this->destination_x) {
-        this->x += this->length_x / 60;
+        this->x += this->length_x / 120;
     // }
 
     // if (this->y < this->destination_y) {
-        this->y += this->length_y / 60;
+        this->y += this->length_y / 120;
     // }
 }
