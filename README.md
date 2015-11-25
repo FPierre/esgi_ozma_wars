@@ -32,7 +32,7 @@ Student project: build an Android game with NDK library
 * (OK) Limiter le nombre de tirs sur Own ship et vaisseaux ennemis
 * (OK) Tirs renvoient un boolean, si TRUE, tir fait (déclenche le son à partir de ce boolean). FALSE si nombre max de missile atteint
 * (OK) Si score supérieur à X, passer au niveau suivant. A faire OOP
-* Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
+* (OK) Si points de vie de Own ship == 0, quitter le niveau (comment les destructeurs sont appelés ?)
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
 * (OK) Repasser la taille de l'écran en dynamique (actuellement mis en dur)
@@ -41,4 +41,4 @@ Student project: build an Android game with NDK library
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
 * (OK) Mettre en place LevelTwo
 * (OK) Le déclenchement du son de tir d'OwnShip est dans sa classe plutot que dans LevelOne
-* Les vaisseaux ennemis ne doivent tirer que s'ils sont dans la zone de l'écran
+* (OK) Les vaisseaux ennemis ne doivent tirer que s'ils sont dans la zone de l'écran
