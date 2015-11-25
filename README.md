@@ -22,7 +22,8 @@ Student project: build an Android game with NDK library
 * Dans toutes les classes, passer par des getters/setters
 * Lors d'un impact d'un missile ennemi, prendre en compte la force de l'arme (Own ship ne part pas forcément tous ses points de vie d'un coup)
 * Lors de la destruction d'un vaisseau ennemi, augmenter le score
-* Musique d'ambiance
+* (OK) Musique d'ambiance
+* Diminuer le poids du fichier de musique assets/musics/music.wav
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
 * (OK) Image de l'espace en background
 * (OK) Son lors d'une collision ?
