@@ -66,6 +66,11 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
 
     EnemyShip enemy_ship_11(-4800, 70, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_11);
+
+    // If there is no music playing
+    if (Mix_PlayingMusic() == 0) {
+        Mix_PlayMusic(this->game->music, -1 );
+    }
 }
 
 LevelOne::LevelOne(const LevelOne& _level_one) {

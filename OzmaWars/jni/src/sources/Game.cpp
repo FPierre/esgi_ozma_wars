@@ -111,6 +111,12 @@ Game::Game(Window _window) : window(_window) {
                                                           this->own_ship_image_right,
                                                           screen_width, screen_height);
     this->own_ship = own_ship;
+
+    this->music = Mix_LoadMUS("musics/music.wav");
+
+    if (this->music == NULL) {
+        LOGI("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
+    }
 }
 
 Game::Game(const Game& _game) {
