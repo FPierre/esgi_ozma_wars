@@ -27,7 +27,6 @@ Student project: build an Android game with NDK library
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
-
 * (OK) Musique d'ambiance
 * (OK) Image de l'espace en background
 * (OK) Son lors d'une collision ?
