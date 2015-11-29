@@ -18,8 +18,6 @@ Student project: build an Android game with NDK library
 
 ## TODO ##
 
-* Lors d'un impact d'un missile ennemi, prendre en compte la force de l'arme (Own ship ne part pas forcément tous ses points de vie d'un coup)
-* Lors de la destruction d'un vaisseau ennemi, augmenter le score
 * Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
 * Commenter le code
 * Bug : lorsque Own ship tourne, les sprites "clignotent"
@@ -27,6 +25,8 @@ Student project: build an Android game with NDK library
 * Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
 * Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
+* (OK) Lors d'un impact d'un missile ennemi, prendre en compte la force de l'arme (Own ship ne part pas forcément tous ses points de vie d'un coup)
+* (OK) Lors de la destruction d'un vaisseau ennemi, augmenter le score
 * (OK) Musique d'ambiance
 * (OK) Image de l'espace en background
 * (OK) Son lors d'une collision ?
