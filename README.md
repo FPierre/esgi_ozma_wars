@@ -22,9 +22,9 @@ Student project: build an Android game with NDK library
 * Commenter le code
 * Bug : lorsque Own ship tourne, les sprites "clignotent"
 * Dans toutes les classes, passer par des getters/setters
-* Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
-* Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * Destructeurs de toutes les classes (delete les pointeurs, fonts, etc)
+* (OK) Détruire en mémoire et du vector les vaisseaux ennemis qui sortent de l'écran
+* (OK) Détruire en mémoire et du vector les missiles qui sortent de l'écran
 * (OK) Lors d'un impact d'un missile ennemi, prendre en compte la force de l'arme (Own ship ne part pas forcément tous ses points de vie d'un coup)
 * (OK) Lors de la destruction d'un vaisseau ennemi, augmenter le score
 * (OK) Musique d'ambiance
