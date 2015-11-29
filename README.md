@@ -18,7 +18,7 @@ Student project: build an Android game with NDK library
 
 ## TODO ##
 
-* Bug : plus les ennemis sont loins d'Own ship, plus leurs missiles sont rapides
+
 * Bug : quand un missile d'Own ship touche un enemy, le jeu plante
 * Commenter le code
 * Bug : lorsque Own ship tourne, les sprites "clignotent"
