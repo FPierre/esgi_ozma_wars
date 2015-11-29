@@ -10,7 +10,7 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Ship::Ship() {
-    // LOGI("Constructeur trivial");
+
 }
 
 Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, int screen_width, int screen_height) :
@@ -20,22 +20,16 @@ Ship::Ship(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _ima
                                                                                                               status(_status),
                                                                                                               weapon(_weapon),
                                                                                                               image(_image) {
-    // LOGI("Constructeur");
-
     this->length_x = 0;
     this->length_y = 0;
     this->destination_x = 0;
     this->destination_y = 0;
-    // TODO Passer les valeurs de l'attribut screen de l'objet Window
     this->area_limits = { 0, 0, screen_width, screen_height };
-
-    this->weapon.x = _x;
-    this->weapon.y = _y;
+    this->weapon.set_x(_x);
+    this->weapon.set_y(_y);
 }
 
 Ship::Ship(const Ship& _ship) {
-    // LOGI("Constructeur par copie");
-
     x = _ship.x;
     y = _ship.y;
     length_x = _ship.length_x;
@@ -81,12 +75,12 @@ int Ship::get_status() {
     return this->status;
 }
 
-void Ship::set_health(int _health) {
-    this->health = _health;
-}
-
 int Ship::get_health() {
     return this->health;
+}
+
+void Ship::set_health(int _health) {
+    this->health = _health;
 }
 
 bool Ship::alive() {
@@ -94,22 +88,16 @@ bool Ship::alive() {
 }
 
 bool Ship::in_area_limit() {
-    if (this->get_x() >= this->area_limits.x && this->get_x() <= this->area_limits.w &&
-        this->get_y() >= this->area_limits.y && this->get_y() <= this->area_limits.h) {
-        return true;
-    }
-
-    return false;
+    return (this->get_x() >= this->area_limits.x &&
+            this->get_x() <= this->area_limits.w &&
+            this->get_y() >= this->area_limits.y &&
+            this->get_y() <= this->area_limits.h);
 }
 
 void Ship::render(SDL_Renderer *_renderer) {
     this->image.render(this->x, this->y, _renderer);
 
-    // WTF cette méthode ? Les weapons sont déjà render dans LevelX
     for (Weapon *fired_weapon : this->fired_weapons) {
-        // if (fired_weapon.get_fired() == true) {
-        // if (this->weapon.x != this->x || this->weapon.y != this->y) {
-            fired_weapon->render(_renderer);
-        // }
+        fired_weapon->render(_renderer);
     }
 }

@@ -9,7 +9,7 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 Sprite::Sprite() {
-    // LOGI("Constructeur trivial");
+
 }
 
 Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path, Rgb& _background, SDL_Renderer *_renderer) : x(_x),
@@ -18,7 +18,6 @@ Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path,
                                                                                                                               h(_h),
                                                                                                                               angle(_angle),
                                                                                                                               background(_background) {
-    // LOGI("Constructeur");
     this->surface = SDL_LoadBMP(_path.c_str());
 
     if (this->surface == NULL) {
@@ -34,8 +33,6 @@ Sprite::Sprite(int _x, int _y, int _w, int _h, double _angle, std::string _path,
 }
 
 Sprite::Sprite(const Sprite& _sprite) {
-    // LOGI("Constructeur par copie");
-
     x = _sprite.x;
     y = _sprite.y;
     w = _sprite.w;
@@ -48,7 +45,7 @@ Sprite::Sprite(const Sprite& _sprite) {
 }
 
 Sprite::~Sprite() {
-
+    // SDL_DestroyTexture(this->texture);
 }
 
 int Sprite::get_width() {
@@ -57,6 +54,10 @@ int Sprite::get_width() {
 
 int Sprite::get_height() {
     return this->h;
+}
+
+double Sprite::get_angle() {
+    return this->angle;
 }
 
 void Sprite::set_angle(double _angle) {

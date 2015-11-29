@@ -8,17 +8,17 @@
 
 class Weapon {
     private:
-    int strength;
-    bool fired;
-
-    // Passer les attr. en private
-    public:
     int x;
     int y;
-    int length_x;
-    int length_y;
-    int destination_x;
-    int destination_y;
+    int strength;
+    int speed;
+    double angle;
+
+    public:
+    // int length_x;
+    // int length_y;
+    // int destination_x;
+    // int destination_y;
     Sprite image;
     Mix_Chunk *launch_sound;
     SDL_Rect area_limits;  // Zone de laquelle le missile est détruit de la mémoire s'il sort
@@ -26,16 +26,17 @@ class Weapon {
     Weapon(int _strength, Sprite _image, int screen_width, int screen_height);
     Weapon(const Weapon& _weapon);
     ~Weapon();
-    void set_fired(bool _fired);
-    bool get_fired();
+    void set_speed(int _speed);
+    void set_angle(double _angle);
     void render(SDL_Renderer *_renderer);
-    void set_destination(int _x, int _y, bool _force_angle = false);
+    void set_destination(int target_x, int target_y, bool _force_angle = false);
     int get_x();
     void set_x(int _x);
     int get_y();
     void set_y(int _y);
+    int get_strength();
+    bool in_area_limit();
     Sprite get_sprite();
-    // TODO Passer en private ? N'est à utiliser que dans le fire de Ship
     void move();
 };
 

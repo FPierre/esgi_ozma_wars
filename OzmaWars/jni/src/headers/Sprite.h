@@ -25,6 +25,7 @@ class Sprite {
     ~Sprite();
     int get_width();
     int get_height();
+    double get_angle();
     void set_angle(double _angle);
     void render(int _x, int _y, SDL_Renderer *_renderer);
 };

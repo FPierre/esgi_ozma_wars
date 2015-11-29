@@ -16,10 +16,8 @@ EnemyShip::EnemyShip() : Ship() {
 
 EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, int screen_width, int screen_height) :
                                                     Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
-    // LOGI("Constructeur");
-
-    this->propability_fire = 2;
-    this->fired_weapon_limit = 10;
+    this->propability_fire = 3;
+    this->fired_weapon_limit = 3;
 
     this->destroy_sound = Mix_LoadWAV("sounds/explosion.wav");
 
@@ -60,7 +58,6 @@ void EnemyShip::set_destination(int _x, int _y) {
     // LOGI("diff_y : %d", diff_y);
     // LOGI("Angle : %f", angle);
 
-    // TODO Faire des struct Target (avec x et y) pour gérer les points
     this->destination_x = _x;
     this->destination_y = _y;
     this->length_x = diff_x;
@@ -76,7 +73,6 @@ void EnemyShip::move() {
     // LOGI("this->y : %d", this->y);
     // LOGI("this->destination_y : %d", this->destination_y);
 
-    // TODO Gérer la vitesse par / 100
     if (this->x < this->destination_x) {
         this->x += this->length_x;
     }
@@ -86,30 +82,27 @@ void EnemyShip::move() {
     }
 }
 
-bool EnemyShip::can_fire(int number) {
-    // Probabilité et dans la zone de l'écran
-    if (number < this->propability_fire && this->in_area_limit()) {
-        return true;
-    }
+bool EnemyShip::can_fire() {
+    int random_number = rand() % 100 + 1;
 
-    return false;
+    // Si le random est suffisant
+    // Si le vaisseau est dans la zone de l'écran
+    // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
+    return (random_number < this->propability_fire &&
+            this->in_area_limit() &&
+            this->fired_weapons.size() < this->fired_weapon_limit);
 }
 
-bool EnemyShip::fire(int _x, int _y) {
-    // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
-    if (this->fired_weapons.size() < this->fired_weapon_limit) {
+void EnemyShip::fire(int _x, int _y) {
+    if (this->can_fire()) {
         // Copie de Weapon actuelle du vaisseau
-        Weapon *fired_weapon = &(this->weapon);
+        // Weapon *fired_weapon = &(this->weapon);
+        Weapon *fired_weapon = new Weapon(20, this->weapon.get_sprite(), 1920, 1080);
 
         fired_weapon->set_x(this->x);
         fired_weapon->set_y(this->y);
         fired_weapon->set_destination(_x, _y);
 
-        // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
         this->fired_weapons.push_back(fired_weapon);
-
-        return true;
     }
-
-    return false;
 }

@@ -7,8 +7,6 @@
 #include "Weapon.h"
 #include "Sprite.h"
 
-// TODO Transformer en virtuelle pure ?
-// TODO Utiliser des getter/setter
 class Ship {
     protected:
     int x;

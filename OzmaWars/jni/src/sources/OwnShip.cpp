@@ -19,11 +19,13 @@ OwnShip::OwnShip() : Ship() {
 OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, Sprite _image_left, Sprite _image_right, int screen_width, int screen_height) :
     Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
 
-    // LOGI("Constructeur");
     this->image_front = _image;
     this->image_left = _image_left;
     this->image_right = _image_right;
     this->fired_weapon_limit = 100;
+
+    this->ship_width = this->image.get_width() * 2;
+    this->ship_height = this->image.get_height() * 2;
 
     this->destroy_sound = Mix_LoadWAV("sounds/explosion.wav");
 
@@ -33,8 +35,6 @@ OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprit
 }
 
 OwnShip::OwnShip(const OwnShip& _ship) {
-    // LOGI("Constructeur par copie");
-
     x = _ship.x;
     y = _ship.y;
     health = _ship.health;
@@ -46,6 +46,8 @@ OwnShip::OwnShip(const OwnShip& _ship) {
     image_right = _ship.image_right;
     fired_weapon_limit = _ship.fired_weapon_limit;
     destroy_sound = _ship.destroy_sound;
+    ship_width = _ship.ship_width;
+    ship_height = _ship.ship_height;
 }
 
 OwnShip::~OwnShip() {
@@ -59,26 +61,21 @@ void OwnShip::move() {
     float tmp_x_value = this->x + (21 * accelerometer_values[0]);
     float tmp_y_value = this->y + (21 * accelerometer_values[1]);
 
-    // TODO Passer cette partie dans constructeur (ce calcul n'est pas a faire ici)
-    int ship_width = this->image.get_width() * 2;
-    int ship_height = this->image.get_height() * 2;
-
-    // TODO Buggé, à finir (va dans le else, mais ne set pas le sprite image)
-    if (this->x > tmp_x_value + 2) {
+    if (this->x > tmp_x_value + 5) {
         set_sprite(this->image_right);
     }
-    else if (this->x < tmp_x_value - 2) {
+    else if (this->x < tmp_x_value - 5) {
         set_sprite(this->image_left);
     }
     else {
         set_sprite(this->image_front);
     }
 
-    if (tmp_x_value >= this->area_limits.x && tmp_x_value <= (this->area_limits.w - ship_width)) {
+    if (tmp_x_value >= this->area_limits.x && tmp_x_value <= (this->area_limits.w - this->ship_width)) {
         this->x = tmp_x_value;
     }
 
-    if (tmp_y_value >= this->area_limits.y && tmp_y_value <= (this->area_limits.h - ship_height)) {
+    if (tmp_y_value >= this->area_limits.y && tmp_y_value <= (this->area_limits.h - this->ship_height)) {
         this->y = tmp_y_value;
     }
 }
@@ -86,23 +83,19 @@ void OwnShip::move() {
 /**
  * Tire des missiles vers le haut de l'écran uniquement
  */
-bool OwnShip::fire() {
-    // Si le vaisseau n'a pas encore atteint le nombre limte de missiles qu'il peut tirer simultanément
+void OwnShip::fire() {
+    // Si le vaisseau n'a pas encore atteint le nombre limite de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
         // Copie de Weapon actuelle du vaisseau
-        Weapon *fired_weapon = &(this->weapon);
+        // Weapon *fired_weapon = &(this->weapon);
+        Weapon *fired_weapon = new Weapon(100, this->weapon.get_sprite(), 1920, 1080);
 
         fired_weapon->set_x(this->x);
         fired_weapon->set_y(this->y);
         fired_weapon->set_destination(this->x, 0, true);
 
-        // Si dans ce vector, c'est que missile a été tiré. Pas besoin de faire de vérifs.
-        this->fired_weapons.push_back(fired_weapon);
-
         Mix_PlayChannel(-1, fired_weapon->launch_sound, 0);
 
-        return true;
+        this->fired_weapons.push_back(fired_weapon);
     }
-
-    return false;
 }

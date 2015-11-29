@@ -17,7 +17,7 @@
 #include "headers/LevelOne.h"
 #include "headers/LevelTwo.h"
 
-// TODO Commenter
+// Etapes possibles du jeu
 enum GameStates {
     STATE_NULL,
     STATE_LEVEL_ONE,
@@ -25,6 +25,7 @@ enum GameStates {
     STATE_EXIT
 };
 
+// Gestion des étapes du jeu
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
 
@@ -52,12 +53,9 @@ int main(int argc, char *argv[]) {
         LOGI("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
     }
 
-    // TODO A déplacer dans le constructeur de Window ? (bien tester !)
+    // Récupération des dimensions de l'écran
     int w, h;
     SDL_GetWindowSize(window.screen, &w, &h);
-    // LOGI("%d", w);
-    // LOGI("%d", h);
-
     window.set_width(w);
     window.set_height(h);
 
@@ -71,6 +69,9 @@ int main(int argc, char *argv[]) {
     state_id = STATE_LEVEL_ONE;
     current_state = new LevelOne(game);
 
+    game->set_level(1);
+
+    // Boucle principale
     while (state_id != STATE_EXIT) {
         // Sortie de jeu
         if (!game->own_ship.alive()) {
@@ -81,51 +82,43 @@ int main(int argc, char *argv[]) {
         current_state->logic();
         // change_state(game);
 
-        if (game->get_score() > 5) {
+        current_state->render();
+
+        if (state_id == STATE_LEVEL_ONE && game->get_score() >= 100) {
             set_next_state(STATE_LEVEL_TWO);
             change_state(game);
+            game->set_level(2);
         }
-
-        current_state->render();
     }
 
-    // SDL_DestroyTexture(tex);
-    // SDL_DestroyTexture(tex2);
+    TTF_Quit();
 
     exit(0);
 }
 
 void set_next_state(int new_state) {
-    // If the user doesn't want to exit
     if (next_state != STATE_EXIT) {
-        //Set the next state
         next_state = new_state;
     }
 }
 
 void change_state(Game *game) {
-    // If the state needs to be changed
     if (next_state != STATE_NULL) {
-        // Delete the current state
         if (next_state != STATE_EXIT) {
             delete current_state;
         }
 
-        // Change the state
         switch (next_state) {
             case STATE_LEVEL_ONE:
                 current_state = new LevelOne(game);
                 break;
 
             case STATE_LEVEL_TWO:
-                LOGI("STATE_LEVEL_TWO");
                 current_state = new LevelTwo(game);
                 break;
         }
 
-        // Change the current state ID
         state_id = next_state;
-        // NULL the next state ID
         next_state = STATE_NULL;
     }
 }

@@ -16,17 +16,13 @@ const int STATUS_DESTROY_STEP_3 = 20;
 const int STATUS_DESTROY_END    = 0;
 
 Game::Game() {
-    // LOGI("Constructeur trivial");
+
 }
 
-// TODO Faire le destructeur spécial de TTF
 Game::Game(Window _window) : window(_window) {
-
-    // LOGI("Constructeur");
-
     this->score = 0;
 
-    // Polices d'écriture
+    // Polices
 
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("fonts/consola.ttf", 30);
@@ -34,9 +30,14 @@ Game::Game(Window _window) : window(_window) {
     SDL_Color text_black = { 0, 0, 0, 255 };
     this->text_black = text_black;
 
-    TTF_Font *font_title = TTF_OpenFont("fonts/consola.ttf", 120); // BUG: taille de police n'est pas prise en compte
+    SDL_Color text_white = { 255, 255, 255, 255 };
+    this->text_white = text_white;
+
+    // BUG: taille de police n'est pas prise en compte
+    TTF_Font *font_title = TTF_OpenFont("fonts/consola.ttf", 120);
     this->font_title = font_title;
-    SDL_Color text_red = { 255, 0, 0, 255 }; // BUG: couleur rouge ne semble pas marcher
+    // BUG: couleur rouge ne semble pas marcher
+    SDL_Color text_red = { 255, 0, 0, 255 };
     this->text_red = text_red;
 
     // Sprites
@@ -120,8 +121,6 @@ Game::Game(Window _window) : window(_window) {
 }
 
 Game::Game(const Game& _game) {
-    // LOGI("Constructeur par copie");
-
     score = _game.score;
     font = _game.font;
     window = _game.window;
@@ -138,7 +137,8 @@ Game::Game(const Game& _game) {
 }
 
 Game::~Game() {
-
+    // TTF_CloseFont(this->font);
+    // TTF_CloseFont(this->font_title);
 }
 
 Window Game::get_window() {
@@ -153,39 +153,59 @@ void Game::set_score(int _points) {
     this->score = _points;
 }
 
-/**
- * @param int points Points à rajouter au score actuel.
- */
 int Game::update_score(int _points) {
     return this->score += _points;
 }
 
+int Game::get_level() {
+    return this->level;
+}
+
+void Game::set_level(int _level) {
+    this->level = _level;
+}
+
 void Game::render_score() {
-    char buffer[4];
+    char buffer[10];
     int score = this->score;
-    int ret = snprintf(buffer, sizeof(buffer), "%d", score);
+    int ret = snprintf(buffer, sizeof(buffer), "Score : %d", score);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_white);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
-    SDL_Rect test = { 100, 10, mWidth, mHeight };
+    SDL_Rect test = { 10, 10, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }
 
 void Game::render_life() {
-    char buffer[4];
+    char buffer[10];
     int number = this->own_ship.get_health();
-    int ret = snprintf(buffer, sizeof(buffer), "%d", number);
+    int ret = snprintf(buffer, sizeof(buffer), "Vie : %d", number);
     char *text = buffer;
 
-    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_black);
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_white);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
     int mWidth = message->w;
     int mHeight = message->h;
-    SDL_Rect test = { 200, 10, mWidth, mHeight };
+    SDL_Rect test = { 230, 10, mWidth, mHeight };
+
+    SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
+}
+
+void Game::render_level() {
+    char buffer[11];
+    int number = this->get_level();
+    int ret = snprintf(buffer, sizeof(buffer), "Niveau : %d", number);
+    char *text = buffer;
+
+    SDL_Surface *message = TTF_RenderText_Solid(this->font, text, this->text_white);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->window.renderer, message);
+    int mWidth = message->w;
+    int mHeight = message->h;
+    SDL_Rect test = { 440, 10, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }
