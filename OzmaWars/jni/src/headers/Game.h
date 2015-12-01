@@ -20,6 +20,7 @@ class Game {
     Window window;
 
     public:
+    static int score_java;
     Mix_Music *music;
     Sprite missile_image;
     Sprite enemy_ship_image;
