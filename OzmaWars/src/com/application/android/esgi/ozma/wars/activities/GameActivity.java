@@ -22,6 +22,8 @@ import android.media.*;
 import android.hardware.*;
 
 import com.application.android.esgi.ozma.wars.R;
+import com.application.android.esgi.ozma.wars.database.OzmaDatabase;
+import com.application.android.esgi.ozma.wars.database.GameModel;
 
 
 /**
@@ -45,6 +47,7 @@ public class GameActivity extends Activity {
     protected static View mTextEdit;
     protected static ViewGroup mLayout;
     protected static SDLJoystickHandler mJoystickHandler;
+    protected static OzmaDatabase database;
 
     // This is what SDL runs in. It invokes SDL_main(), eventually
     protected static Thread mSDLThread;
@@ -84,6 +87,9 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(DEBUG_TAG, "onCreate():" + mSingleton);
         super.onCreate(savedInstanceState);
+
+        // Get SQLite database
+        database = new OzmaDatabase(this);
 
         GameActivity.initialize();
         // So we can call stuff from static callbacks
@@ -191,9 +197,19 @@ public class GameActivity extends Activity {
     }
 
     // DEBUG: Show logs
-    public static void showLog(int[] infos) {
-        Log.d(DEBUG_TAG, "Receive this score : " + infos[0] 
-            + ", this life : " + infos[1] + " & this level : " + infos[2]);
+    public static void showLog(int[] datas) {
+        int score = datas[0];
+        int life  = datas[1];
+        int level = datas[2];
+
+        Log.d(DEBUG_TAG, "Receive this score : " + score 
+            + ", this life : " + life + " & this level : " + level);
+
+        GameModel game = GameModel.init( 0, score, life, level, ((life > 0) ? 1 : 0) );
+        if (game.getStatus() == 1) {
+            Log.d(DEBUG_TAG, "Get status > 0, add to db");
+            database.addGame(game);
+        }
     }
 
     public static native int[] getCurrentScore();
@@ -205,7 +221,7 @@ public class GameActivity extends Activity {
     public static void handlePause() {
         if (!GameActivity.mIsPaused && GameActivity.mIsSurfaceReady) {
             // Get current score of game
-            GameActivity.showLog(GameActivity.getCurrentScore());
+            GameActivity.showLog( GameActivity.getCurrentScore() );
 
             GameActivity.mIsPaused = true;
             GameActivity.nativePause();

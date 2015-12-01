@@ -173,6 +173,7 @@ void LevelOne::logic() {
                     int life = this->game->own_ship.get_health() - fired_weapon->get_strength();
 
                     this->game->own_ship.set_health(life);
+                    Game::user_life = life;
 
                     enemy_ship.fired_weapons.erase(enemy_ship.fired_weapons.begin() + j);
 

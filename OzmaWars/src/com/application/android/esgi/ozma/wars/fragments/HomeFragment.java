@@ -15,6 +15,7 @@ import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 import com.application.android.esgi.ozma.wars.activities.GameActivity;
+import com.application.android.esgi.ozma.wars.database.OzmaDatabase;
 
 
 /**
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
 
     // Context
     private Activity activity;
+    private OzmaDatabase database;
 
     public HomeFragment() { }
 
@@ -58,6 +60,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Get SQLite database
+        database = new OzmaDatabase(getActivity());
     }
 
     @Override
