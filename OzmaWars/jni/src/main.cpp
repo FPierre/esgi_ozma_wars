@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
 #include <string>
+#include <stdio.h>
 
 #include "headers/Game.h"
 #include "headers/Window.h"

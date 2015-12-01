@@ -24,6 +24,7 @@ class Game {
     public:
     bool next_level;
     bool apocalyse_now;
+    static int score_java;
     Mix_Music *music;
     Sprite meteorite_image;
     Sprite missile_image;

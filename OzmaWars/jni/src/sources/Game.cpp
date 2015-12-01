@@ -1,4 +1,8 @@
 #include <android/log.h>
+#include <jni.h>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "headers/Game.h"
 
@@ -14,6 +18,8 @@ const int STATUS_DESTROY_STEP_1 = 60;
 const int STATUS_DESTROY_STEP_2 = 40;
 const int STATUS_DESTROY_STEP_3 = 20;
 const int STATUS_DESTROY_END    = 0;
+
+int Game::score_java = 0;
 
 Game::Game() {
 
@@ -155,9 +161,11 @@ int Game::get_score() {
 
 void Game::set_score(int _points) {
     this->score = _points;
+    Game::score_java = _points;
 }
 
 int Game::update_score(int _points) {
+    Game::score_java = _points;
     return this->score += _points;
 }
 
@@ -277,4 +285,8 @@ void Game::render_over() {
     SDL_Rect gameover = { mX, mY, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);
+}
+
+extern "C" jint Java_com_application_android_esgi_ozma_wars_activities_GameActivity_getCurrentScore(JNIEnv* env, jobject obj) {
+    return Game::score_java;
 }
