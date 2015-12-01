@@ -133,7 +133,7 @@ Game::Game(Window _window) : window(_window) {
     if (this->music == NULL) {
         LOGI("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
     }
-    
+
     this->next_level = false;
 }
 
