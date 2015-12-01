@@ -1,7 +1,6 @@
 #include <android/log.h>
 #include <math.h>
 
-#include "headers/Game.h"
 #include "headers/Ship.h"
 
 #define LOG_TAG "Ship"
@@ -82,7 +81,6 @@ int Ship::get_health() {
 
 void Ship::set_health(int _health) {
     this->health = _health;
-    Game::user_life = _health;
 }
 
 bool Ship::alive() {
