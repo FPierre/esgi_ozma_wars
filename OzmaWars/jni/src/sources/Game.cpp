@@ -19,7 +19,9 @@ const int STATUS_DESTROY_STEP_2 = 40;
 const int STATUS_DESTROY_STEP_3 = 20;
 const int STATUS_DESTROY_END    = 0;
 
-int Game::score_java = 0;
+int Game::user_score = 0;
+int Game::user_life  = 0;
+int Game::user_level = 0;
 
 Game::Game() {
 
@@ -171,11 +173,11 @@ int Game::get_score() {
 
 void Game::set_score(int _points) {
     this->score = _points;
-    Game::score_java = _points;
+    Game::user_score = _points;
 }
 
 int Game::update_score(int _points) {
-    Game::score_java = _points;
+    Game::user_score = _points;
     return this->score += _points;
 }
 
@@ -184,6 +186,7 @@ int Game::get_level() {
 }
 
 void Game::set_level(int _level) {
+    Game::user_level = _level;
     this->level = _level;
 }
 
@@ -292,6 +295,15 @@ void Game::render_over() {
     SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);
 }
 
-extern "C" jint Java_com_application_android_esgi_ozma_wars_activities_GameActivity_getCurrentScore(JNIEnv* env, jobject obj) {
-    return Game::score_java;
+extern "C" jintArray Java_com_application_android_esgi_ozma_wars_activities_GameActivity_getCurrentScore(JNIEnv* env, jobject obj) {
+    jintArray datas = env->NewIntArray(3);
+    jint *infos = env->GetIntArrayElements(datas, NULL);
+
+    infos[0] = Game::user_score;
+    infos[1] = Game::user_life;
+    infos[2] = Game::user_level;
+
+    env->ReleaseIntArrayElements(datas, infos, NULL);
+
+    return datas;
 }

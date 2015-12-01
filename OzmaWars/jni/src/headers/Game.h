@@ -22,9 +22,12 @@ class Game {
     Window window;
 
     public:
+    static int user_score;
+    static int user_life;
+    static int user_level;
+
     bool next_level;
     bool apocalyse_now;
-    static int score_java;
     Mix_Music *music;
     Sprite meteorite_image;
     Sprite missile_image;

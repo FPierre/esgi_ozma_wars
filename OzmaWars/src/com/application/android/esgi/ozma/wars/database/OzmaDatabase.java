@@ -3,13 +3,13 @@ package com.application.android.esgi.ozma.wars.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.OzmaDatabase;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-// import models;
-
 import java.util.ArrayList;
+
+import com.application.android.esgi.ozma.wars.database.GameModel;
 
 /**
   * ---- OzmaDatabase
@@ -24,12 +24,20 @@ public class OzmaDatabase extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION 	= 1;
     private static final String DATABASE_NAME 	= "OzmaDatabase";
-    private static final String TABLE_USER_NAME = "OzmaUser";
+    private static final String TABLE_GAME_NAME = "OzmaGame";
 
-    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_GAME_ID 	= "game_id";
+    private static final String KEY_GAME_SCORE 	= "game_score";
+    private static final String KEY_GAME_LIFE 	= "game_life";
+    private static final String KEY_GAME_LEVEL  = "game_level";
+    private static final String KEY_GAME_STATE  = "game_state";
+
     private static final String[] COLUMNS = {   
-                                                KEY_USER_ID
-                                                // ...
+                                                KEY_GAME_ID,
+                                                KEY_GAME_SCORE,
+                                                KEY_GAME_LIFE,
+                                                KEY_GAME_LEVEL,
+                                                KEY_GAME_STATE
                                             };
 
     /**
@@ -46,96 +54,146 @@ public class OzmaDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(OzmaDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_USER_NAME
-                + " ( id INTEGER PRIMARY KEY AUTOINCREMENT, ";    // Id auto-increment (Integer)
-                // ...
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE " + TABLE_GAME_NAME
+                + " ( game_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "game_score INTEGER, "
+                + "game_life INTEGER, "
+                + "game_level INTEGER, "
+                + "game_state INTEGER )";
 
         db.execSQL(CREATE_TABLE);
         Log.i(DEBUG_DB, "onCreate()");
     }
 
     @Override
-    public void onUpgrade(OzmaDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_NAME);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAME_NAME);
         this.onCreate(db);
         Log.i(DEBUG_DB, "onUpgrade()");
     }
 
-    public long addSpaceShip(SpaceShip spaceship) {
-        OzmaDatabase db = this.getWritableDatabase();
+    public long addGame(GameModel game) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_GAME_ID, spaceship.getId());
-        // ...
+        values.put(KEY_GAME_SCORE, 	game.getScore());
+        values.put(KEY_GAME_LIFE, 	game.getLife());
+        values.put(KEY_GAME_LEVEL, 	game.getLevel());
+        values.put(KEY_GAME_STATE,  game.getStatus());
 
-        long res = db.insert(TABLE_USER_NAME, null, values);
+        long res = db.insert(TABLE_GAME_NAME, null, values);
         db.close();
-        Log.i(DEBUG_DB, "addSpaceShip() with \"id\": " + spaceship.getId());
+        Log.i(DEBUG_DB, "addGame() with \"game_id\": " + res);
         return res;
     }
 
-    public SpaceShip selectSpaceShip(int id) {
-        OzmaDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USER_NAME, COLUMNS,
-                " shapship_id = ?",
+    public GameModel getGame(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_GAME_NAME, COLUMNS,
+                " game_id = ?",
                 new String[] { String.valueOf(id) },
                 null,   // Group by
                 null,   // Having
                 null,   // Order by
                 null);  // Limit
+
         if (cursor != null)
             cursor.moveToFirst();
-        SpaceShip spaceship = new SpaceShip();
-        spaceship.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
-        // ...
+
+        GameModel game = new GameModel();
+        game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
+        game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
+        game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
+        game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
+        game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
 
         if (!cursor.isClosed())
             cursor.close();
 
-        Log.i(DEBUG_DB, "selectSpaceShip() with \"spaceship_id\": " + id);
-        return spaceship;
+        Log.i(DEBUG_DB, "getGame() with \"game_id\": " + id);
+        return game;
     }
 
-    public int updateSpaceShip(SpaceShip spaceship) {
-        OzmaDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_GAME_ID, spaceship.getId());
-        // ...
+    public GameModel getLastGame() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_GAME_NAME, COLUMNS,
+                null,
+                null,
+                null,   // Group by
+                null,   // Having
+                "DESC",   // Order by
+                "1");  // Limit
 
-        int res = db.update(TABLE_USER_NAME, values, "spaceship_id = ?",
-                new String[]{String.valueOf(spaceship.getId())});
-        db.close();
-        Log.i(DEBUG_DB, "updateSpaceShip() with \"id\": " + spaceship.getId());
-        return res;
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        GameModel game = new GameModel();
+        game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
+        game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
+        game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
+        game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
+        game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+
+        if (!cursor.isClosed())
+            cursor.close();
+
+        Log.i(DEBUG_DB, "getLastGame() with \"game_id\": " + game.getId());
+        return game;
     }
 
-    public ArrayList<SpaceShip> getSpaceShips() {
-        ArrayList<SpaceShip> spaceship = new ArrayList<SpaceShip>();
-        String query = "SELECT  * FROM " + TABLE_USER_NAME;
-        OzmaDatabase db = this.getReadableDatabase();
+    public ArrayList<Integer> getAllGameScores() {
+        ArrayList<Integer> scores = new ArrayList<Integer>();
+        String query = "SELECT * FROM " + TABLE_GAME_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        SpaceShip spaceship = null;
-        if (cursor.spaceship()) {
+        int score = 0;
+        if (cursor.moveToFirst()) {
             do {
-                spaceship = new SpaceShip();
-                spaceship.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
-                // ...
-                spaceship.add(spaceship);
+                score = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE)));
+                scores.add(score);
             } while (cursor.moveToNext());
         }
 
         if (cursor != null && !cursor.isClosed())
             cursor.close();
 
-        Log.i(DEBUG_DB, "getSpaceShips() (list contains " + movies.size() + " movies)");
-        return movies;
+        Log.i(DEBUG_DB, "getAllGameScores() (list contains " + scores.size() + " scores)");
+        return scores;
     }
 
-    public int deleteSpaceShip(int id) {
-        Log.i(DEBUG_DB, "deleteSpaceShip() with \"spaceship_id\": " + id);
-        OzmaDatabase db = this.getWritableDatabase();
-        int res = db.delete(TABLE_USER_NAME, " spaceship_id = ?", new String[]{String.valueOf(id)});
+    public int updateGame(GameModel game) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_GAME_ID, 	game.getId());
+        values.put(KEY_GAME_SCORE, 	game.getScore());
+        values.put(KEY_GAME_LIFE, 	game.getLife());
+        values.put(KEY_GAME_LEVEL, 	game.getLevel());
+        values.put(KEY_GAME_STATE,  game.getStatus());
+
+        int res = db.update(TABLE_GAME_NAME, values, "game_id = ?",
+                new String[]{String.valueOf(game.getId())});
         db.close();
+        Log.i(DEBUG_DB, "updateGame() with \"id\": " + game.getId());
+        return res;
+    }
+
+    public int deleteGame(int id) {
+        Log.i(DEBUG_DB, "deleteGame() with \"game_id\": " + id);
+        SQLiteDatabase db = this.getWritableDatabase();
+        int res = db.delete(TABLE_GAME_NAME, " game_id = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return res;
+    }
+
+    public int deleteGameScore(GameModel game) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_GAME_SCORE, 0);
+
+        int res = db.update(TABLE_GAME_NAME, values, "game_id = ?",
+                new String[]{String.valueOf(game.getId())});
+        db.close();
+        Log.i(DEBUG_DB, "deleteGameScore() with \"game_id\": " + game.getId());
         return res;
     }
 }
