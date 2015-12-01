@@ -15,6 +15,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.os.*;
+import android.os.Vibrator;
 import android.util.Log;
 import android.graphics.*;
 import android.media.*;
@@ -105,6 +106,17 @@ public class GameActivity extends Activity {
         mLayout.addView(mSurface);
     }
 
+    // Vibration
+    public void setVibration(final int delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(200);
+            }
+        }, delay);
+    }
+
     // Events
     @Override
     protected void onPause() {
@@ -179,11 +191,12 @@ public class GameActivity extends Activity {
     }
 
     // DEBUG: Show logs
-    public static void showLog(int score) {
-        Log.d(DEBUG_TAG, "Receive this score : " + score);
+    public static void showLog(int[] infos) {
+        Log.d(DEBUG_TAG, "Receive this score : " + infos[0] 
+            + ", this life : " + infos[1] + " & this level : " + infos[2]);
     }
 
-    public static native int getCurrentScore();
+    public static native int[] getCurrentScore();
 
     /** Called by onPause or surfaceDestroyed. Even if surfaceDestroyed
      *  is the first to be called, mIsSurfaceReady should still be set
