@@ -42,6 +42,7 @@ Ship::Ship(const Ship& _ship) {
     image = _ship.image;
     area_limits = _ship.area_limits;
     fired_weapons = _ship.fired_weapons;
+    size_coeff = _ship.size_coeff;
 }
 
 Ship::~Ship() {
@@ -83,10 +84,12 @@ void Ship::set_health(int _health) {
     this->health = _health;
 }
 
+// TRUE si le vaisseau n'est pas détruit
 bool Ship::alive() {
     return this->get_health() > 0;
 }
 
+// TRUE si le vaisseau est dans la zone de l'écran
 bool Ship::in_area_limit() {
     return (this->get_x() >= this->area_limits.x &&
             this->get_x() <= this->area_limits.w &&
@@ -95,8 +98,9 @@ bool Ship::in_area_limit() {
 }
 
 void Ship::render(SDL_Renderer *_renderer) {
-    this->image.render(this->x, this->y, _renderer);
+    this->image.render(this->x, this->y, _renderer, size_coeff);
 
+    // Affiche les missiles tirés
     for (Weapon *fired_weapon : this->fired_weapons) {
         fired_weapon->render(_renderer);
     }

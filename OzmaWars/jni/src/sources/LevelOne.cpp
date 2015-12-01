@@ -4,7 +4,6 @@
 #include "headers/LevelOne.h"
 #include "headers/Game.h"
 #include "headers/Sprite.h"
-// #include "headers/Meteorite.h"
 
 #define LOG_TAG "LevelOne"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -26,8 +25,8 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
 
     this->texture = SDL_CreateTextureFromSurface(this->game->get_window().renderer, this->background);
     // TODO Passer sur les valeurs réelles de l'écran
-    this->image_location = { 0, 0, 1920, 1080 };
-    this->test = { 0, 0, 1920, 1080};
+    this->image_location = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
+    this->test = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
 
     int screen_width = this->game->get_window().get_width();
     int screen_height = this->game->get_window().get_height();
@@ -102,7 +101,9 @@ void LevelOne::logic() {
     int random_number_meteorite = rand() % 101;
 
     if (random_number_meteorite < 50 && !this->game->apocalyse_now) {
-        Meteorite *meteorite = new Meteorite(this->game->meteorite_image, 1920, 1080);
+        Meteorite *meteorite = new Meteorite(this->game->meteorite_image,
+                                             this->game->get_window().get_width(),
+                                             this->game->get_window().get_height());
 
         meteorite->set_x(1200);
         meteorite->set_y(-200);
@@ -131,7 +132,7 @@ void LevelOne::logic() {
         enemy_ship.set_destination(test1, test2);
     }
 
-    // // Vérification des status des vaisseaux et des collisions
+    // Vérification des status des vaisseaux et des collisions
 
     int size = this->enemy_ships.size();
 
@@ -141,7 +142,6 @@ void LevelOne::logic() {
         // Si le vaisseau ennemi est détruit
         if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END) {
             // Le retire du vector
-            // this->enemy_ships.erase(this->enemy_ships.begin() + i);
             continue;
         }
         else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
@@ -219,16 +219,22 @@ void LevelOne::logic() {
         }
 
         // Si un des Enemy Ships touche Own Ship
-        if (enemy_ship.alive() && this->game->check_collision(this->game->own_ship, enemy_ship)) {
-            // LOGI("Collision between enemy and own ships");
+        if (this->game->own_ship.alive() && this->game->check_collision(this->game->own_ship, enemy_ship)) {
             // Les 2 vaisseaux sont détruits
             enemy_ship.set_health(0);
             this->game->own_ship.set_health(0);
         }
+    }
 
-        if (this->game->own_ship.alive() && this->game->apocalyse_now && this->game->check_collision(this->game->own_ship, *meteorite)) {
-            this->game->own_ship.set_health(0);
-        }
+    if (this->game->apocalyse_now) {
+        LOGI("APO");
+    }
+    else {
+        LOGI("PAS APO");
+    }
+
+    if (this->game->apocalyse_now && this->game->check_collision(this->game->own_ship, *meteorite)) {
+        this->game->own_ship.set_health(0);
     }
 
     // Déplacements de Own ship et de ses missiles
@@ -248,149 +254,6 @@ void LevelOne::logic() {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // // Vérification des status des vaisseaux et des collisions
-    // for (std::vector<EnemyShip>::iterator it_enemy = this->enemy_ships.begin();
-    //     it_enemy != this->enemy_ships.end(); ++it_enemy) {
-
-    //     EnemyShip& enemy_ship = *it_enemy;
-
-    //     // Si le vaisseau ennemi est mort et qu'il n'a pas de missile lancés, on le retire du vector
-    //     if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END &&
-    //         enemy_ship.fired_weapons.size() == 0) {
-
-    //         // TODO: automatiser à l'aide d'un template ?
-    //         this->enemy_ships.erase(it_enemy);
-    //     }
-    //     //  Vraiment obligatoire ce ELSE ? Sorti du IF, plus besoin de vérifier ?
-    //     // S'il n'est pas en train d'être détruit, on exécute les actions
-    //     else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
-    //         enemy_ship.move();
-
-    //         int random_number = rand() % 100 + 1;
-
-    //         if (enemy_ship.can_fire(random_number)) {
-    //             // Vise Own ship
-    //             enemy_ship.fire(this->game->own_ship.get_x(), this->game->own_ship.get_y());
-    //         }
-    //     }
-
-    // //     // LOGI("------- ''OUT'' Nombre de enemy : %d", this->enemy_ships.size());
-
-    //     // Mouvements pour tous les missiles tirés du vaisseau ennemi courant
-    //     for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
-    //         // // TODO Utiliser limit area
-    //         // if (fired_weapon->x < 0
-    //         //     || fired_weapon->y < 0
-    //         //     || fired_weapon->x > this->game->get_window().get_width()
-    //         //     || fired_weapon->y > this->game->get_window().get_height()) {
-    //         //     // LOGI("Weapon dies()");
-    //         //     delete fired_weapon;
-    //         // } else {
-    //             // LOGI("Weapon moves()");
-    //             fired_weapon->move();
-    //         }
-    //     // }
-
-    //     // Si le Own Ship est mort, on évite les calculs pour tous
-    //     if (!this->game->own_ship.alive()) {
-    //         break;
-    //     }
-
-    // //     // Si un missile des Enemy Ships touche le Own Ship
-    // //     // TODO Enlever le missile du vector
-    //     for (Weapon *fired_weapon : enemy_ship.fired_weapons) {
-    //         if ( this->game->check_collision(this->game->own_ship, *fired_weapon) ) {
-    //             // LOGI("Collision between enemy weapon and own ship");
-    //             this->game->own_ship.set_health(0);
-    //             // TODO Mieux encapsuler cette méthode
-    //             // TODO Vérifier selon les points de vie de Own ship (selon la force de l'arme qui les touche,
-    //             //      il ne perd pas forcément tous ses points de vie)
-    //             Mix_PlayChannel(-1, this->game->own_ship.destroy_sound, 0);
-
-    //             // TODO Automatiser à l'aide d'un template ?
-    //             // this->game->remove_item( *fired_weapon, enemy_ship.fired_weapons );
-
-    //             // // On déplace l'item en dernière place
-    //             // std::swap(*fired_weapon, *(enemy_ship.fired_weapons.back()));
-    //             // // On le supprime du vector
-    //             // enemy_ship.fired_weapons.pop_back();
-    //             delete fired_weapon;
-    //             break;
-    //         }
-    //     }
-
-    //     // Si le vaisseau ennemi n'a plus de vie, on passe au suivant
-    //     if ( !enemy_ship.alive() ) {
-    //         continue;
-    //     }
-
-    //     // Si un missile Own Ship touche un Enemy Ship
-    //     for (Weapon *fired_weapon : this->game->own_ship.fired_weapons) {
-    //         if (this->game->check_collision(*fired_weapon, enemy_ship)) {
-    //             // LOGI("Collision between own weapon and enemy ship");
-    //             enemy_ship.set_health(0);
-    //             // Augmente les points du joueur
-    //             this->game->update_score(5);
-
-    //             // delete &enemy_ship;
-    //             delete fired_weapon;
-    //             // break;
-    //         }
-    //     }
-
-    //     // Si un des Enemy Ships touche le Own Ship
-    //     if (enemy_ship.alive() && this->game->check_collision(this->game->own_ship, enemy_ship)) {
-    //         // LOGI("Collision between enemy and own ships");
-    //         // Les 2 vaisseaux sont détruits
-    //         enemy_ship.set_health(0);
-    //         this->game->own_ship.set_health(0);
-    //     }
-    // }
-
-    // // Mouvements des objets seulement si encore en vie
-    // if (this->game->own_ship.alive()) {
-    //     this->game->own_ship.move();
-    // }
-
-    // // // Pour tous les missiles tirés par Own ship
-    // for (Weapon *fired_weapon : this->game->own_ship.fired_weapons) {
-    //     fired_weapon->move();
-
-    //     // Supprime le missile s'il est sorti de la zone de l'écran
-    //     if (!fired_weapon->in_area_limit()) {
-    //         delete fired_weapon;
-    //     }
-    // }
 }
 
 void LevelOne::render() {

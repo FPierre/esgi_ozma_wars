@@ -13,12 +13,9 @@ class Weapon {
     int strength;
     int speed;
     double angle;
+    int size_coeff;
 
     public:
-    // int length_x;
-    // int length_y;
-    // int destination_x;
-    // int destination_y;
     Sprite image;
     Mix_Chunk *launch_sound;
     SDL_Rect area_limits;  // Zone de laquelle le missile est détruit de la mémoire s'il sort

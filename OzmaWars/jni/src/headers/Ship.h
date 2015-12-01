@@ -20,6 +20,7 @@ class Ship {
     Sprite image;
     SDL_Rect area_limits;   // Zone depuis laquelle le vaisseau ne peut pas sortir
     int fired_weapon_limit; // Nombre maximum de missiles tirés sans qu'ils ne soient détruits en mémoire
+    int size_coeff;
 
     public:
     Mix_Chunk *destroy_sound; // Son lorsque le vaisseau est détruit
