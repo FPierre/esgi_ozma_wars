@@ -178,12 +178,22 @@ public class GameActivity extends Activity {
         return super.dispatchKeyEvent(event);
     }
 
+    // DEBUG: Show logs
+    public static void showLog(int score) {
+        Log.d(DEBUG_TAG, "Receive this score : " + score);
+    }
+
+    public static native int getCurrentScore();
+
     /** Called by onPause or surfaceDestroyed. Even if surfaceDestroyed
      *  is the first to be called, mIsSurfaceReady should still be set
      *  to 'true' during the call to onPause (in a usual scenario).
      */
     public static void handlePause() {
         if (!GameActivity.mIsPaused && GameActivity.mIsSurfaceReady) {
+            // Get current score of game
+            GameActivity.showLog(GameActivity.getCurrentScore());
+
             GameActivity.mIsPaused = true;
             GameActivity.nativePause();
             mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, false);
