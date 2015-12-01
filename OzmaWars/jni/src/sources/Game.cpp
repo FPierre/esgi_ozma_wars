@@ -73,6 +73,15 @@ Game::Game(Window _window) : window(_window) {
         LOGI("Sprite enemy_ship_image n'a pas pu être crée");
     }
 
+    Sprite meteorite_image(0, 245, 60, 60, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
+
+    if (&meteorite_image != nullptr) {
+        this->meteorite_image = meteorite_image;
+    }
+    else {
+        LOGI("Sprite meteorite_image n'a pas pu être crée");
+    }
+
     Sprite own_ship_image(41, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
     Sprite own_ship_image_left(82, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
     Sprite own_ship_image_right(0, 42, 40, 45, 0.0, "spritesheets/ship.bmp", pink_background, this->window.renderer);
@@ -118,6 +127,8 @@ Game::Game(Window _window) : window(_window) {
     if (this->music == NULL) {
         LOGI("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
     }
+
+    this->next_level = false;
 }
 
 Game::Game(const Game& _game) {
@@ -126,6 +137,7 @@ Game::Game(const Game& _game) {
     window = _game.window;
     own_ship = _game.own_ship;
     missile_image = _game.missile_image;
+    meteorite_image = _game.meteorite_image;
     enemy_ship_image = _game.enemy_ship_image;
     own_ship_image = _game.own_ship_image;
     own_ship_image_left = _game.own_ship_image_left;
@@ -134,6 +146,8 @@ Game::Game(const Game& _game) {
     destroyed_ship_image_step2 = _game.destroyed_ship_image_step2;
     destroyed_ship_image_step3 = _game.destroyed_ship_image_step3;
     destroyed_ship_image_step4 = _game.destroyed_ship_image_step4;
+    next_level = _game.next_level;
+    apocalyse_now = _game.apocalyse_now;
 }
 
 Game::~Game() {

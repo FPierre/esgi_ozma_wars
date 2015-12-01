@@ -64,7 +64,7 @@ void Sprite::set_angle(double _angle) {
     this->angle = _angle;
 }
 
-void Sprite::render(int _x, int _y, SDL_Renderer *_renderer) {
-    SDL_Rect surface = { _x, _y, this->w * 2 + 10, this->h * 2 + 10 };
+void Sprite::render(int _x, int _y, SDL_Renderer *_renderer, int size_coeff) {
+    SDL_Rect surface = { _x, _y, this->w * 2 + size_coeff, this->h * 2 + size_coeff };
     SDL_RenderCopyEx(_renderer, this->texture, &(this->image_location), &surface, this->angle, NULL, SDL_FLIP_NONE);
 }

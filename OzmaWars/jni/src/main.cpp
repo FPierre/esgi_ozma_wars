@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 
         current_state->render();
 
-        if (state_id == STATE_LEVEL_ONE && game->get_score() >= 100) {
+        if ((state_id == STATE_LEVEL_ONE && game->get_score() >= 100) || game->next_level) {
             set_next_state(STATE_LEVEL_TWO);
             change_state(game);
             game->set_level(2);

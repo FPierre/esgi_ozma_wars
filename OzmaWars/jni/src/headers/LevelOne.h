@@ -9,10 +9,12 @@
 #include "Window.h"
 #include "EnemyShip.h"
 #include "Weapon.h"
+#include "Meteorite.h"
 
 class LevelOne : public GameState {
     private:
     Game *game;
+    Meteorite *meteorite;
     std::vector<EnemyShip> enemy_ships;
     SDL_Surface *background;
     SDL_Texture *texture;

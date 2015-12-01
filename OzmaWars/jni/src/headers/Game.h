@@ -22,7 +22,10 @@ class Game {
     Window window;
 
     public:
+    bool next_level;
+    bool apocalyse_now;
     Mix_Music *music;
+    Sprite meteorite_image;
     Sprite missile_image;
     Sprite enemy_ship_image;
     Sprite own_ship_image;

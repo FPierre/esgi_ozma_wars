@@ -5,7 +5,8 @@
 
 class EnemyShip : public Ship {
     private:
-    int propability_fire; // Probabilité que le vaisseau fasse feu lors d'un tour (en %)
+    int propability_fire;   // Probabilité que le vaisseau fasse feu lors d'un tour (en %)
+    int fired_weapon_limit;
     bool can_fire();
 
     public:

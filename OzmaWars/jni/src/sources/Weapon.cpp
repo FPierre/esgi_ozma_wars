@@ -21,7 +21,7 @@ Weapon::Weapon(int _strength, Sprite _image, int screen_width, int screen_height
     // this->length_y = 0;
     // this->destination_x = 0;
     // this->destination_y = 0;
-    speed = 10;
+    this->speed = 10;
 
     this->area_limits = { 0, 0, screen_width, screen_height };
 
