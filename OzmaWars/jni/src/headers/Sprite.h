@@ -27,7 +27,7 @@ class Sprite {
     int get_height();
     double get_angle();
     void set_angle(double _angle);
-    void render(int _x, int _y, SDL_Renderer *_renderer, int size_coeff = 10);
+    void render(int _x, int _y, SDL_Renderer *_renderer, int size_coeff = 20);
 };
 
 #endif
