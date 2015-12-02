@@ -98,7 +98,7 @@ void LevelOne::handle_events() {
         if (this->game->own_ship.alive() && event.type == SDL_FINGERDOWN) {
             this->game->own_ship.fire();
         } else if (event.type == SDL_KEYDOWN) {
-            this->game->force_exit = true;
+            exit(0);
         }
     }
 }

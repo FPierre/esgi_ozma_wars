@@ -106,13 +106,12 @@ public class OzmaDatabase extends SQLiteOpenHelper {
             game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
             game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
             game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+            Log.i(DEBUG_DB, "getGame() with \"game_id\": " + game.getId());
 
         }
 
         if (!cursor.isClosed())
             cursor.close();
-
-        Log.i(DEBUG_DB, "getGame() with \"game_id\": " + id);
         return game;
     }
 
@@ -135,13 +134,13 @@ public class OzmaDatabase extends SQLiteOpenHelper {
             game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
             game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
             game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+            Log.i(DEBUG_DB, "getLastGame() with \"game_id\": " + game.getId());
 
         }
 
         if (!cursor.isClosed())
             cursor.close();
 
-        Log.i(DEBUG_DB, "getLastGame() with \"game_id\": " + game.getId());
         return game;
     }
 
