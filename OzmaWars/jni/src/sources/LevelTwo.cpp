@@ -71,6 +71,8 @@ void LevelTwo::handle_events() {
         // Si "tap" sur l'écran, Own ship tire
         if (this->game->own_ship.alive() && event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
             this->game->own_ship.fire();
+        } else if (event.type == SDL_KEYDOWN) {
+            exit(0);
         }
     }
 }
