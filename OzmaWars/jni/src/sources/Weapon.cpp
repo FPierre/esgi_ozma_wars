@@ -83,7 +83,7 @@ bool Weapon::in_area_limit() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->image.render(this->x, this->y, _renderer);
+    this->image.render(this->x, this->y, _renderer, -20);
 }
 
 // Destination en 2D de l'arme
