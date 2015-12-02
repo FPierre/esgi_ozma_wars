@@ -55,6 +55,7 @@ OwnShip::~OwnShip() {
 
 }
 
+// Mouvement du vaisseau
 void OwnShip::move() {
     float accelerometer_values[3];
     Android_JNI_GetAccelerometerValues(accelerometer_values);
@@ -81,9 +82,7 @@ void OwnShip::move() {
     }
 }
 
-/**
- * Tire des missiles vers le haut de l'écran uniquement
- */
+// Tire des missiles vers le haut de l'écran uniquement
 void OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limite de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {

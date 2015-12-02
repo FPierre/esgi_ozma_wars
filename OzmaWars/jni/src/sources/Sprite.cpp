@@ -45,7 +45,7 @@ Sprite::Sprite(const Sprite& _sprite) {
 }
 
 Sprite::~Sprite() {
-    // SDL_DestroyTexture(this->texture);
+
 }
 
 int Sprite::get_width() {

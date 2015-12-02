@@ -27,25 +27,7 @@ EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, S
     }
 }
 
-// SI DECOMMENTE, ENEMIES SHIPS N'APPARAISSENT PLUS
-// EnemyShip::EnemyShip(const EnemyShip& _ship) {
-//     // LOGI("Constructeur par copie");
-
-//     x = _ship.x;
-//     y = _ship.y;
-//     health = _ship.health;
-//     status = _ship.status;
-//     weapon = _ship.weapon;
-//     image = _ship.image;
-//     fired_weapon_limit = _ship.fired_weapon_limit;
-//     propability_fire = _ship.propability_fire;
-//     destroy_sound = _ship.destroy_sound;
-// }
-
-// EnemyShip::~EnemyShip() {
-
-// }
-
+// Destination en 2D du vaisseau
 void EnemyShip::set_destination(int _x, int _y) {
     int diff_x = _x - this->x;
     int diff_y = _y - this->y;
@@ -56,6 +38,7 @@ void EnemyShip::set_destination(int _x, int _y) {
     this->length_y = diff_y;
 }
 
+// Mouvement du vaisseau
 void EnemyShip::move() {
     if (this->x < this->destination_x) {
         this->x += this->length_x;
@@ -66,6 +49,7 @@ void EnemyShip::move() {
     }
 }
 
+// TRUE si le vaisseau réuni les conditions pour faire feu
 bool EnemyShip::can_fire() {
     int random_number = rand() % 100 + 1;
 
@@ -77,6 +61,7 @@ bool EnemyShip::can_fire() {
             this->fired_weapons.size() < this->fired_weapon_limit);
 }
 
+// Le vaisseau ennemi fait feu à la position _x et _y
 void EnemyShip::fire(int _x, int _y) {
     if (this->can_fire()) {
         // Copie de Weapon actuelle du vaisseau

@@ -88,6 +88,7 @@ void Weapon::render(SDL_Renderer *_renderer) {
     this->image.render(this->x, this->y, _renderer, this->size_coeff);
 }
 
+// Destination en 2D de l'arme
 void Weapon::set_destination(int target_x, int target_y, bool _force_angle) {
     int delta_x = target_x - this->x;
     int delta_y = target_y - this->y;
@@ -98,6 +99,7 @@ void Weapon::set_destination(int target_x, int target_y, bool _force_angle) {
     this->image.set_angle(angle);
 }
 
+// Mouvement de l'arme
 void Weapon::move() {
     int vx = this->speed * (90 - abs(this->angle)) / 90;
     int vy;

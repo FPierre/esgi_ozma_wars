@@ -51,29 +51,9 @@ void Meteorite::set_destination(int target_x, int target_y) {
     int delta_x = target_x - this->x;
     int delta_y = target_y - this->y;
 
-    // LOGI("this->x : %d", this->x);
-    // LOGI("this->y : %d", this->y);
-    // LOGI("_x : %d", _x);
-    // LOGI("_y : %d", _y);
-    // LOGI("diff_x : %d", diff_x);
-    // LOGI("diff_y : %d", diff_y);
-    // LOGI("Angle : %f", angle);
-
-    // this->length = sqrt(delta_x * delta_x + delta_y * delta_y);
-
-    // double target_angle = atan2(target_y - this->y, target_x - this->x);
-    // this->target_angle = target_angle;
-
     double angle = atan2(delta_y, delta_x) * (180.0 / PI);
     this->angle = angle;
     this->image.set_angle(angle);
-
-    // LOGI("this->angle : %f", this->angle);
-
-    // this->destination_x = _x;
-    // this->destination_y = _y;
-    // this->length_x = diff_x;
-    // this->length_y = diff_y;
 }
 
 void Meteorite::move() {
@@ -111,6 +91,7 @@ int Meteorite::get_strength() {
     return this->strength;
 }
 
+// TRUE si le météorite est dans la zone de l'écran
 bool Meteorite::in_area_limit() {
     return (this->get_x() >= this->area_limits.x &&
             this->get_x() <= this->area_limits.w &&

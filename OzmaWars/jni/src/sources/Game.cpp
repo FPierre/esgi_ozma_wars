@@ -8,7 +8,7 @@
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
-// TODO Commenter
+// Status des vaisseaux pour gérer l'animation de destruction
 const int STATUS_NORMAL         = 80;
 const int STATUS_DESTROY_STEP_1 = 60;
 const int STATUS_DESTROY_STEP_2 = 40;
@@ -52,15 +52,6 @@ Game::Game(Window _window) : window(_window) {
     else {
         LOGI("Sprite missile_image n'a pas pu être crée");
     }
-
-    // Sprite explosion_image(3, 152, 75, 65, 0.0, "spritesheets/projectile.bmp", blue_background, this->window.renderer);
-
-    // if (&explosion_image != nullptr) {
-    //     this->explosion_image = explosion_image;
-    // }
-    // else {
-    //     LOGI("Sprite explosion_image n'a pas pu être crée");
-    // }
 
     Rgb pink_background(255, 0, 255);
 
@@ -151,8 +142,7 @@ Game::Game(const Game& _game) {
 }
 
 Game::~Game() {
-    // TTF_CloseFont(this->font);
-    // TTF_CloseFont(this->font_title);
+
 }
 
 Window Game::get_window() {
@@ -179,6 +169,7 @@ void Game::set_level(int _level) {
     this->level = _level;
 }
 
+// Affiche le score à l'écran
 void Game::render_score() {
     char buffer[10];
     int score = this->score;
@@ -194,6 +185,7 @@ void Game::render_score() {
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }
 
+// Affiche la vie restante à l'écran
 void Game::render_life() {
     char buffer[10];
     int number = this->own_ship.get_health();
@@ -209,6 +201,7 @@ void Game::render_life() {
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }
 
+// Affiche le niveau actuel à l'écran
 void Game::render_level() {
     char buffer[11];
     int number = this->get_level();
@@ -224,6 +217,7 @@ void Game::render_level() {
     SDL_RenderCopy(this->window.renderer, texture, NULL, &test);
 }
 
+// Animation lors d'une destruction
 void Game::render_destroy(Ship& _ship) {
     LOGI("Statut du vaisseau (start) : %d", _ship.get_status());
 
@@ -251,6 +245,7 @@ void Game::render_destroy(Ship& _ship) {
     LOGI("Statut du vaisseau (end) : %d", _ship.get_status());
 }
 
+// Affiche l'écran de Game Over
 void Game::render_over() {
     // Fenêtre de dialogue
     SDL_Rect rect = { ((this->window.get_width() / 2) - 225), ((this->window.get_width() / 2) - 320), 450, 250 };
