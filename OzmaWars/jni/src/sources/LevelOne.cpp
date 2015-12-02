@@ -86,8 +86,10 @@ void LevelOne::handle_events() {
 
     while (SDL_PollEvent(&event)) {
         // Si "tap" sur l'écran, Own ship tire
-        if (this->game->own_ship.alive() && event.type == SDL_KEYDOWN || event.type == SDL_FINGERDOWN) {
+        if (this->game->own_ship.alive() && event.type == SDL_FINGERDOWN) {
             this->game->own_ship.fire();
+        } else if (event.type == SDL_KEYDOWN) {
+            exit(0);
         }
     }
 }
@@ -164,6 +166,7 @@ void LevelOne::logic() {
                     int life = this->game->own_ship.get_health() - fired_weapon->get_strength();
 
                     this->game->own_ship.set_health(life);
+                    Game::user_life = life;
 
                     enemy_ship.fired_weapons.erase(enemy_ship.fired_weapons.begin() + j);
 

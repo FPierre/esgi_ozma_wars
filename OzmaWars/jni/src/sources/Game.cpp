@@ -1,4 +1,8 @@
 #include <android/log.h>
+#include <jni.h>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "headers/Game.h"
 
@@ -15,13 +19,18 @@ const int STATUS_DESTROY_STEP_2 = 40;
 const int STATUS_DESTROY_STEP_3 = 20;
 const int STATUS_DESTROY_END    = 0;
 
+// Données du jeu pour la sauvegarde en Java
+int Game::user_id    = 0;
+int Game::user_score = 0;
+int Game::user_life  = 0;
+int Game::user_level = 0;
+
 Game::Game() {
 
 }
 
 Game::Game(Window _window) : window(_window) {
     this->score = 0;
-    this->force_exit = false;
 
     // Polices
 
@@ -119,7 +128,7 @@ Game::Game(Window _window) : window(_window) {
     if (this->music == NULL) {
         LOGI("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
     }
-
+    
     this->next_level = false;
 }
 
@@ -140,7 +149,6 @@ Game::Game(const Game& _game) {
     destroyed_ship_image_step4 = _game.destroyed_ship_image_step4;
     next_level = _game.next_level;
     apocalyse_now = _game.apocalyse_now;
-    force_exit = _game.force_exit;
 }
 
 Game::~Game() {
@@ -157,9 +165,11 @@ int Game::get_score() {
 
 void Game::set_score(int _points) {
     this->score = _points;
+    Game::user_score = _points;
 }
 
 int Game::update_score(int _points) {
+    Game::user_score = _points;
     return this->score += _points;
 }
 
@@ -168,6 +178,7 @@ int Game::get_level() {
 }
 
 void Game::set_level(int _level) {
+    Game::user_level = _level;
     this->level = _level;
 }
 
@@ -221,8 +232,6 @@ void Game::render_level() {
 
 // Animation lors d'une destruction
 void Game::render_destroy(Ship& _ship) {
-    LOGI("Statut du vaisseau (start) : %d", _ship.get_status());
-
     // On décrémente le statut du vaisseau
     _ship.dec_status( 1 ); // status -= 1;
 
@@ -243,8 +252,6 @@ void Game::render_destroy(Ship& _ship) {
     {
         _ship.set_sprite(this->destroyed_ship_image_step4);
     }
-
-    LOGI("Statut du vaisseau (end) : %d", _ship.get_status());
 }
 
 // Affiche l'écran de Game Over
@@ -254,16 +261,6 @@ void Game::render_over() {
     SDL_SetRenderDrawColor(this->window.renderer, 0, 0, 0, 10); // BUG: opacité ne fonctionne pas...
     SDL_RenderDrawRect(this->window.renderer, &rect);
     SDL_RenderFillRect(this->window.renderer, &rect);
-
-    // Bouton droit de quitter
-    rect = { ((this->window.get_width() / 2) - 200), ((this->window.get_width() / 2) - 180), 180, 80 };
-    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
-    SDL_RenderDrawRect(this->window.renderer, &rect);
-
-    // Bouton gauche de recommencer
-    rect = { ((this->window.get_width() / 2) + 20), ((this->window.get_width() / 2) - 180), 180, 80 };
-    SDL_SetRenderDrawColor(this->window.renderer, 255, 255, 255, 255);
-    SDL_RenderDrawRect(this->window.renderer, &rect);
 
     // Titre de dialogue
     char buffer[70];
@@ -275,8 +272,23 @@ void Game::render_over() {
     int mWidth = title->w;
     int mHeight = title->h;
     int mX = (this->window.get_width() / 2) - (mWidth/2);
-    int mY = (this->window.get_height() / 2) - (mHeight/2) - 50;
+    int mY = (this->window.get_height() / 2) - (mHeight/2);
     SDL_Rect gameover = { mX, mY, mWidth, mHeight };
 
     SDL_RenderCopy(this->window.renderer, texture, NULL, &gameover);
+}
+
+// Méthode de callback (Java) pour récupérer les données du jeu en cours
+extern "C" jintArray Java_com_application_android_esgi_ozma_wars_activities_GameActivity_getCurrentGame(JNIEnv* env, jobject obj) {
+    jintArray datas = env->NewIntArray(4);
+    jint *infos = env->GetIntArrayElements(datas, NULL);
+
+    infos[0] = Game::user_id;
+    infos[1] = Game::user_score;
+    infos[2] = Game::user_life;
+    infos[3] = Game::user_level;
+
+    env->ReleaseIntArrayElements(datas, infos, NULL);
+
+    return datas;
 }

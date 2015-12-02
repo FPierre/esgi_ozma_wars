@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
 #include <string>
+#include <stdio.h>
 
 #include "headers/Game.h"
 #include "headers/Window.h"
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]) {
     // Boucle principale
     while (state_id != STATE_EXIT) {
         // Sortie de jeu
-        if (!game->own_ship.alive() || game->force_exit) {
+        if (!game->own_ship.alive()) {
             set_next_state(STATE_EXIT);
         }
 

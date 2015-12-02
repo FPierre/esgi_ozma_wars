@@ -15,12 +15,15 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.os.*;
+import android.os.Vibrator;
 import android.util.Log;
 import android.graphics.*;
 import android.media.*;
 import android.hardware.*;
 
 import com.application.android.esgi.ozma.wars.R;
+import com.application.android.esgi.ozma.wars.database.OzmaDatabase;
+import com.application.android.esgi.ozma.wars.database.GameModel;
 
 
 /**
@@ -44,6 +47,7 @@ public class GameActivity extends Activity {
     protected static View mTextEdit;
     protected static ViewGroup mLayout;
     protected static SDLJoystickHandler mJoystickHandler;
+    protected static OzmaDatabase database;
 
     // This is what SDL runs in. It invokes SDL_main(), eventually
     protected static Thread mSDLThread;
@@ -54,9 +58,7 @@ public class GameActivity extends Activity {
     // Load the .so
     static {
         System.loadLibrary("SDL2");
-        //System.loadLibrary("SDL2_image");
         System.loadLibrary("SDL2_mixer");
-        //System.loadLibrary("SDL2_net");
         System.loadLibrary("SDL2_ttf");
         System.loadLibrary("main");
     }
@@ -84,11 +86,11 @@ public class GameActivity extends Activity {
         Log.v(DEBUG_TAG, "onCreate():" + mSingleton);
         super.onCreate(savedInstanceState);
 
+        // Initialise la classe
         GameActivity.initialize();
-        // So we can call stuff from static callbacks
         mSingleton = this;
 
-        // Set up the surface
+        // Initialise la SurfaceView
         mSurface = new SDLSurface(getApplication());
 
         if(Build.VERSION.SDK_INT >= 12) {
@@ -98,11 +100,45 @@ public class GameActivity extends Activity {
             mJoystickHandler = new SDLJoystickHandler();
         }
 
-        // Display layout contents
+        // Affiche le layout
         setContentView(R.layout.game_activity);
 
         mLayout = (AbsoluteLayout) findViewById(R.id.game_frame);
         mLayout.addView(mSurface);
+
+        // Initialise SQLite database
+        database = new OzmaDatabase(getApplication());
+    }
+
+    // Méthode native de récupération des données du jeu
+    public static native int[] getCurrentGame();
+
+    // Sauvegarde les données du jeu en cours
+    public static void saveCurrentGame(int[] datas) {
+        int id    = datas[0];
+        int score = datas[1];
+        int life  = datas[2];
+        int level = datas[3];
+
+        Log.d(DEBUG_TAG, "Received item (id:"+id+") has this score : " + score 
+            + ", this life : " + life + " & this level : " + level);
+
+        GameModel game = GameModel.init( id, score, life, level, ((life > 0) ? 1 : 0) );
+        if (id == 0)
+            database.addGame(game);
+        else 
+            database.updateGame(game);
+    }
+
+    // Vibration
+    public void setVibration(final int delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(200);
+            }
+        }, delay);
     }
 
     // Events
@@ -184,6 +220,9 @@ public class GameActivity extends Activity {
      */
     public static void handlePause() {
         if (!GameActivity.mIsPaused && GameActivity.mIsSurfaceReady) {
+            // Obtiens et sauvegarde le jeu en cours
+            GameActivity.saveCurrentGame( GameActivity.getCurrentGame() );
+
             GameActivity.mIsPaused = true;
             GameActivity.nativePause();
             mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, false);

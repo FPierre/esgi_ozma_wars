@@ -22,8 +22,12 @@ class Game {
     Window window;
 
     public:
+    static int user_id;
+    static int user_score;
+    static int user_life;
+    static int user_level;
+
     bool next_level;
-    bool force_exit;
     bool apocalyse_now;
     Mix_Music *music;
     Sprite meteorite_image;
