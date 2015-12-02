@@ -1,10 +1,10 @@
-# view AndroidManifest.xml #generated:11
+# view AndroidManifest.xml #generated:13
 -keep class com.application.android.esgi.ozma.wars.OzmaApplication { <init>(...); }
 
-# view AndroidManifest.xml #generated:32
+# view AndroidManifest.xml #generated:34
 -keep class com.application.android.esgi.ozma.wars.activities.GameActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:20
+# view AndroidManifest.xml #generated:22
 -keep class com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity { <init>(...); }
 
 # view res/layout/fragment_cinematic.xml #generated:15

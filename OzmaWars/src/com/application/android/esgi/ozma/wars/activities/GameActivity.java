@@ -196,23 +196,25 @@ public class GameActivity extends Activity {
         return super.dispatchKeyEvent(event);
     }
 
-    // DEBUG: Show logs
-    public static void showLog(int[] datas) {
-        int score = datas[0];
-        int life  = datas[1];
-        int level = datas[2];
+    // Méthode native de récupération des données du jeu
+    public static native int[] getCurrentGame();
 
-        Log.d(DEBUG_TAG, "Receive this score : " + score 
+    // Sauvegarde les données du jeu en cours
+    public static void saveCurrentGame(int[] datas) {
+        int id    = datas[0];
+        int score = datas[1];
+        int life  = datas[2];
+        int level = datas[3];
+
+        Log.d(DEBUG_TAG, "Received item (id:"+id+") has this score : " + score 
             + ", this life : " + life + " & this level : " + level);
 
-        GameModel game = GameModel.init( 0, score, life, level, ((life > 0) ? 1 : 0) );
-        if (game.getStatus() == 1) {
-            Log.d(DEBUG_TAG, "Get status > 0, add to db");
+        GameModel game = GameModel.init( id, score, life, level, ((life > 0) ? 1 : 0) );
+        if (id == 0)
             database.addGame(game);
-        }
+        else 
+            database.updateGame(game);
     }
-
-    public static native int[] getCurrentScore();
 
     /** Called by onPause or surfaceDestroyed. Even if surfaceDestroyed
      *  is the first to be called, mIsSurfaceReady should still be set
@@ -220,8 +222,8 @@ public class GameActivity extends Activity {
      */
     public static void handlePause() {
         if (!GameActivity.mIsPaused && GameActivity.mIsSurfaceReady) {
-            // Get current score of game
-            GameActivity.showLog( GameActivity.getCurrentScore() );
+            // Obtiens et sauvegarde le jeu en cours
+            GameActivity.saveCurrentGame( GameActivity.getCurrentGame() );
 
             GameActivity.mIsPaused = true;
             GameActivity.nativePause();

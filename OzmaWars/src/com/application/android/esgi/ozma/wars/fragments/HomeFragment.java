@@ -11,10 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.Thread;
+import java.lang.Runnable;
+import android.os.Handler;
+
 import com.application.android.esgi.ozma.wars.R;
 import com.application.android.esgi.ozma.wars.utils.OzmaUtils;
 import com.application.android.esgi.ozma.wars.activities.OzmaWarsActivity;
 import com.application.android.esgi.ozma.wars.activities.GameActivity;
+import com.application.android.esgi.ozma.wars.database.GameModel;
 import com.application.android.esgi.ozma.wars.database.OzmaDatabase;
 
 
@@ -30,9 +35,10 @@ public class HomeFragment extends Fragment {
     // Debug
     private static final String DEBUG_TAG = "//-- HomeFragment";
 
-    // Context
+    // Contexte
     private Activity activity;
     private OzmaDatabase database;
+    private GameModel lastGame;
 
     public HomeFragment() { }
 
@@ -61,8 +67,10 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get SQLite database
+        // Initialise la SQLite database
         database = new OzmaDatabase(getActivity());
+        // Récupère le dernier jeu
+        lastGame = database.getLastGame();
     }
 
     @Override
@@ -70,12 +78,12 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        TextView textHighScore = (TextView) v.findViewById(R.id.text_highscore);
+        final TextView textHighScore = (TextView) v.findViewById(R.id.text_highscore);
+        final TextView btnNewGame = (TextView) v.findViewById(R.id.button_new_game);
+        final TextView btnContinueGame = (TextView) v.findViewById(R.id.button_continue_game);
         ImageView btnSettings = (ImageView) v.findViewById(R.id.button_settings);
-        TextView btnNewGame = (TextView) v.findViewById(R.id.button_new_game);
-        TextView btnContinueGame = (TextView) v.findViewById(R.id.button_continue_game);
 
-        // Open settings fragment
+        // Affiche l'écran de préférences
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,12 +91,49 @@ public class HomeFragment extends Fragment {
                     SettingsFragment.newInstance(), OzmaUtils.SETTINGS_TAG, true);
             }
         });
-        // Display a new game
+
+        // Commence un nouveau jeu
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(activity, GameActivity.class);
                 activity.startActivity(i);
+            }
+        });
+
+        // Commence un jeu en cours
+        btnContinueGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, GameActivity.class);
+                if (lastGame != null && lastGame.getStatus() > 0) {
+                    i.putExtra("id", lastGame.getId());
+                    i.putExtra("score", lastGame.getScore());
+                    i.putExtra("life", lastGame.getLife());
+                    i.putExtra("level", lastGame.getLevel());
+                }
+                activity.startActivity(i);
+            }
+        });
+
+        // Récupère et affiche les dernières données d'un jeu
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                lastGame = database.getLastGame();
+                int highScore = database.getHighScore();
+
+                if (highScore > 0) {
+                    textHighScore.setText( String.valueOf(highScore) );
+                }
+
+                if (lastGame != null && lastGame.getStatus() > 0) {
+                    btnContinueGame.setTextColor( getActivity().getResources().getColor(R.color.white) );
+                    btnContinueGame.setBackgroundDrawable( getActivity().getResources().getDrawable(R.drawable.border_white) );
+                    btnContinueGame.setEnabled(true);
+                } else {
+                    btnContinueGame.setEnabled(false);
+                }
             }
         });
 

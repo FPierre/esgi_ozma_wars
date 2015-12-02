@@ -1,2 +1,2 @@
-C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\bin\AndroidManifest.xml : \
-C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\OzmaWars\AndroidManifest.xml \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\Ozmawars\bin\AndroidManifest.xml : \
+C:\Users\Fllo\Documents\ESGI\a__Development\ozmawars\Ozmawars\AndroidManifest.xml \

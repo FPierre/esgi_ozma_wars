@@ -22,6 +22,7 @@ class Game {
     Window window;
 
     public:
+    static int user_id;
     static int user_score;
     static int user_life;
     static int user_level;

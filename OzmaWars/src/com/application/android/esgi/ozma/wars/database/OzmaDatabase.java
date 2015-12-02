@@ -97,15 +97,17 @@ public class OzmaDatabase extends SQLiteOpenHelper {
                 null,   // Order by
                 null);  // Limit
 
-        if (cursor != null)
-            cursor.moveToFirst();
+        GameModel game = null;
+        if (cursor != null && cursor.moveToFirst()) {
 
-        GameModel game = new GameModel();
-        game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
-        game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
-        game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
-        game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
-        game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+            game = new GameModel();
+            game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
+            game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
+            game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
+            game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
+            game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+
+        }
 
         if (!cursor.isClosed())
             cursor.close();
@@ -121,18 +123,20 @@ public class OzmaDatabase extends SQLiteOpenHelper {
                 null,
                 null,   // Group by
                 null,   // Having
-                "DESC",   // Order by
+                KEY_GAME_ID + " DESC",   // Order by
                 "1");  // Limit
 
-        if (cursor != null)
-            cursor.moveToFirst();
+        GameModel game = null;
+        if (cursor != null && cursor.moveToFirst()) {
 
-        GameModel game = new GameModel();
-        game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
-        game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
-        game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
-        game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
-        game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+            game = new GameModel();
+            game.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_ID))));
+            game.setScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE))));
+            game.setLife(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LIFE))));
+            game.setLevel(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_LEVEL))));
+            game.setStatus(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_STATE))));
+
+        }
 
         if (!cursor.isClosed())
             cursor.close();
@@ -141,13 +145,35 @@ public class OzmaDatabase extends SQLiteOpenHelper {
         return game;
     }
 
+    public int getHighScore() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_GAME_NAME, COLUMNS,
+                null,
+                null,
+                null,   // Group by
+                null,   // Having
+                KEY_GAME_SCORE + " DESC",   // Order by
+                "1");  // Limit
+
+        int score = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            score = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE)));
+        }
+
+        if (!cursor.isClosed())
+            cursor.close();
+
+        Log.i(DEBUG_DB, "getHighScore() : " + score);
+        return score;
+    }
+
     public ArrayList<Integer> getAllGameScores() {
         ArrayList<Integer> scores = new ArrayList<Integer>();
         String query = "SELECT * FROM " + TABLE_GAME_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         int score = 0;
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 score = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_GAME_SCORE)));
                 scores.add(score);
