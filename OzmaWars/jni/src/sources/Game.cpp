@@ -31,7 +31,6 @@ Game::Game() {
 
 Game::Game(Window _window) : window(_window) {
     this->score = 0;
-    this->force_exit = false;
 
     // Polices
 
