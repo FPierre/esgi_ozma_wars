@@ -37,38 +37,38 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
 
     Weapon canon(20, this->game->missile_image, screen_width, screen_height);
 
-    // EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_1);
+    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_1);
 
-    // EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_2);
+    EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_2);
 
-    // EnemyShip enemy_ship_3(-600, 80, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_3);
+    EnemyShip enemy_ship_3(-600, 80, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_3);
 
-    // EnemyShip enemy_ship_4(-840, 370, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_4);
+    EnemyShip enemy_ship_4(-840, 370, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_4);
 
     EnemyShip enemy_ship_5(-1200, 40, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_5);
 
-    // EnemyShip enemy_ship_6(-2300, 230, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_6);
+    EnemyShip enemy_ship_6(-2300, 230, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_6);
 
-    // EnemyShip enemy_ship_7(-2500, 400, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_7);
+    EnemyShip enemy_ship_7(-2500, 400, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_7);
 
-    // EnemyShip enemy_ship_8(-3000, 270, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_8);
+    EnemyShip enemy_ship_8(-3000, 270, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_8);
 
-    // EnemyShip enemy_ship_9(-3800, 100, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_9);
+    EnemyShip enemy_ship_9(-3800, 100, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_9);
 
-    // EnemyShip enemy_ship_10(-4500, 290, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_10);
+    EnemyShip enemy_ship_10(-4500, 290, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_10);
 
-    // EnemyShip enemy_ship_11(-4800, 70, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_11);
+    EnemyShip enemy_ship_11(-4800, 70, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_11);
 
     // S'il n'y a pas encore de musique jouée
     if (Mix_PlayingMusic() == 0) {
@@ -104,7 +104,7 @@ void LevelOne::handle_events() {
 void LevelOne::logic() {
     int random_number_meteorite = rand() % 101;
 
-    // if (random_number_meteorite < 50 && !this->game->apocalyse_now) {
+    if (random_number_meteorite < 1 && !this->game->apocalyse_now) {
         Meteorite *meteorite = new Meteorite(this->game->meteorite_image,
                                              this->game->get_window().get_width(),
                                              this->game->get_window().get_height());
@@ -116,7 +116,7 @@ void LevelOne::logic() {
         this->meteorite = meteorite;
 
         this->game->apocalyse_now = true;
-    // }
+    }
 
     if (this->game->apocalyse_now) {
         this->meteorite->move();
@@ -195,12 +195,6 @@ void LevelOne::logic() {
             return;
         }
 
-        // Pas posible, déjà vérifié dans le haut de la boucle
-        // // Si le vaisseau ennemi n'a plus de vie, on passe au suivant
-        // if (!enemy_ship.alive()) {
-        //     continue;
-        // }
-
         int size_ownship_weapon = this->game->own_ship.fired_weapons.size();
 
         for (int k = 0; k < size_ownship_weapon; ++k) {
@@ -212,8 +206,6 @@ void LevelOne::logic() {
                 this->game->update_score(5);
 
                 enemy_ship.set_health(0);
-                // this->enemy_ships.erase(this->enemy_ships.begin() + i);
-                // this->game->own_ship.fired_weapons.erase(this->game->own_ship.fired_weapons.begin() + k);
                 continue;
             }
         }
@@ -231,23 +223,7 @@ void LevelOne::logic() {
         }
     }
 
-
-    // int left_b   = meteorite->get_x();
-    // int top_b    = meteorite->get_y();
-    // int right_b  = left_b + meteorite->get_sprite().get_width();
-    // int bottom_b = top_b + meteorite->get_sprite().get_height();
-
-    // LOGI("left_b : %d", left_b);
-    // LOGI("top_b : %d", top_b);
-    // LOGI("right_b : %d", right_b);
-    // LOGI("bottom_b : %d", bottom_b);
-
-
-    if (this->game->check_collision(this->game->own_ship, *meteorite)) {
-        LOGI("COLL");
-    }
-
-
+    // Collision entre Own ship et la météorite
     if (this->game->apocalyse_now && this->game->check_collision(this->game->own_ship, *meteorite)) {
         this->game->own_ship.set_health(0);
     }

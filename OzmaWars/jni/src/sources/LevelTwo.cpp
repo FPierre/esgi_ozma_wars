@@ -99,7 +99,8 @@ void LevelTwo::logic() {
 
         // Si le vaisseau ennemi est détruit
         if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END) {
-            // Le retire du vector
+            enemy_ship.set_health(0);
+
             continue;
         }
         else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
@@ -148,12 +149,6 @@ void LevelTwo::logic() {
             return;
         }
 
-        // Pas posible, déjà vérifié dans le haut de la boucle
-        // // Si le vaisseau ennemi n'a plus de vie, on passe au suivant
-        // if (!enemy_ship.alive()) {
-        //     continue;
-        // }
-
         int size_ownship_weapon = this->game->own_ship.fired_weapons.size();
 
         for (int k = 0; k < size_ownship_weapon; ++k) {
@@ -165,8 +160,6 @@ void LevelTwo::logic() {
                 this->game->update_score(5);
 
                 enemy_ship.set_health(0);
-                // this->enemy_ships.erase(this->enemy_ships.begin() + i);
-                // this->game->own_ship.fired_weapons.erase(this->game->own_ship.fired_weapons.begin() + k);
                 continue;
             }
         }
