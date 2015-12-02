@@ -24,8 +24,6 @@ LevelTwo::LevelTwo(Game *_game) : game(_game) {
     }
 
     this->texture = SDL_CreateTextureFromSurface(this->game->get_window().renderer, this->background);
-    this->image_location = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
-    this->test = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
 
     int screen_width = this->game->get_window().get_width();
     int screen_height = this->game->get_window().get_height();
@@ -56,8 +54,6 @@ LevelTwo::LevelTwo(const LevelTwo& _level_two) {
     enemy_ships = _level_two.enemy_ships;
     background = _level_two.background;
     texture = _level_two.texture;
-    image_location = _level_two.image_location;
-    test = _level_two.test;
 }
 
 LevelTwo::~LevelTwo() {

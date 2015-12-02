@@ -16,7 +16,6 @@ EnemyShip::EnemyShip() : Ship() {
 
 EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, int screen_width, int screen_height) :
                                                     Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
-    this->size_coeff = 50;
     this->propability_fire = 3;
     this->fired_weapon_limit = 3;
 
@@ -65,10 +64,7 @@ bool EnemyShip::can_fire() {
 void EnemyShip::fire(int _x, int _y) {
     if (this->can_fire()) {
         // Copie de Weapon actuelle du vaisseau
-        Weapon *fired_weapon = new Weapon(this->weapon.get_strength(),
-                                          this->weapon.get_sprite(),
-                                          this->area_limits.w,
-                                          this->area_limits.h);
+        Weapon *fired_weapon = new Weapon(this->weapon.get_strength(), this->weapon.get_sprite(),  this->area_limits.w, this->area_limits.h);
 
         fired_weapon->set_x(this->x);
         fired_weapon->set_y(this->y);

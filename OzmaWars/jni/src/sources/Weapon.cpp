@@ -18,7 +18,6 @@ Weapon::Weapon() {
 Weapon::Weapon(int _strength, Sprite _image, int screen_width, int screen_height) : strength(_strength),
                                                                                     image(_image) {
     this->speed = 10;
-    this->size_coeff = 10;
     this->area_limits = { 0, 0, screen_width, screen_height };
 
     this->launch_sound = Mix_LoadWAV("sounds/missile_launch.wav");
@@ -33,7 +32,6 @@ Weapon::Weapon(const Weapon& _weapon) {
     area_limits = _weapon.area_limits;
     image = _weapon.image;
     launch_sound = _weapon.launch_sound;
-    size_coeff = _weapon.size_coeff;
     speed = _weapon.speed;
     strength = _weapon.strength;
     x = _weapon.x;
@@ -85,7 +83,7 @@ bool Weapon::in_area_limit() {
 }
 
 void Weapon::render(SDL_Renderer *_renderer) {
-    this->image.render(this->x, this->y, _renderer, this->size_coeff);
+    this->image.render(this->x, this->y, _renderer);
 }
 
 // Destination en 2D de l'arme

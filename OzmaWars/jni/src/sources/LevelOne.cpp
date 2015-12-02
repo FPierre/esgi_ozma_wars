@@ -23,14 +23,7 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
         exit(0);
     }
 
-    LOGI("%d", this->meteorite->get_x());
-    LOGI("%d", this->meteorite->get_y());
-    LOGI("%d", this->meteorite->get_sprite().get_height());
-    LOGI("%d", this->meteorite->get_sprite().get_height());
-
     this->texture = SDL_CreateTextureFromSurface(this->game->get_window().renderer, this->background);
-    this->image_location = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
-    this->test = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
 
     int screen_width = this->game->get_window().get_width();
     int screen_height = this->game->get_window().get_height();
@@ -40,10 +33,10 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
     EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_1);
 
-    EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    EnemyShip enemy_ship_2(100, 100, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_2);
 
-    EnemyShip enemy_ship_3(-600, 80, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    EnemyShip enemy_ship_3(200, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_3);
 
     EnemyShip enemy_ship_4(-840, 370, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
@@ -81,8 +74,6 @@ LevelOne::LevelOne(const LevelOne& _level_one) {
     enemy_ships = _level_one.enemy_ships;
     background = _level_one.background;
     texture = _level_one.texture;
-    image_location = _level_one.image_location;
-    test = _level_one.test;
     meteorite = _level_one.meteorite;
 }
 

@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 
         current_state->render();
 
-        if (game->own_ship.alive() && (state_id == STATE_LEVEL_ONE && game->get_score() >= 10) || game->next_level) {
+        if (game->own_ship.alive() && (state_id == STATE_LEVEL_ONE && game->get_score() >= 20) || game->next_level) {
             set_next_state(STATE_LEVEL_TWO);
             change_state(game);
             game->set_level(2);

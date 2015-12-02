@@ -13,7 +13,6 @@ class Weapon {
     int strength;
     int speed;
     double angle;
-    int size_coeff;
 
     public:
     Sprite image;

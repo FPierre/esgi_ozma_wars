@@ -7,7 +7,6 @@ class EnemyShip : public Ship {
     private:
     int propability_fire;   // Probabilité que le vaisseau fasse feu lors d'un tour (en %)
     int fired_weapon_limit;
-    int size_coeff;
     bool can_fire();
 
     public:

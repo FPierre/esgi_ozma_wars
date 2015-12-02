@@ -16,8 +16,6 @@ class LevelTwo : public GameState {
     std::vector<EnemyShip> enemy_ships;
     SDL_Surface *background;
     SDL_Texture *texture;
-    SDL_Rect image_location;
-    SDL_Rect test;
 
     public:
     LevelTwo();

@@ -19,7 +19,6 @@ OwnShip::OwnShip() : Ship() {
 OwnShip::OwnShip(int _x, int _y, int _health, int _status, Weapon _weapon, Sprite _image, Sprite _image_left, Sprite _image_right, int screen_width, int screen_height) :
     Ship(_x, _y, _health, _status, _weapon, _image, screen_width, screen_height) {
 
-    this->size_coeff = 50;
     this->image_front = _image;
     this->image_left = _image_left;
     this->image_right = _image_right;

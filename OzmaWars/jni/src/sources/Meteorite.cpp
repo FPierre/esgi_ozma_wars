@@ -17,7 +17,6 @@ Meteorite::Meteorite() {
 
 Meteorite::Meteorite(Sprite _image, int screen_width, int screen_height) : image(_image) {
     this->speed = 10;
-    this->size_coeff = 200;
 
     this->area_limits = { 0, 0, screen_width, screen_height };
 
@@ -44,7 +43,7 @@ Meteorite::~Meteorite() {
 }
 
 void Meteorite::render(SDL_Renderer *_renderer) {
-    this->image.render(this->x, this->y, _renderer, this->size_coeff);
+    this->image.render(this->x, this->y, _renderer);
 }
 
 void Meteorite::set_destination(int target_x, int target_y) {
