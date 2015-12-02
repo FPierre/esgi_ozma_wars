@@ -107,7 +107,7 @@ public class GameActivity extends Activity {
         mLayout.addView(mSurface);
 
         // Initialise SQLite database
-        database = new OzmaDatabase(mSingleton);
+        database = new OzmaDatabase(getApplication());
     }
 
     // Méthode native de récupération des données du jeu
