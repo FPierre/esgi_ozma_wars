@@ -53,32 +53,22 @@ class Game {
     void render_over();
 
     // Template pour la gestion de collisions
-    // TODO Passer par des références ?
     template<class S1, class S2>
     bool check_collision( S1 a, S2 b ) {
-        // Initialisation des variables
-        int leftA,   leftB;
-        int rightA,  rightB;
-        int topA,    topB;
-        int bottomA, bottomB;
-
         // Calcule les côtés du 1er objet (A)
-        leftA   = a.get_x();
-        rightA  = leftA + a.get_sprite().get_width();
-        topA    = a.get_y();
-        bottomA = topA + a.get_sprite().get_height();
+        int left_a   = a.get_x();
+        int top_a    = a.get_y();
+        int right_a  = left_a + a.get_sprite().get_width();
+        int bottom_a = top_a + a.get_sprite().get_height();
 
         // Calcule les côtés du 2nd objet (B)
-        leftB   = b.get_x();
-        rightB  = leftB + b.get_sprite().get_width();
-        topB    = b.get_y();
-        bottomB = topB + b.get_sprite().get_height();
+        int left_b   = b.get_x();
+        int top_b    = b.get_y();
+        int right_b  = left_b + b.get_sprite().get_width();
+        int bottom_b = top_b + b.get_sprite().get_height();
 
         // Si un seul des côtés de B est hors zone A, alors il n'y a pas de collision possible
-        if (bottomB <= topA ||
-            topB >= bottomA ||
-            rightB <= leftA ||
-            leftB >= rightA) {
+        if (bottom_b <= top_a || top_b >= bottom_a || right_b <= left_a || left_b >= right_a) {
             return false;
         }
 

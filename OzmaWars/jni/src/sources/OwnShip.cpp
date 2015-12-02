@@ -88,7 +88,6 @@ void OwnShip::fire() {
     // Si le vaisseau n'a pas encore atteint le nombre limite de missiles qu'il peut tirer simultanément
     if (this->fired_weapons.size() < this->fired_weapon_limit) {
         // Copie de Weapon actuelle du vaisseau
-        // Weapon *fired_weapon = &(this->weapon);
         Weapon *fired_weapon = new Weapon(100, this->weapon.get_sprite(), this->area_limits.w, this->area_limits.h);
 
         fired_weapon->set_x(this->x);

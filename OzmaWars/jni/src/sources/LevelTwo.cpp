@@ -15,8 +15,6 @@ const int STATUS_NORMAL      = 80;
 const int STATUS_DESTROY_END = 0;
 
 LevelTwo::LevelTwo(Game *_game) : game(_game) {
-    LOGI("LevelTwo");
-
     this->background = SDL_LoadBMP("images/background_level_two.bmp");
 
     if (this->background == NULL) {
@@ -32,10 +30,20 @@ LevelTwo::LevelTwo(Game *_game) : game(_game) {
     int screen_width = this->game->get_window().get_width();
     int screen_height = this->game->get_window().get_height();
 
-    Weapon canon(100, this->game->missile_image, screen_width, screen_height);
+    Weapon canon(40, this->game->missile_image, screen_width, screen_height);
+    canon.set_speed(14);
 
-    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    EnemyShip enemy_ship_1(0, 0, 150, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     this->enemy_ships.push_back(enemy_ship_1);
+
+    EnemyShip enemy_ship_2(-50, 200, 150, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_2);
+
+    EnemyShip enemy_ship_3(-600, 80, 150, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_3);
+
+    EnemyShip enemy_ship_4(-840, 370, 150, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_4);
 
     // S'il n'y a pas encore de musique jouée
     if (Mix_PlayingMusic() == 0) {
@@ -191,42 +199,49 @@ void LevelTwo::logic() {
 }
 
 void LevelTwo::render() {
-    SDL_RenderClear(this->game->get_window().renderer);
+     SDL_RenderClear(this->game->get_window().renderer);
 
     // Image de background
     SDL_RenderCopy(this->game->get_window().renderer, this->texture, NULL, NULL);
 
+    // Render des informations du jeu
     this->game->render_score();
     this->game->render_life();
+    this->game->render_level();
+
+    int dead_ships = 0;
 
     for (EnemyShip& enemy_ship : this->enemy_ships) {
-        // LOGI("Health of enemy ship: %d", enemy_ship.get_health());
-        if ( !enemy_ship.alive() ) {
+        if (!enemy_ship.alive()) {
             // LOGI("Enemy ship - not alive");
             // Méthode d'affichage de la destruction
             this->game->render_destroy(enemy_ship);
+
+            dead_ships++;
+
+            if (dead_ships == this->enemy_ships.size()) {
+                this->game->next_level = true;
+            }
         }
-        // LOGI("Enemy ship - render");
+
         enemy_ship.render(this->game->get_window().renderer);
     }
 
-    // On vérifie que le Ship n'a toujours pas explosé
+    // Vérifie que le Own ship n'a toujours pas explosé
     if ( this->game->own_ship.get_status() != STATUS_DESTROY_END ) {
         // S'il n'est plus en vie, on gère l'animation de l'explosion
         if ( !this->game->own_ship.alive() ) {
             // Méthode d'affichage de la destruction
             this->game->render_destroy(this->game->own_ship);
         }
-        // Render du Sprite
+
         this->game->own_ship.render(this->game->get_window().renderer);
-    } else {
-        // On affiche l'écran GameOver
+    }
+    else {
+        // Affiche l'écran GameOver
         this->game->render_over();
     }
 
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->game->get_window().renderer);
 
     SDL_Delay(10);

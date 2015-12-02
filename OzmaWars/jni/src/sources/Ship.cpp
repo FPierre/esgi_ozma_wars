@@ -91,6 +91,20 @@ bool Ship::alive() {
 
 // TRUE si le vaisseau est dans la zone de l'écran
 bool Ship::in_area_limit() {
+
+    LOGI("%d", this->area_limits.w);
+    LOGI("%d", this->x);
+
+    if (this->get_x() >= this->area_limits.x &&
+        this->get_x() <= this->area_limits.w &&
+        this->get_y() >= this->area_limits.y &&
+        this->get_y() <= this->area_limits.h) {
+        // LOGI("in_area_limit : true");
+     }
+     else {
+        // LOGI("in_area_limit : false");
+     }
+
     return (this->get_x() >= this->area_limits.x &&
             this->get_x() <= this->area_limits.w &&
             this->get_y() >= this->area_limits.y &&

@@ -23,8 +23,12 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
         exit(0);
     }
 
+    LOGI("%d", this->meteorite->get_x());
+    LOGI("%d", this->meteorite->get_y());
+    LOGI("%d", this->meteorite->get_sprite().get_height());
+    LOGI("%d", this->meteorite->get_sprite().get_height());
+
     this->texture = SDL_CreateTextureFromSurface(this->game->get_window().renderer, this->background);
-    // TODO Passer sur les valeurs réelles de l'écran
     this->image_location = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
     this->test = { 0, 0, this->game->get_window().get_width(), this->game->get_window().get_height() };
 
@@ -33,11 +37,11 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
 
     Weapon canon(20, this->game->missile_image, screen_width, screen_height);
 
-    EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    this->enemy_ships.push_back(enemy_ship_1);
+    // EnemyShip enemy_ship_1(0, 0, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    // this->enemy_ships.push_back(enemy_ship_1);
 
-    EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    this->enemy_ships.push_back(enemy_ship_2);
+    // EnemyShip enemy_ship_2(-50, 200, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    // this->enemy_ships.push_back(enemy_ship_2);
 
     // EnemyShip enemy_ship_3(-600, 80, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     // this->enemy_ships.push_back(enemy_ship_3);
@@ -45,8 +49,8 @@ LevelOne::LevelOne(Game *_game) : game(_game) {
     // EnemyShip enemy_ship_4(-840, 370, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     // this->enemy_ships.push_back(enemy_ship_4);
 
-    // EnemyShip enemy_ship_5(-1200, 40, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
-    // this->enemy_ships.push_back(enemy_ship_5);
+    EnemyShip enemy_ship_5(-1200, 40, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
+    this->enemy_ships.push_back(enemy_ship_5);
 
     // EnemyShip enemy_ship_6(-2300, 230, 100, STATUS_NORMAL, canon, this->game->enemy_ship_image, screen_width, screen_height);
     // this->enemy_ships.push_back(enemy_ship_6);
@@ -100,7 +104,7 @@ void LevelOne::handle_events() {
 void LevelOne::logic() {
     int random_number_meteorite = rand() % 101;
 
-    if (random_number_meteorite < 50 && !this->game->apocalyse_now) {
+    // if (random_number_meteorite < 50 && !this->game->apocalyse_now) {
         Meteorite *meteorite = new Meteorite(this->game->meteorite_image,
                                              this->game->get_window().get_width(),
                                              this->game->get_window().get_height());
@@ -112,7 +116,7 @@ void LevelOne::logic() {
         this->meteorite = meteorite;
 
         this->game->apocalyse_now = true;
-    }
+    // }
 
     if (this->game->apocalyse_now) {
         this->meteorite->move();
@@ -141,7 +145,8 @@ void LevelOne::logic() {
 
         // Si le vaisseau ennemi est détruit
         if (!enemy_ship.alive() && enemy_ship.get_status() == STATUS_DESTROY_END) {
-            // Le retire du vector
+            enemy_ship.set_health(0);
+
             continue;
         }
         else if (enemy_ship.alive() && enemy_ship.get_status() == STATUS_NORMAL) {
@@ -226,12 +231,22 @@ void LevelOne::logic() {
         }
     }
 
-    if (this->game->apocalyse_now) {
-        LOGI("APO");
+
+    // int left_b   = meteorite->get_x();
+    // int top_b    = meteorite->get_y();
+    // int right_b  = left_b + meteorite->get_sprite().get_width();
+    // int bottom_b = top_b + meteorite->get_sprite().get_height();
+
+    // LOGI("left_b : %d", left_b);
+    // LOGI("top_b : %d", top_b);
+    // LOGI("right_b : %d", right_b);
+    // LOGI("bottom_b : %d", bottom_b);
+
+
+    if (this->game->check_collision(this->game->own_ship, *meteorite)) {
+        LOGI("COLL");
     }
-    else {
-        LOGI("PAS APO");
-    }
+
 
     if (this->game->apocalyse_now && this->game->check_collision(this->game->own_ship, *meteorite)) {
         this->game->own_ship.set_health(0);
@@ -267,9 +282,10 @@ void LevelOne::render() {
     this->game->render_life();
     this->game->render_level();
 
-    // if (this->game->apocalyse_now) {
+    if (this->game->apocalyse_now) {
+        // Render du météorite
         this->meteorite->render(this->game->get_window().renderer);
-    // }
+    }
 
     int dead_ships = 0;
 
@@ -286,7 +302,6 @@ void LevelOne::render() {
             }
         }
 
-        // LOGI("Enemy ship - render");
         enemy_ship.render(this->game->get_window().renderer);
     }
 
@@ -305,9 +320,6 @@ void LevelOne::render() {
         this->game->render_over();
     }
 
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 226, 35, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 35, 226, 35, SDL_ALPHA_OPAQUE);
-    // SDL_SetRenderDrawColor(this->game->get_window().renderer, 35, 35, 226, SDL_ALPHA_OPAQUE);
     SDL_RenderPresent(this->game->get_window().renderer);
 
     SDL_Delay(10);

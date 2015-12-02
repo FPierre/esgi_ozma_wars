@@ -49,31 +49,14 @@ EnemyShip::EnemyShip(int _x, int _y, int _health, int _status, Weapon _weapon, S
 void EnemyShip::set_destination(int _x, int _y) {
     int diff_x = _x - this->x;
     int diff_y = _y - this->y;
-    // double angle = atan2(diff_x, diff_y) * (180.0 / PI);
-
-    // LOGI("this->x : %d", this->x);
-    // LOGI("this->y : %d", this->y);
-    // LOGI("_x : %d", _x);
-    // LOGI("_y : %d", _y);
-    // LOGI("diff_x : %d", diff_x);
-    // LOGI("diff_y : %d", diff_y);
-    // LOGI("Angle : %f", angle);
 
     this->destination_x = _x;
     this->destination_y = _y;
     this->length_x = diff_x;
     this->length_y = diff_y;
-
-    // this->image->set_angle(angle);
 }
 
 void EnemyShip::move() {
-    // LOGI("this->x : %d", this->x);
-    // LOGI("this->length_x : %d", this->length_x);
-    // LOGI("this->destination_x : %d", this->destination_x);
-    // LOGI("this->y : %d", this->y);
-    // LOGI("this->destination_y : %d", this->destination_y);
-
     if (this->x < this->destination_x) {
         this->x += this->length_x;
     }
@@ -97,8 +80,10 @@ bool EnemyShip::can_fire() {
 void EnemyShip::fire(int _x, int _y) {
     if (this->can_fire()) {
         // Copie de Weapon actuelle du vaisseau
-        // Weapon *fired_weapon = &(this->weapon);
-        Weapon *fired_weapon = new Weapon(20, this->weapon.get_sprite(), this->area_limits.w, this->area_limits.h);
+        Weapon *fired_weapon = new Weapon(this->weapon.get_strength(),
+                                          this->weapon.get_sprite(),
+                                          this->area_limits.w,
+                                          this->area_limits.h);
 
         fired_weapon->set_x(this->x);
         fired_weapon->set_y(this->y);
