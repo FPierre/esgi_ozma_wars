@@ -23,6 +23,7 @@ class Game {
 
     public:
     bool next_level;
+    bool force_exit;
     bool apocalyse_now;
     Mix_Music *music;
     Sprite meteorite_image;

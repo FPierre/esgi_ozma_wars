@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     // Boucle principale
     while (state_id != STATE_EXIT) {
         // Sortie de jeu
-        if (!game->own_ship.alive()) {
+        if (!game->own_ship.alive() || game->force_exit) {
             set_next_state(STATE_EXIT);
         }
 

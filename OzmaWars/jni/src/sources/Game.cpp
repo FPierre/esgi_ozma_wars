@@ -21,6 +21,7 @@ Game::Game() {
 
 Game::Game(Window _window) : window(_window) {
     this->score = 0;
+    this->force_exit = false;
 
     // Polices
 
@@ -139,6 +140,7 @@ Game::Game(const Game& _game) {
     destroyed_ship_image_step4 = _game.destroyed_ship_image_step4;
     next_level = _game.next_level;
     apocalyse_now = _game.apocalyse_now;
+    force_exit = _game.force_exit;
 }
 
 Game::~Game() {
